@@ -477,7 +477,7 @@ else
 		// ARGUMENTS:
 		//  pCallback - Callback interface to be called during each processing pass.
 		//
-		HRESULT RegisterForCallbacks (IXAudio2EngineCallback* pCallback);
+		HRESULT RegisterForCallbacks (IXAudio2EngineCallback pCallback);
 
 		// NAME: IXAudio2::UnregisterForCallbacks
 		// DESCRIPTION: Removes an existing receiver of XAudio2 engine callbacks.
@@ -485,7 +485,7 @@ else
 		// ARGUMENTS:
 		//  pCallback - Previously registered callback interface to be removed.
 		//
-		void UnregisterForCallbacks(IXAudio2EngineCallback* pCallback);
+		void UnregisterForCallbacks(IXAudio2EngineCallback pCallback);
 
 		// NAME: IXAudio2::CreateSourceVoice
 		// DESCRIPTION: Creates and configures a source voice.
@@ -499,11 +499,11 @@ else
 		//  pSendList - Optional list of voices this voice should send audio to.
 		//  pEffectChain - Optional list of effects to apply to the audio data.
 		//
-		HRESULT CreateSourceVoice (IXAudio2SourceVoice** ppSourceVoice,
+		HRESULT CreateSourceVoice (IXAudio2SourceVoice* ppSourceVoice,
 								   const (WAVEFORMATEX)* pSourceFormat,
 								   UINT32 Flags = 0,
 								   float MaxFrequencyRatio = XAUDIO2_DEFAULT_FREQ_RATIO,
-								   IXAudio2VoiceCallback* pCallback = null,
+								   IXAudio2VoiceCallback pCallback = null,
 								   const (XAUDIO2_VOICE_SENDS)* pSendList = null,
 								   const (XAUDIO2_EFFECT_CHAIN)* pEffectChain = null);
 
@@ -519,7 +519,7 @@ else
 		//  pSendList - Optional list of voices this voice should send audio to.
 		//  pEffectChain - Optional list of effects to apply to the audio data.
 		//
-		HRESULT CreateSubmixVoice (IXAudio2SubmixVoice** ppSubmixVoice,
+		HRESULT CreateSubmixVoice (IXAudio2SubmixVoice* ppSubmixVoice,
 								   UINT32 InputChannels, UINT32 InputSampleRate,
 								   UINT32 Flags = 0, UINT32 ProcessingStage = 0,
 								   const (XAUDIO2_VOICE_SENDS)* pSendList = null,
@@ -537,7 +537,7 @@ else
 		//  DeviceIndex - Identifier of the device to receive the output audio.
 		//  pEffectChain - Optional list of effects to apply to the audio data.
 		//
-		HRESULT CreateMasteringVoice (IXAudio2MasteringVoice** ppMasteringVoice,
+		HRESULT CreateMasteringVoice (IXAudio2MasteringVoice* ppMasteringVoice,
 									  UINT32 InputChannels = XAUDIO2_DEFAULT_CHANNELS,
 									  UINT32 InputSampleRate = XAUDIO2_DEFAULT_SAMPLERATE,
 									  UINT32 Flags = 0, UINT32 DeviceIndex = 0,
@@ -703,7 +703,7 @@ else
 			//  pParameters - Pointer to the filter's parameter structure.
 			//  OperationSet - Used to identify this call as part of a deferred batch.
 			*/
-			HRESULT SetOutputFilterParameters (IXAudio2Voice* pDestinationVoice,
+			HRESULT SetOutputFilterParameters (IXAudio2Voice pDestinationVoice,
 												const (XAUDIO2_FILTER_PARAMETERS)* pParameters,
 												UINT32 OperationSet = XAUDIO2_COMMIT_NOW);
 
@@ -714,7 +714,7 @@ else
 			//  pDestinationVoice - Destination voice of the send whose filter parameters will be read.
 			//  pParameters - Returns the filter parameters.
 			*/
-			void GetOutputFilterParameters (IXAudio2Voice* pDestinationVoice,
+			void GetOutputFilterParameters (IXAudio2Voice pDestinationVoice,
 												XAUDIO2_FILTER_PARAMETERS* pParameters); 
 
 			/* NAME: IXAudio2Voice::SetVolume
@@ -770,7 +770,7 @@ else
 			//   channel D should be in pLevelMatrix[S + SourceChannels * D].
 			//  OperationSet - Used to identify this call as part of a deferred batch.
 			*/
-			HRESULT SetOutputMatrix (IXAudio2Voice* pDestinationVoice,
+			HRESULT SetOutputMatrix (IXAudio2Voice pDestinationVoice,
 										UINT32 SourceChannels, UINT32 DestinationChannels,
 										const (float)* pLevelMatrix,
 										UINT32 OperationSet = XAUDIO2_COMMIT_NOW);
@@ -787,7 +787,7 @@ else
 			//  DestinationChannels - Confirms the destination voice's input channels.
 			//  pLevelMatrix - Array of send levels, as above.
 			*/
-			void GetOutputMatrix (IXAudio2Voice* pDestinationVoice,
+			void GetOutputMatrix (IXAudio2Voice pDestinationVoice,
 									UINT32 SourceChannels, 
 									UINT32 DestinationChannels,
 									float* pLevelMatrix);
@@ -1064,7 +1064,7 @@ else
 	version(XBOX) 
 	{
 
-		STDAPI XAudio2Create(IXAudio2** ppXAudio2, UINT32 Flags = 0,
+		STDAPI XAudio2Create(IXAudio2* ppXAudio2, UINT32 Flags = 0,
 							 XAUDIO2_PROCESSOR XAudio2Processor = XAUDIO2_DEFAULT_PROCESSOR);
 	}
 	else // Windows

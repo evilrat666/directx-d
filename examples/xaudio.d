@@ -17,7 +17,7 @@ version(X86_64)
   alias myInt = long;
 else
   alias myInt = int;
-
+  
 myInt xaudio_tutorial()
 {
 	IXAudio2 g_engine;
@@ -38,7 +38,7 @@ myInt xaudio_tutorial()
 	}
 
 	//create the mastering voice
-	if( FAILED( g_engine.CreateMasteringVoice( cast(IXAudio2MasteringVoice**)&g_master ) ) )
+	if( FAILED( g_engine.CreateMasteringVoice( &g_master ) ) )
 	{
 		g_engine.Release();
 		CoUninitialize();
@@ -55,7 +55,7 @@ myInt xaudio_tutorial()
 	}
 
 	//create the source voice, based on loaded wave format
-	if( FAILED( g_engine.CreateSourceVoice( cast(IXAudio2SourceVoice**)&g_source, buffer.wf() ) ) )
+	if( FAILED( g_engine.CreateSourceVoice( &g_source, buffer.wf() ) ) )
 	{
 		g_engine.Release();
 		CoUninitialize();
