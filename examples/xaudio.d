@@ -3,6 +3,7 @@ XAudio2 tutorial ported to D
 http://www.win32developer.com/tutorial/xaudio/xaudio_tutorial_1.shtm
 */
 
+import std.c.windows.com;
 import std.c.windows.windows;
 import std.stdio;
 import std.string;
@@ -54,7 +55,7 @@ myInt xaudio_tutorial()
 	}
 
 	//create the source voice, based on loaded wave format
-	if( FAILED( g_engine.CreateSourceVoice( cast(IXAudio2SourceVoice**)&g_source, &buffer.wf() ) ) )
+	if( FAILED( g_engine.CreateSourceVoice( cast(IXAudio2SourceVoice**)&g_source, buffer.wf() ) ) )
 	{
 		g_engine.Release();
 		CoUninitialize();
@@ -67,7 +68,7 @@ myInt xaudio_tutorial()
 	//simple message loop
 	while( MessageBoxA( null, toStringz("Do you want to play the sound?"), toStringz("ABLAX: PAS"), MB_YESNO ) == IDYES )
 	{
-		g_source.SubmitSourceBuffer( xa );
+		g_source.SubmitSourceBuffer( buffer.xaBuffer() );
 	}
 
 	//release the engine, NOT the voices!
@@ -80,7 +81,7 @@ myInt xaudio_tutorial()
 }
 
 extern (Windows)
-myInt WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	import core.runtime;
     myInt result;
@@ -99,7 +100,7 @@ myInt WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int
         result = 0;             // failed
     }
 
-	return result;
+	return cast(int)result;
 }
 
 

@@ -1,6 +1,7 @@
 // helper module for xaudio2 tutorial from http://www.win32developer.com/tutorial/xaudio/xaudio_tutorial_1.shtm
+module directx.helper.wave;
 
-import core.stdc.string : memset;
+import core.stdc.string : memset, memcpy;
 
 import std.conv;
 import std.stdio;
@@ -24,9 +25,9 @@ public:
 
 		load(szFile);
 	}
-	XAUDIO2_BUFFER xaBuffer() {return m_xa;}
+	const (XAUDIO2_BUFFER)* xaBuffer() {return &m_xa;}
 
-	WAVEFORMATEX wf() {return m_wf;}
+	const (WAVEFORMATEX)* wf() {return &m_wf;}
 
 	bool load(string szFile) {
 
