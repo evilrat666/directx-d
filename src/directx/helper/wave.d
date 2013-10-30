@@ -78,7 +78,6 @@ public:
 
 				file.seek(i+8);
 				file.rawRead(wavetmp);
-				//m_wf = cast(WAVEFORMATEX)*wavetmp.ptr;
 				memcpy(&m_wf, wavetmp.ptr, WAVEFORMATEX.sizeof);
 				bFilledFormat = true;
 				break;

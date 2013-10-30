@@ -588,7 +588,7 @@ else
 	*
 	**************************************************************************/
 
-	interface IXAudio2Voice : IUnknown
+	extern(C++) interface IXAudio2Voice
 	{
 			extern(Windows):
 			/* NAME: IXAudio2Voice::GetVoiceDetails
@@ -806,7 +806,7 @@ else
 	*
 	**************************************************************************/
 
-	interface IXAudio2SourceVoice : IXAudio2Voice
+	extern(C++) interface IXAudio2SourceVoice : IXAudio2Voice
 	{
 		extern(Windows):
 		
@@ -932,7 +932,7 @@ else
 	*
 	**************************************************************************/
 
-	interface IXAudio2EngineCallback
+	extern(C++) interface IXAudio2EngineCallback
 	{
 		extern(Windows):
 		// Called by XAudio2 just before an audio processing pass begins.
@@ -958,10 +958,8 @@ else
 	*
 	**************************************************************************/
 
-	interface IXAudio2VoiceCallback
+	extern(C++) interface IXAudio2VoiceCallback
 	{
-		extern(Windows):
-		
 		// Called just before this voice's processing pass begins.
 		void OnVoiceProcessingPassStart (UINT32 BytesRequired);
 

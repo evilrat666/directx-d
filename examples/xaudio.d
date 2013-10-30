@@ -12,13 +12,7 @@ import directx.xaudio2;
 
 import directx.helper.wave;
 
-// this is for the case if one would try to compile as x64 code, though i don't tested it yet.
-version(X86_64)
-  alias myInt = long;
-else
-  alias myInt = int;
-  
-myInt xaudio_tutorial()
+int xaudio_tutorial()
 {
 	IXAudio2 g_engine;
 	IXAudio2SourceVoice g_source;
@@ -84,20 +78,19 @@ extern (Windows)
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	import core.runtime;
-    myInt result;
+	int result;
 	
 	try
-    {
-        Runtime.initialize();
+	{
+		Runtime.initialize();
 		result = xaudio_tutorial();
 		Runtime.terminate();
-    }
+	}
 
     catch (Exception e)            // catch any uncaught exceptions
     {
-        MessageBoxA(null, toStringz(e.msg), "Error",
-                    MB_OK | MB_ICONEXCLAMATION);
-        result = 0;             // failed
+		MessageBoxA(null, toStringz(e.msg), "Error", MB_OK | MB_ICONEXCLAMATION);
+		result = 0;             // failed
     }
 
 	return cast(int)result;
