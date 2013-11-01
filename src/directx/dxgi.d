@@ -76,7 +76,7 @@ struct DXGI_SHARED_RESOURCE
 }
 
 enum DXGI_RESOURCE_PRIORITY_MINIMUM = ( 0x28000000 );
-enum DXGI_RESOURCE_PRIORITY_LOW	    = ( 0x50000000 );
+enum DXGI_RESOURCE_PRIORITY_LOW     = ( 0x50000000 );
 enum DXGI_RESOURCE_PRIORITY_NORMAL  = ( 0x78000000 );
 enum DXGI_RESOURCE_PRIORITY_HIGH    = ( 0xa0000000 );
 enum DXGI_RESOURCE_PRIORITY_MAXIMUM = ( 0xc8000000 );
@@ -84,9 +84,9 @@ enum DXGI_RESOURCE_PRIORITY_MAXIMUM = ( 0xc8000000 );
  
 enum DXGI_RESIDENCY
 {
-	DXGI_RESIDENCY_FULLY_RESIDENT	= 1,
-	DXGI_RESIDENCY_RESIDENT_IN_SHARED_MEMORY	= 2,
-	DXGI_RESIDENCY_EVICTED_TO_DISK	= 3
+	DXGI_RESIDENCY_FULLY_RESIDENT                = 1,
+	DXGI_RESIDENCY_RESIDENT_IN_SHARED_MEMORY     = 2,
+	DXGI_RESIDENCY_EVICTED_TO_DISK               = 3
 }
 
 struct DXGI_SURFACE_DESC
@@ -100,16 +100,16 @@ struct DXGI_SURFACE_DESC
 
 enum DXGI_SWAP_EFFECT
 {
-	DXGI_SWAP_EFFECT_DISCARD	= 0,
-	DXGI_SWAP_EFFECT_SEQUENTIAL	= 1
+	DXGI_SWAP_EFFECT_DISCARD    = 0,
+	DXGI_SWAP_EFFECT_SEQUENTIAL = 1
 }
 
 
 enum DXGI_SWAP_CHAIN_FLAG
 {
-	DXGI_SWAP_CHAIN_FLAG_NONPREROTATED	= 1,
-	DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH	= 2,
-	DXGI_SWAP_CHAIN_FLAG_GDI_COMPATIBLE	= 4
+	DXGI_SWAP_CHAIN_FLAG_NONPREROTATED      = 1,
+	DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH  = 2,
+	DXGI_SWAP_CHAIN_FLAG_GDI_COMPATIBLE     = 4
 }
 
 struct DXGI_SWAP_CHAIN_DESC
@@ -190,10 +190,10 @@ IDXGIKeyedMutex : IDXGIDeviceSubObject
 }
 
 
-enum DXGI_MAP_READ	  = ( 1UL );
-enum DXGI_MAP_WRITE	  = ( 2UL );
+enum DXGI_MAP_READ    = ( 1UL );
+enum DXGI_MAP_WRITE   = ( 2UL );
 enum DXGI_MAP_DISCARD = ( 4UL );
- 
+
 
 mixin( uuid!(IDXGISurface, "cafcb56c-6ac3-4889-bf47-9e23bbd260ec") );
 IDXGISurface : IDXGIDeviceSubObject
@@ -350,7 +350,7 @@ IDXGIFactory : IDXGIObject
 	extern(Windws):
 	HRESULT EnumAdapters( 
 				UINT Adapter,
-				IDXGIAdapter *ppAdapter);
+				IDXGIAdapter* ppAdapter);
 
 	HRESULT MakeWindowAssociation( 
 				HWND WindowHandle,
@@ -361,8 +361,8 @@ IDXGIFactory : IDXGIObject
 
 	HRESULT CreateSwapChain( 
 				IUnknown pDevice,
-				DXGI_SWAP_CHAIN_DESC *pDesc,
-				IDXGISwapChain *ppSwapChain);
+				DXGI_SWAP_CHAIN_DESC* pDesc,
+				IDXGISwapChain* ppSwapChain);
 
 	HRESULT CreateSoftwareAdapter( 
 				HMODULE Module, 
@@ -370,8 +370,8 @@ IDXGIFactory : IDXGIObject
 }
 
 
-extern(Windows) HRESULT CreateDXGIFactory(REFIID riid, void **ppFactory);
-extern(Windows) HRESULT CreateDXGIFactory1(REFIID riid, void **ppFactory);
+extern(Windows) HRESULT CreateDXGIFactory(REFIID riid, void** ppFactory);
+extern(Windows) HRESULT CreateDXGIFactory1(REFIID riid, void** ppFactory);
 
 
 mixin( uuid!(IDXGIDevice, "54ec77fa-1377-44e6-8c32-88fd5f44c84c") );
@@ -379,7 +379,7 @@ IDXGIDevice : public IDXGIObject
 {
 	extern(Windows):
 	HRESULT GetAdapter( 
-				IDXGIAdapter *pAdapter);
+				IDXGIAdapter* pAdapter);
 
 	HRESULT CreateSurface( 
 				const(DXGI_SURFACE_DESC)* pDesc,
@@ -402,9 +402,9 @@ IDXGIDevice : public IDXGIObject
  
 enum DXGI_ADAPTER_FLAG
 {
-	DXGI_ADAPTER_FLAG_NONE	        = 0,
-	DXGI_ADAPTER_FLAG_REMOTE	    = 1,
-	DXGI_ADAPTER_FLAG_FORCE_DWORD	= 0xffffffff
+	DXGI_ADAPTER_FLAG_NONE          = 0,
+	DXGI_ADAPTER_FLAG_REMOTE        = 1,
+	DXGI_ADAPTER_FLAG_FORCE_DWORD   = 0xffffffff
 }
 
 struct DXGI_ADAPTER_DESC1
@@ -436,7 +436,7 @@ IDXGIFactory1 : IDXGIFactory
 				UINT Adapter,
 				IDXGIAdapter1* ppAdapter);
 
-    BOOL IsCurrent();
+	BOOL IsCurrent();
 }
    
 
@@ -445,7 +445,7 @@ IDXGIAdapter1 : IDXGIAdapter
 {
 	extern(Windows):
 	HRESULT GetDesc1( 
-				DXGI_ADAPTER_DESC1 *pDesc);
+				DXGI_ADAPTER_DESC1* pDesc);
 }
 
 
