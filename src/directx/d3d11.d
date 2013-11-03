@@ -4,10 +4,10 @@ module directx.d3d11;
  * Copyright (c) Microsoft Corporation
  *
  *-------------------------------------------------------------------------------------*/
-public import directx.d3d11contants;
-
-import directx.dxgi;
-import directx.d3dcommon;
+public import directx.d3d11constants;
+public import directx.dxgi;
+public import directx.d3dcommon;
+public import directx.com;
 
 
 enum _FACD3D11 = 0x87c;
@@ -21,16 +21,11 @@ HRESULT MAKE_D3D11_STATUS(T)(T code) {
 	return MAKE_HRESULT(0, _FACD3D11, code);
 }
 
-alias D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS  MAKE_D3D11_HRESULT(1);
-alias D3D11_ERROR_FILE_NOT_FOUND  MAKE_D3D11_HRESULT(2);
-alias D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS  MAKE_D3D11_HRESULT(3);
-alias D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD  MAKE_D3D11_HRESULT(4);
+enum D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS  = MAKE_D3D11_HRESULT(1);
+enum D3D11_ERROR_FILE_NOT_FOUND = MAKE_D3D11_HRESULT(2);
+enum D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS = MAKE_D3D11_HRESULT(3);
+enum D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD = MAKE_D3D11_HRESULT(4);
 
-version(D3D11_HELPERS)
-{
-struct CD3D11_DEFAULT {};
-extern(C) const(CD3D11_DEFAULT) D3D11_DEFAULT;
-}
 
 extern(C):
 
@@ -59,9 +54,9 @@ enum D3D11_FILL_MODE
 	D3D11_FILL_SOLID	= 3
 }
 
-alias D3D11_PRIMITIVE_TOPOLOGY D3D_PRIMITIVE_TOPOLOGY;
+alias D3D_PRIMITIVE_TOPOLOGY D3D11_PRIMITIVE_TOPOLOGY;
 
-alias D3D11_PRIMITIVE D3D_PRIMITIVE;
+alias D3D_PRIMITIVE D3D11_PRIMITIVE;
 
 
 enum D3D11_CULL_MODE
@@ -100,7 +95,7 @@ enum D3D11_RESOURCE_DIMENSION
 	D3D11_RESOURCE_DIMENSION_TEXTURE3D	= 4
 }
 
-alias D3D11_SRV_DIMENSION D3D_SRV_DIMENSION;
+alias D3D_SRV_DIMENSION D3D11_SRV_DIMENSION;
 
 
 enum D3D11_DSV_DIMENSION
@@ -205,7 +200,7 @@ enum D3D11_CLEAR_FLAG
 	D3D11_CLEAR_STENCIL	= 0x2L
 }
 
-alias D3D11_RECT RECT;
+alias RECT D3D11_RECT;
 
 struct D3D11_BOX
 {
@@ -279,7 +274,7 @@ struct D3D11_DEPTH_STENCILOP_DESC
     D3D11_STENCIL_OP StencilDepthFailOp;
     D3D11_STENCIL_OP StencilPassOp;
     D3D11_COMPARISON_FUNC StencilFunc;
-} 	D3D11_DEPTH_STENCILOP_DESC;
+}
 
 struct D3D11_DEPTH_STENCIL_DESC
 {
@@ -791,7 +786,7 @@ struct D3D11_DEPTH_STENCIL_VIEW_DESC
 mixin( uuid!(ID3D11DepthStencilView, "9fdac92a-1876-48c3-afad-25b94f84a9b6") );
 interface ID3D11DepthStencilView : ID3D11View
 {
-	extern(Windows);
+	extern(Windows):
     void GetDesc( 
 				D3D11_DEPTH_STENCIL_VIEW_DESC* pDesc);
 }
@@ -1371,8 +1366,8 @@ interface ID3D11DeviceContext : ID3D11DeviceChild
 				UINT StartSlot,
 				UINT NumBuffers,
 				const(ID3D11Buffer)* ppVertexBuffers,
-				const UINT* pStrides,
-				const UINT* pOffsets);
+				const(UINT)* pStrides,
+				const(UINT)* pOffsets);
 
 	void IASetIndexBuffer( 
 				ID3D11Buffer* pIndexBuffer,
@@ -1457,7 +1452,7 @@ interface ID3D11DeviceContext : ID3D11DeviceChild
 
 	void OMSetBlendState( 
 				ID3D11BlendState pBlendState,
-				FLOAT[ 4 ] BlendFactor,
+				FLOAT* BlendFactor, //FLOAT[ 4 ] BlendFactor
 				UINT SampleMask);
 
 	void OMSetDepthStencilState( 
@@ -1528,15 +1523,15 @@ interface ID3D11DeviceContext : ID3D11DeviceChild
 
 	void ClearRenderTargetView( 
 				ID3D11RenderTargetView pRenderTargetView,
-				FLOAT[ 4 ] ColorRGBA);
+				FLOAT* ColorRGBA); //FLOAT[ 4 ] ColorRGBA);
 
 	void ClearUnorderedAccessViewUint( 
 				ID3D11UnorderedAccessView pUnorderedAccessView,
-				UINT[ 4 ] Values);
+				UINT* Values); //UINT[ 4 ] Values);
 
 	void ClearUnorderedAccessViewFloat( 
 				ID3D11UnorderedAccessView pUnorderedAccessView,
-				FLOAT[ 4 ] Values);
+				FLOAT* Values); //FLOAT[ 4 ] Values);
 
 	void ClearDepthStencilView( 
 				ID3D11DepthStencilView pDepthStencilView,
@@ -1728,7 +1723,7 @@ interface ID3D11DeviceContext : ID3D11DeviceChild
 
 	void OMGetBlendState( 
 				ID3D11BlendState* ppBlendState,
-				FLOAT[ 4 ] BlendFactor,
+				FLOAT* BlendFactor, //FLOAT[ 4 ] BlendFactor,
 				UINT* pSampleMask);
 
 	void OMGetDepthStencilState( 
@@ -2084,7 +2079,7 @@ import directx.d3d11sdklayers;
 //          D3D11CreateDevice
 //
 ///////////////////////////////////////////////////////////////////////////
-alias extern(Windows) function HRESULT ( IDXGIAdapter, 
+alias extern(Windows) HRESULT function ( IDXGIAdapter, 
     D3D_DRIVER_TYPE, HMODULE, UINT, 
     const(D3D_FEATURE_LEVEL)*,
     UINT FeatureLevels, UINT, ID3D11Device*, 
@@ -2157,7 +2152,7 @@ HRESULT D3D11CreateDevice(
 //
 ///////////////////////////////////////////////////////////////////////////
 
-alias extern(Windows) function HRESULT ( IDXGIAdapter, 
+alias extern(Windows) HRESULT function ( IDXGIAdapter, 
     D3D_DRIVER_TYPE, HMODULE, UINT, 
     const(D3D_FEATURE_LEVEL)*, 
     UINT FeatureLevels, UINT, const(DXGI_SWAP_CHAIN_DESC)*, 
