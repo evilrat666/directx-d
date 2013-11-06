@@ -16,7 +16,7 @@ union LARGE_INTEGER {
 }
 
 alias LARGE_INTEGER LUID;
-alias ulong SIZE_T;
+alias size_t SIZE_T;
 
 alias uint UINT32;
 alias ulong UINT64;
