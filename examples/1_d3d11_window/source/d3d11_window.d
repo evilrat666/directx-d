@@ -89,7 +89,7 @@ void InitD3D(HWND hWnd)
 
     // fill the swap chain description struct
     scd.BufferCount = 1;                                    // one back buffer
-    scd.BufferDesc.Format = DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM;     // use 32-bit color
+    scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;     // use 32-bit color
     scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;      // how swap chain is to be used
     scd.OutputWindow = hWnd;                                // the window to be used
     scd.SampleDesc.Count = 4;                               // how many multisamples
@@ -97,7 +97,7 @@ void InitD3D(HWND hWnd)
 
     // create a device, device context and swap chain using the information in the scd struct
     D3D11CreateDeviceAndSwapChain(null,
-                                  D3D_DRIVER_TYPE.D3D_DRIVER_TYPE_HARDWARE,
+                                  D3D_DRIVER_TYPE_HARDWARE,
                                   null,
                                   0,
                                   null,

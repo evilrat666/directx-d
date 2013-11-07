@@ -10,7 +10,7 @@ import std.string;
 
 import directx.xaudio2;
 
-import directx.helper.wave;
+import wave;
 
 int xaudio_tutorial()
 {

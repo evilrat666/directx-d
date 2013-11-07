@@ -1,0 +1,11 @@
+{
+	"name": "xaudio-example",
+	"description": "DirectX D XAudio2 example",
+	"targetType": "executable",
+	"authors": [ "evilrat666" ],
+	"libs": [ "ole32" ],
+	"workingDirectory": "../resources",
+	"dependencies": {
+                "directx-d": {"version": "~master", "path": "../../"}
+	}
+}

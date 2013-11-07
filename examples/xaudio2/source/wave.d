@@ -1,5 +1,5 @@
 // helper module for xaudio2 tutorial from http://www.win32developer.com/tutorial/xaudio/xaudio_tutorial_1.shtm
-module directx.helper.wave;
+module wave;
 
 import core.stdc.string : memset, memcpy;
 

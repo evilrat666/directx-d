@@ -1,0 +1,10 @@
+{
+	"name": "d3d11-window",
+	"description": "DirectX D D3D11 window example",
+	"targetType": "executable",
+	"authors": [ "evilrat666" ],
+	"libs": [ "ole32", "d3dcompiler", "d3d11", "dxgi" ],
+	"dependencies": {
+                "directx-d": {"version": "~master", "path": "../../"}
+	}
+}
