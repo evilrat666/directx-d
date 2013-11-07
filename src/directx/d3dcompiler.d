@@ -316,8 +316,8 @@ HRESULT D3DStripShader(
 // -----------------------
 // Extracts information from a compilation result.
 //----------------------------------------------------------------------------
-
-enum D3D_BLOB_PART
+alias D3D_BLOB_PART = int;
+enum : D3D_BLOB_PART
 {
     D3D_BLOB_INPUT_SIGNATURE_BLOB,
     D3D_BLOB_OUTPUT_SIGNATURE_BLOB,

@@ -12,7 +12,8 @@ import directx.d3dcommon;
 import directx.win32;
 import directx.com;
 
-enum D3D11_SHADER_VERSION_TYPE
+alias D3D11_SHADER_VERSION_TYPE = int;
+enum : D3D11_SHADER_VERSION_TYPE
 {
     D3D11_SHVER_PIXEL_SHADER    = 0,
     D3D11_SHVER_VERTEX_SHADER   = 1,
