@@ -1382,7 +1382,7 @@ interface ID3D11DeviceContext : ID3D11DeviceChild
 				D3D11_MAPPED_SUBRESOURCE* pMappedResource);
 
 	void Unmap( 
-				ID3D11Resource* pResource,
+				ID3D11Resource pResource,
 				UINT Subresource);
 
 	void PSSetConstantBuffers( 
@@ -1401,7 +1401,7 @@ interface ID3D11DeviceContext : ID3D11DeviceChild
 				const(UINT)* pOffsets);
 
 	void IASetIndexBuffer( 
-				ID3D11Buffer* pIndexBuffer,
+				ID3D11Buffer pIndexBuffer,
 				DXGI_FORMAT Format,
 				UINT Offset);
 
@@ -1698,7 +1698,7 @@ interface ID3D11DeviceContext : ID3D11DeviceChild
 				UINT* pOffsets);
 
 	void IAGetIndexBuffer( 
-				ID3D11Buffer* pIndexBuffer,
+				ID3D11Buffer pIndexBuffer,
 				DXGI_FORMAT* Format,
 				UINT* Offset);
 
