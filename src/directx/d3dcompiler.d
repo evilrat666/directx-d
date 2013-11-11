@@ -160,6 +160,20 @@ alias extern(Windows) HRESULT function
      UINT                            Flags2,
      ID3DBlob*                       ppCode,
      ID3DBlob*                       ppErrorMsgs) pD3DCompile;
+	 
+	 
+	 
+version(Win8) extern(Windows)
+HRESULT D3DCompileFromFile(
+				LPCWSTR pFileName,
+				const(D3D_SHADER_MACRO)* pDefines,
+				ID3DInclude pInclude,
+				LPCSTR pEntrypoint,
+				LPCSTR pTarget,
+				UINT Flags1,
+				UINT Flags2,
+				ID3DBlob* ppCode,
+				ID3DBlob* ppErrorMsgs);
      
 //----------------------------------------------------------------------------
 // D3DPreprocess:

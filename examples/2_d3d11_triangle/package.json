@@ -3,9 +3,23 @@
 	"description": "DirectX D D3D11 triangle example",
 	"targetType": "executable",
 	"authors": [ "evilrat666" ],
-	"libs": [ "ole32", "d3dcompiler", "d3d11", "d3dx11", "dxgi" ],
+	"libs": [ "ole32", "d3dcompiler", "d3d11", "dxgi" ],
 	"workingDirectory": "../resources",
 	"dependencies": {
                 "directx-d": {"version": "~master", "path": "../../"}
-	}
+	},
+	
+	"configurations": [
+		{
+			"name": "Windows",
+			"targetType": "executable",
+			"libs": [ "d3dx11" ],
+		},
+		{
+			"name": "Windows8",
+			"targetType": "executable",
+			"platforms": ["windows"],
+			"versions": ["Win8"],
+		}
+	]
 }

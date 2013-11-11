@@ -8,6 +8,7 @@
 
 import core.runtime;
 import std.string : toStringz;
+import std.utf : toUTF16z;
 import core.stdc.string : memset;
 
 import directx.win32;
@@ -17,7 +18,6 @@ import directx.d3dcompiler;
 
 //import directx.math;
 //#include <xnamath.h>
-
 
 //--------------------------------------------------------------------------------------
 // Structures
@@ -165,12 +165,16 @@ debug {
 }
 
     ID3DBlob pErrorBlob;
-
-	// todo: fix this string hack for D3DX11CompileFromFileW
-	//wchar* file = cast(wchar*)toStringz(szFileName);
 	
+version(Win8)
+	hr = D3DCompileFromFile ( toUTF16z(szFileName), null, null, toStringz(szEntryPoint), toStringz(szShaderModel),
+		dwShaderFlags, 0, ppBlobOut, &pErrorBlob);
+else 
+{
+pragma(msg, "info: if you build this on windows 8 don't forget to use Win8 version or Windows8 dub config. >> file: ", __FILE__, "line: ", __LINE__);
     hr = D3DX11CompileFromFileA( toStringz(szFileName) , null, null, toStringz(szEntryPoint), toStringz(szShaderModel), 
         dwShaderFlags, 0, null, ppBlobOut, &pErrorBlob, null );
+}
     if( FAILED(hr) )
     {
         if( pErrorBlob !is null )
