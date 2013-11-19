@@ -7,5 +7,19 @@
 	"workingDirectory": "../resources",
 	"dependencies": {
                 "directx-d": {"version": "~master", "path": "../../"}
-	}
+	},
+	"configurations": [
+		{
+			"name": "Windows",
+			"targetType": "executable",
+			"versions": ["DXSDK_2010_6"],
+		},
+		{
+			"name": "Windows8",
+			"targetType": "executable",
+			"platforms": ["windows"],
+			"libs": [ "xaudio2" ],
+			"versions": ["Win8", "XAUDIO_2_8"],
+		}
+	]
 }

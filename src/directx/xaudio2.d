@@ -21,8 +21,8 @@ import directx.com;
 
 
 // oops, bad way defining it here
-version=DXSDK_2010_6;
-version=DXSDK_11_0;
+//version=DXSDK_2010_6;
+//version=DXSDK_11_0;
 version=XAUDIO2_HELPER_FUNCTIONS;
 
 // it is outdated and i'm lazy, so maybe later i will upgrade it or remove at all.
@@ -85,6 +85,12 @@ version(DXSDK_2010_6)
 	mixin(uuid!(XAudio2_Debug, "db05ea35-0329-4d4b-a53a-6dead03d3852"));
 
 	mixin(uuid!(IXAudio2, "8bcf1f58-9fe7-4583-8ac6-e2adc465c8bb"));
+}
+
+version(XAUDIO_2_8)
+{
+	// XAudio 2.8 ( Windows 8 )
+	mixin(uuid!(IXAudio2, "60d8dac8-5aa1-4e8e-b597-2f5e2883d484"));
 }
 
 
@@ -155,7 +161,7 @@ else
 	enum XAUDIO2_SEND_USEFILTER          = 0x0080;         // Used in XAUDIO2_SEND_DESCRIPTOR.Flags
 
 	// Default parameters for the built-in filter
-	enum XAUDIO2_DEFAULT_FILTER_TYPE      = XAUDIO2_FILTER_TYPE.LowPassFilter;
+	enum XAUDIO2_DEFAULT_FILTER_TYPE      = LowPassFilter;
 	enum XAUDIO2_DEFAULT_FILTER_FREQUENCY = XAUDIO2_MAX_FILTER_FREQUENCY;
 	enum XAUDIO2_DEFAULT_FILTER_ONEOVERQ  = 1.0f;
 
@@ -202,7 +208,8 @@ else
 		alias XAUDIO2_XBOX_HWTHREAD_SPECIFIER XAUDIO2_PROCESSOR;
 	}
 	else {
-		enum XAUDIO2_WINDOWS_PROCESSOR_SPECIFIER
+		alias XAUDIO2_WINDOWS_PROCESSOR_SPECIFIER = int;
+		enum : XAUDIO2_WINDOWS_PROCESSOR_SPECIFIER
 		{
 			Processor1  = 0x00000001,
 			Processor2  = 0x00000002,
@@ -278,7 +285,7 @@ else
 	struct XAUDIO2_SEND_DESCRIPTOR
 	{
 		UINT32 Flags;                       // Either 0 or XAUDIO2_SEND_USEFILTER.
-		IXAudio2Voice* pOutputVoice;        // This send's destination voice.
+		IXAudio2Voice pOutputVoice;        // This send's destination voice.
 	}
 
 	// Used in the voice creation functions and in IXAudio2Voice::SetOutputVoices
@@ -291,7 +298,7 @@ else
 	// Used in XAUDIO2_EFFECT_CHAIN below
 	struct XAUDIO2_EFFECT_DESCRIPTOR
 	{
-		IUnknown* pEffect;                  // Pointer to the effect object's IUnknown interface.
+		IUnknown pEffect;                  // Pointer to the effect object's IUnknown interface.
 		BOOL InitialState;                  // TRUE if the effect should begin in the enabled state.
 		UINT32 OutputChannels;              // How many output channels the effect should produce.
 	}
@@ -304,7 +311,8 @@ else
 	}
 
 	// Used in XAUDIO2_FILTER_PARAMETERS below
-	enum XAUDIO2_FILTER_TYPE
+	alias XAUDIO2_FILTER_TYPE = uint;
+	enum : XAUDIO2_FILTER_TYPE
 	{
 		LowPassFilter,                      // Attenuates frequencies above the cutoff frequency.
 		BandPassFilter,                     // Attenuates frequencies outside a given range.
@@ -435,11 +443,11 @@ else
 	* IXAudio2: Top-level XAudio2 COM interface.
 	*
 	**************************************************************************/
-
 	interface IXAudio2 : IUnknown
 	{
 		extern(Windows):
-		
+		version(DXSDK_2010_6)
+		{
 		// NAME: IXAudio2::GetDeviceCount
 		// DESCRIPTION: Returns the number of audio output devices available.
 		//
@@ -470,6 +478,7 @@ else
 		HRESULT Initialize (
 							UINT32 Flags = 0,
 							XAUDIO2_PROCESSOR XAudio2Processor = XAUDIO2_WINDOWS_PROCESSOR_SPECIFIER.XAUDIO2_DEFAULT_PROCESSOR );
+		}
 
 		// NAME: IXAudio2::RegisterForCallbacks
 		// DESCRIPTION: Adds a new client to receive XAudio2's engine callbacks.
@@ -916,7 +925,8 @@ else
 
 	interface IXAudio2MasteringVoice : IXAudio2Voice
 	{
-		// There are currently no methods specific to mastering voices.
+		version(XAUDIO_2_8)
+		HRESULT GetChannelMask(DWORD* pChannelmask);
 	}
 
 
@@ -1067,9 +1077,10 @@ else
 	}
 	else // Windows
 	{
-		extern(Windows)
+		extern(Windows):
+		version(DXSDK_2010_6)
 			HRESULT XAudio2Create(out IXAudio2 ppXAudio2, UINT32 Flags = 0,
-								  XAUDIO2_PROCESSOR XAudio2Processor = XAUDIO2_WINDOWS_PROCESSOR_SPECIFIER.XAUDIO2_DEFAULT_PROCESSOR)
+								  XAUDIO2_PROCESSOR XAudio2Processor = XAUDIO2_DEFAULT_PROCESSOR)
 		{
 			// Instantiate the appropriate XAudio2 engine
 			IXAudio2 pXAudio2;
@@ -1091,6 +1102,11 @@ else
 			}
 
 			return hr;
+		}
+		else version(XAUDIO_2_8)
+		{
+		HRESULT XAudio2Create(IXAudio2* ppXAudio2, UINT32 Flags = 0,
+								XAUDIO2_PROCESSOR XAudio2Processor = XAUDIO2_DEFAULT_PROCESSOR);
 		}
 
 	}
