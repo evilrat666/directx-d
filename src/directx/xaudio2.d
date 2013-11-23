@@ -1105,7 +1105,7 @@ else
 		}
 		else version(XAUDIO_2_8)
 		{
-		HRESULT XAudio2Create(IXAudio2* ppXAudio2, UINT32 Flags = 0,
+		HRESULT XAudio2Create(out IXAudio2 ppXAudio2, UINT32 Flags = 0,
 								XAUDIO2_PROCESSOR XAudio2Processor = XAUDIO2_DEFAULT_PROCESSOR);
 		}
 

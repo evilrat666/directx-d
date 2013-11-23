@@ -25,23 +25,11 @@ int xaudio_tutorial()
 		return -5;
 
 	//create the engine
-	version(Win8)
-	{
-	if( FAILED( XAudio2Create( &g_engine ) ) )
-	{
-		CoUninitialize();
-		return -1;
-	}
-	}
-	else
-	{
 	if( FAILED( XAudio2Create( g_engine ) ) )
 	{
 		CoUninitialize();
 		return -1;
 	}
-	}
-	
 
 	//create the mastering voice
 	if( FAILED( g_engine.CreateMasteringVoice( &g_master ) ) )
