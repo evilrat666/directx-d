@@ -5,6 +5,7 @@
 	"authors": [ "evilrat666" ],
 	"libs": [ "ole32" ],
 	"workingDirectory": "../resources",
+	"mainSourceFile": "xaudio.d",
 	"dependencies": {
                 "directx-d": {"version": "~master", "path": "../../"}
 	},
