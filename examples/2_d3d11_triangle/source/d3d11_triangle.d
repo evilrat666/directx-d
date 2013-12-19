@@ -330,7 +330,7 @@ debug {
     D3D11_BUFFER_DESC bd;
 	memset( &bd, 0, D3D11_BUFFER_DESC.sizeof );
     bd.Usage = D3D11_USAGE_DEFAULT;
-    bd.ByteWidth = SimpleVertex.sizeof * 3;
+    bd.ByteWidth = FLOAT3.sizeof * 3;
     bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bd.CPUAccessFlags = 0;
     D3D11_SUBRESOURCE_DATA InitData;
@@ -341,7 +341,7 @@ debug {
         return hr;
 
     // Set vertex buffer
-    UINT stride = SimpleVertex.sizeof;
+    UINT stride = FLOAT3.sizeof;
     UINT offset = 0;
     g_pImmediateContext.IASetVertexBuffers( 0, 1, &g_pVertexBuffer, &stride, &offset );
 
