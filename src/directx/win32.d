@@ -23,7 +23,7 @@ alias ulong UINT64;
 
 alias HANDLE HMONITOR;
 alias ubyte UINT8;
-alias const void* LPCVOID;
+alias const(void)* LPCVOID;
 
 
 // ======= XAudio2 stuff
