@@ -297,9 +297,9 @@ enum : _D3D_INCLUDE_TYPE
 alias _D3D_INCLUDE_TYPE D3D_INCLUDE_TYPE;
 
 
-interface ID3DInclude
+extern(C++) interface ID3DInclude
 {
-	extern(Windows)
+  extern(Windows):
     HRESULT Open(D3D_INCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes);
     HRESULT Close(LPCVOID pData);
 }
