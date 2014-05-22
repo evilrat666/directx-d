@@ -18,12 +18,30 @@ union LARGE_INTEGER {
 alias LARGE_INTEGER LUID;
 alias size_t SIZE_T;
 
-alias uint UINT32;
-alias ulong UINT64;
+alias UINT8 = ubyte;
+alias UINT16 = ushort;
+alias UINT32 = uint;
+alias UINT64 = ulong;
+
+alias INT8 = byte;
+alias INT16 = short;
+alias INT32 = int;
+alias INT64 = long;
 
 alias HANDLE HMONITOR;
-alias ubyte UINT8;
 alias const(void)* LPCVOID;
+
+struct tagSIZE
+{
+	LONG        cx;
+	LONG        cy;
+} 
+alias SIZE = tagSIZE;
+alias PSIZE = tagSIZE*;
+alias LPSIZE = tagSIZE*;
+alias SIZEL = SIZE;
+alias PSIZEL = SIZE*;
+alias LPSIZEL = SIZE*;
 
 
 // ======= XAudio2 stuff
