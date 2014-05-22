@@ -1287,19 +1287,19 @@ interface ID2D1Bitmap : ID2D1Image
     void GetDpi(out FLOAT dpiX, out FLOAT dpiY ) const;
     
     HRESULT CopyFromBitmap(
-        const(D2D1_POINT_2U*) destPoint,
+        const(D2D1_POINT_2U)* destPoint,
         ID2D1Bitmap bitmap,
-        const(D2D1_RECT_U*) srcRect 
+        const(D2D1_RECT_U)* srcRect 
         );
     
     HRESULT CopyFromRenderTarget(
-        const(D2D1_POINT_2U*) destPoint,
+        const(D2D1_POINT_2U)* destPoint,
         ID2D1RenderTarget renderTarget,
-        const(D2D1_RECT_U*) srcRect 
+        const(D2D1_RECT_U)* srcRect 
         );
     
     HRESULT CopyFromMemory(
-        const(D2D1_RECT_U*) dstRect,
+        const(D2D1_RECT_U)* dstRect,
         const(void*) srcData,
         UINT32 pitch
         );
@@ -1371,7 +1371,7 @@ interface ID2D1Brush : ID2D1Resource
     //
     // Sets the transform that applies to everything drawn by the brush.
     //
-    void SetTransform( const(D2D1_MATRIX_3X2_F*) transform );
+    void SetTransform( const(D2D1_MATRIX_3X2_F)* transform );
     
     FLOAT GetOpacity() const;
     
@@ -1451,7 +1451,7 @@ interface ID2D1SolidColorBrush : ID2D1Brush
 {
 	extern(Windows):
     
-    void SetColor( const(D2D1_COLOR_F*) color );
+    void SetColor( const(D2D1_COLOR_F)* color );
     
     D2D1_COLOR_F GetColor() const;
     
@@ -1601,7 +1601,7 @@ interface ID2D1Geometry : ID2D1Resource
     // Retrieve the bounds of the geometry, with an optional applied transform.
     //
     HRESULT GetBounds(
-        const(D2D1_MATRIX_3X2_F*) worldTransform,
+        const(D2D1_MATRIX_3X2_F)* worldTransform,
         /*out*/ D2D1_RECT_F* bounds 
         ) const;
     
@@ -1613,7 +1613,7 @@ interface ID2D1Geometry : ID2D1Resource
     HRESULT GetWidenedBounds(
         FLOAT strokeWidth,
         ID2D1StrokeStyle strokeStyle,
-        const(D2D1_MATRIX_3X2_F*) worldTransform,
+        const(D2D1_MATRIX_3X2_F)* worldTransform,
         FLOAT flatteningTolerance,
         /*out*/ D2D1_RECT_F *bounds 
         ) const;
@@ -1627,7 +1627,7 @@ interface ID2D1Geometry : ID2D1Resource
         D2D1_POINT_2F point,
         FLOAT strokeWidth,
         ID2D1StrokeStyle strokeStyle,
-        const(D2D1_MATRIX_3X2_F*) worldTransform,
+        const(D2D1_MATRIX_3X2_F)* worldTransform,
         FLOAT flatteningTolerance,
         /*out*/BOOL* contains 
         ) const;
@@ -1638,7 +1638,7 @@ interface ID2D1Geometry : ID2D1Resource
     //
     HRESULT FillContainsPoint(
         D2D1_POINT_2F point,
-        const(D2D1_MATRIX_3X2_F*) worldTransform,
+        const(D2D1_MATRIX_3X2_F)* worldTransform,
         FLOAT flatteningTolerance,
         /*out*/ BOOL *contains 
         ) const;
@@ -1649,7 +1649,7 @@ interface ID2D1Geometry : ID2D1Resource
     //
     HRESULT CompareWithGeometry(
         ID2D1Geometry inputGeometry,
-        const(D2D1_MATRIX_3X2_F*) inputGeometryTransform,
+        const(D2D1_MATRIX_3X2_F)* inputGeometryTransform,
         FLOAT flatteningTolerance,
         /*out*/ D2D1_GEOMETRY_RELATION *relation 
         ) const;
@@ -1661,7 +1661,7 @@ interface ID2D1Geometry : ID2D1Resource
     //
     HRESULT Simplify(
         D2D1_GEOMETRY_SIMPLIFICATION_OPTION simplificationOption,
-        const(D2D1_MATRIX_3X2_F*) worldTransform,
+        const(D2D1_MATRIX_3X2_F)* worldTransform,
         FLOAT flatteningTolerance,
         ID2D1SimplifiedGeometrySink geometrySink 
         ) const;
@@ -1671,7 +1671,7 @@ interface ID2D1Geometry : ID2D1Resource
     // Tessellates a geometry into triangles.
     //
     HRESULT Tessellate(
-        const(D2D1_MATRIX_3X2_F*) worldTransform,
+        const(D2D1_MATRIX_3X2_F)* worldTransform,
         FLOAT flatteningTolerance,
         ID2D1TessellationSink tessellationSink 
         ) const;
@@ -1684,7 +1684,7 @@ interface ID2D1Geometry : ID2D1Resource
     HRESULT CombineWithGeometry(
         ID2D1Geometry inputGeometry,
         D2D1_COMBINE_MODE combineMode,
-        const(D2D1_MATRIX_3X2_F*) inputGeometryTransform,
+        const(D2D1_MATRIX_3X2_F)* inputGeometryTransform,
         FLOAT flatteningTolerance,
         ID2D1SimplifiedGeometrySink geometrySink 
         ) const;
@@ -1695,7 +1695,7 @@ interface ID2D1Geometry : ID2D1Resource
     // simplified geometry sink.
     //
     HRESULT Outline(
-        const(D2D1_MATRIX_3X2_F*) worldTransform,
+        const(D2D1_MATRIX_3X2_F)* worldTransform,
         FLOAT flatteningTolerance,
         ID2D1SimplifiedGeometrySink geometrySink 
         ) const;
@@ -1705,7 +1705,7 @@ interface ID2D1Geometry : ID2D1Resource
     // Computes the area of the geometry.
     //
     HRESULT ComputeArea(
-        const(D2D1_MATRIX_3X2_F*) worldTransform,
+        const(D2D1_MATRIX_3X2_F)* worldTransform,
         FLOAT flatteningTolerance,
         /*out*/ FLOAT *area 
         ) const;
@@ -1715,7 +1715,7 @@ interface ID2D1Geometry : ID2D1Resource
     // Computes the length of the geometry.
     //
     HRESULT ComputeLength(
-        const(D2D1_MATRIX_3X2_F*) worldTransform,
+        const(D2D1_MATRIX_3X2_F)* worldTransform,
         FLOAT flatteningTolerance,
         /*out*/ FLOAT *length 
         ) const;
@@ -1726,7 +1726,7 @@ interface ID2D1Geometry : ID2D1Resource
     //
     HRESULT ComputePointAtLength(
         FLOAT length,
-        const(D2D1_MATRIX_3X2_F*) worldTransform,
+        const(D2D1_MATRIX_3X2_F)* worldTransform,
         FLOAT flatteningTolerance,
         /*out*/ D2D1_POINT_2F *point,
         /*out*/ D2D1_POINT_2F *unitTangentVector 
@@ -1739,7 +1739,7 @@ interface ID2D1Geometry : ID2D1Resource
     HRESULT Widen(
         FLOAT strokeWidth,
         ID2D1StrokeStyle strokeStyle,
-        const(D2D1_MATRIX_3X2_F*) worldTransform,
+        const(D2D1_MATRIX_3X2_F)* worldTransform,
         FLOAT flatteningTolerance,
         ID2D1SimplifiedGeometrySink geometrySink 
         ) const;
@@ -2435,12 +2435,12 @@ interface ID2D1SimplifiedGeometrySink : IUnknown
         );
     
     void AddLines(
-        const(D2D1_POINT_2F*) points,
+        const(D2D1_POINT_2F)* points,
         UINT32 pointsCount 
         );
     
     void AddBeziers(
-        const(D2D1_BEZIER_SEGMENT*) beziers,
+        const(D2D1_BEZIER_SEGMENT)* beziers,
         UINT32 beziersCount 
         );
     
@@ -2468,20 +2468,20 @@ interface ID2D1GeometrySink : ID2D1SimplifiedGeometrySink
         );
     
     void AddBezier(
-        const(D2D1_BEZIER_SEGMENT*) bezier 
+        const(D2D1_BEZIER_SEGMENT)* bezier 
         );
     
     void AddQuadraticBezier(
-        const(D2D1_QUADRATIC_BEZIER_SEGMENT*) bezier 
+        const(D2D1_QUADRATIC_BEZIER_SEGMENT)* bezier 
         );
     
     void AddQuadraticBeziers(
-        const(D2D1_QUADRATIC_BEZIER_SEGMENT*) beziers,
+        const(D2D1_QUADRATIC_BEZIER_SEGMENT)* beziers,
         UINT32 beziersCount 
         );
     
     void AddArc(
-        const(D2D1_ARC_SEGMENT*) arc 
+        const(D2D1_ARC_SEGMENT)* arc 
         );
     /*
     COM_DECLSPEC_NOTHROW
@@ -2526,7 +2526,7 @@ interface ID2D1TessellationSink : IUnknown
 {
     extern(Windows):
     void AddTriangles(
-        const(D2D1_TRIANGLE*) triangles,
+        const(D2D1_TRIANGLE)* triangles,
         UINT32 trianglesCount 
         );
     
@@ -2632,7 +2632,7 @@ interface ID2D1DrawingStateBlock : ID2D1Resource
     // Sets the state description of this state block resource.
     //
     void SetDescription(
-        const(D2D1_DRAWING_STATE_DESCRIPTION*) stateDescription
+        const(D2D1_DRAWING_STATE_DESCRIPTION)* stateDescription
         );
     
     
@@ -2685,7 +2685,7 @@ interface ID2D1RenderTarget : ID2D1Resource
         D2D1_SIZE_U size,
         const(void*) srcData,
         UINT32 pitch,
-        const(D2D1_BITMAP_PROPERTIES*) bitmapProperties,
+        const(D2D1_BITMAP_PROPERTIES)* bitmapProperties,
         /*out*/ID2D1Bitmap* bitmap 
         );
     
@@ -2695,7 +2695,7 @@ interface ID2D1RenderTarget : ID2D1Resource
     //
     HRESULT CreateBitmapFromWicBitmap(
         IWICBitmapSource wicBitmapSource,
-        const(D2D1_BITMAP_PROPERTIES*) bitmapProperties,
+        const(D2D1_BITMAP_PROPERTIES)* bitmapProperties,
         /*out*/ ID2D1Bitmap *bitmap 
         );
     
@@ -2709,7 +2709,7 @@ interface ID2D1RenderTarget : ID2D1Resource
     HRESULT CreateSharedBitmap(
         REFIID riid,
         void *data,
-        const(D2D1_BITMAP_PROPERTIES*) bitmapProperties,
+        const(D2D1_BITMAP_PROPERTIES)* bitmapProperties,
         /*out*/ ID2D1Bitmap* bitmap
         );
     
@@ -2720,8 +2720,8 @@ interface ID2D1RenderTarget : ID2D1Resource
     //
     HRESULT CreateBitmapBrush(
         ID2D1Bitmap bitmap,
-        const(D2D1_BITMAP_BRUSH_PROPERTIES*) bitmapBrushProperties,
-        const(D2D1_BRUSH_PROPERTIES*) brushProperties,
+        const(D2D1_BITMAP_BRUSH_PROPERTIES)* bitmapBrushProperties,
+        const(D2D1_BRUSH_PROPERTIES)* brushProperties,
         /*out*/ ID2D1BitmapBrush* bitmapBrush 
         );
     
@@ -2737,7 +2737,7 @@ interface ID2D1RenderTarget : ID2D1Resource
     // This is the source resource for a linear gradient and radial gradient brush.
     //
     HRESULT CreateGradientStopCollection(
-        const(D2D1_GRADIENT_STOP*) gradientStops,
+        const(D2D1_GRADIENT_STOP)* gradientStops,
         UINT32 gradientStopsCount,
         
         //
@@ -2753,15 +2753,15 @@ interface ID2D1RenderTarget : ID2D1Resource
         );
     
     HRESULT CreateLinearGradientBrush(
-        const(D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES*) linearGradientBrushProperties,
-        const(D2D1_BRUSH_PROPERTIES*) brushProperties,
+        const(D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES)* linearGradientBrushProperties,
+        const(D2D1_BRUSH_PROPERTIES)* brushProperties,
         ID2D1GradientStopCollection gradientStopCollection,
         /*out*/ ID2D1LinearGradientBrush* linearGradientBrush 
         );
     
     HRESULT CreateRadialGradientBrush(
-        const(D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES*) radialGradientBrushProperties,
-        const(D2D1_BRUSH_PROPERTIES*) brushProperties,
+        const(D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES)* radialGradientBrushProperties,
+        const(D2D1_BRUSH_PROPERTIES)* brushProperties,
         ID2D1GradientStopCollection gradientStopCollection,
         /*out*/ ID2D1RadialGradientBrush* radialGradientBrush
         );
@@ -2778,7 +2778,7 @@ interface ID2D1RenderTarget : ID2D1Resource
         // the DPI is inherited from the parent target. However, the render target will
         // never contain a fractional number of pixels.
         //
-        const(D2D1_SIZE_F*) desiredSize,
+        const(D2D1_SIZE_F)* desiredSize,
         
         //
         // The requested size of the render target in pixels. If the DIP size is also
@@ -2787,14 +2787,14 @@ interface ID2D1RenderTarget : ID2D1Resource
         // value is specified, the compatible render target will be the same size and have
         // the same DPI as the parent target.
         //
-        const(D2D1_SIZE_U*) desiredPixelSize,
+        const(D2D1_SIZE_U)* desiredPixelSize,
         
         //
         // The desired pixel format. The format must be compatible with the parent render
         // target type. If the format is not specified, it will be inherited from the
         // parent render target.
         //
-        const(D2D1_PIXEL_FORMAT*) desiredFormat,
+        const(D2D1_PIXEL_FORMAT)* desiredFormat,
         
         //
         // Allows the caller to retrieve a GDI compatible render target.
@@ -2822,7 +2822,7 @@ interface ID2D1RenderTarget : ID2D1Resource
         // be allocated to be the minimum size that can hold the content when the layer is
         // pushed.
         //
-        const(D2D1_SIZE_F*) size,
+        const(D2D1_SIZE_F)* size,
         /*out*/ ID2D1Layer* layer 
         );
     
@@ -2843,38 +2843,38 @@ interface ID2D1RenderTarget : ID2D1Resource
         );
     
     void DrawRectangle(
-        const(D2D1_RECT_F*) rect,
+        const(D2D1_RECT_F)* rect,
         ID2D1Brush brush,
         FLOAT strokeWidth = 1.0f,
         ID2D1StrokeStyle strokeStyle = null 
         );
     
     void FillRectangle(
-        const(D2D1_RECT_F*) rect,
+        const(D2D1_RECT_F)* rect,
         ID2D1Brush brush 
         );
     
     void DrawRoundedRectangle(
-        const(D2D1_ROUNDED_RECT*) roundedRect,
+        const(D2D1_ROUNDED_RECT)* roundedRect,
         ID2D1Brush brush,
         FLOAT strokeWidth = 1.0f,
         ID2D1StrokeStyle strokeStyle = null
         );
     
     void FillRoundedRectangle(
-        const(D2D1_ROUNDED_RECT*) roundedRect,
+        const(D2D1_ROUNDED_RECT)* roundedRect,
         ID2D1Brush brush 
         );
     
     void DrawEllipse(
-        const(D2D1_ELLIPSE*) ellipse,
+        const(D2D1_ELLIPSE)* ellipse,
         ID2D1Brush brush,
         FLOAT strokeWidth = 1.0f,
         ID2D1StrokeStyle strokeStyle = null 
         );
     
     void FillEllipse(
-        const(D2D1_ELLIPSE*) ellipse,
+        const(D2D1_ELLIPSE)* ellipse,
         ID2D1Brush brush 
         );
     
@@ -2918,16 +2918,16 @@ interface ID2D1RenderTarget : ID2D1Resource
         ID2D1Bitmap opacityMask,
         ID2D1Brush brush,
         D2D1_OPACITY_MASK_CONTENT content,
-        const(D2D1_RECT_F*) destinationRectangle = null,
-        const(D2D1_RECT_F*) sourceRectangle = null 
+        const(D2D1_RECT_F)* destinationRectangle = null,
+        const(D2D1_RECT_F)* sourceRectangle = null 
         );
     
     void DrawBitmap(
         ID2D1Bitmap bitmap,
-        const(D2D1_RECT_F*) destinationRectangle = null,
+        const(D2D1_RECT_F)* destinationRectangle = null,
         FLOAT opacity = 1.0f,
         D2D1_BITMAP_INTERPOLATION_MODE interpolationMode = D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
-        const(D2D1_RECT_F*) sourceRectangle = null 
+        const(D2D1_RECT_F)* sourceRectangle = null 
         );
     
     
@@ -2939,7 +2939,7 @@ interface ID2D1RenderTarget : ID2D1Resource
         const(WCHAR)* string,
         UINT32 stringLength,
         IDWriteTextFormat textFormat,
-        const(D2D1_RECT_F*) layoutRect,
+        const(D2D1_RECT_F)* layoutRect,
         ID2D1Brush defaultForegroundBrush,
         D2D1_DRAW_TEXT_OPTIONS options = D2D1_DRAW_TEXT_OPTIONS_NONE,
         DWRITE_MEASURING_MODE measuringMode = DWRITE_MEASURING_MODE_NATURAL 
@@ -3033,7 +3033,7 @@ interface ID2D1RenderTarget : ID2D1Resource
     // ID2D1Layer is provided, then a layer resource will be allocated automatically.
     //
     void PushLayer(
-        const(D2D1_LAYER_PARAMETERS*) layerParameters,
+        const(D2D1_LAYER_PARAMETERS)* layerParameters,
         ID2D1Layer layer 
         );
     
@@ -3150,7 +3150,7 @@ interface ID2D1RenderTarget : ID2D1Resource
     // supported.
     //
     BOOL IsSupported(
-        const(D2D1_RENDER_TARGET_PROPERTIES*) renderTargetProperties 
+        const(D2D1_RENDER_TARGET_PROPERTIES)* renderTargetProperties 
         ) const;
     
 	/*
@@ -3659,7 +3659,7 @@ interface ID2D1GdiInteropRenderTarget : IUnknown
         );
     
     HRESULT ReleaseDC(
-        const(RECT*) update 
+        const(RECT)* update 
         );
 } // interface ID2D1GdiInteropRenderTarget
 
@@ -3677,7 +3677,7 @@ interface ID2D1DCRenderTarget : ID2D1RenderTarget
     extern(Windows):
     HRESULT BindDC(
         const HDC  hDC,
-        const(RECT*) pSubRect 
+        const(RECT)* pSubRect 
         );
 } // interface ID2D1DCRenderTarget
 
@@ -3713,17 +3713,17 @@ interface ID2D1Factory : IUnknown
         );
     
     HRESULT CreateRectangleGeometry(
-        const(D2D1_RECT_F*) rectangle,
+        const(D2D1_RECT_F)* rectangle,
         /*out*/ ID2D1RectangleGeometry* rectangleGeometry 
         );
     
     HRESULT CreateRoundedRectangleGeometry(
-        const(D2D1_ROUNDED_RECT*) roundedRectangle,
+        const(D2D1_ROUNDED_RECT)* roundedRectangle,
         /*out*/ ID2D1RoundedRectangleGeometry* roundedRectangleGeometry 
         );
     
     HRESULT CreateEllipseGeometry(
-        const(D2D1_ELLIPSE*) ellipse,
+        const(D2D1_ELLIPSE)* ellipse,
         /*out*/ ID2D1EllipseGeometry* ellipseGeometry 
         );
     
@@ -3740,7 +3740,7 @@ interface ID2D1Factory : IUnknown
     
     HRESULT CreateTransformedGeometry(
         ID2D1Geometry sourceGeometry,
-        const(D2D1_MATRIX_3X2_F*) transform,
+        const(D2D1_MATRIX_3X2_F)* transform,
         /*out*/ ID2D1TransformedGeometry* transformedGeometry 
         );
     
@@ -3759,8 +3759,8 @@ interface ID2D1Factory : IUnknown
     // time.
     //
     HRESULT CreateStrokeStyle(
-        const(D2D1_STROKE_STYLE_PROPERTIES*) strokeStyleProperties,
-        const(FLOAT*) dashes,
+        const(D2D1_STROKE_STYLE_PROPERTIES)* strokeStyleProperties,
+        const(FLOAT)* dashes,
         UINT32 dashesCount,
         /*out*/ ID2D1StrokeStyle* strokeStyle 
         );
@@ -3771,7 +3771,7 @@ interface ID2D1Factory : IUnknown
     // SaveDrawingState and RestoreDrawingState operations on the render target.
     //
     HRESULT CreateDrawingStateBlock(
-        const(D2D1_DRAWING_STATE_DESCRIPTION*) drawingStateDescription,
+        const(D2D1_DRAWING_STATE_DESCRIPTION)* drawingStateDescription,
         IDWriteRenderingParams textRenderingParams,
         /*out*/ ID2D1DrawingStateBlock* drawingStateBlock 
 		);
@@ -3782,7 +3782,7 @@ interface ID2D1Factory : IUnknown
     //
     HRESULT CreateWicBitmapRenderTarget(
         IWICBitmap target,
-        const(D2D1_RENDER_TARGET_PROPERTIES*) renderTargetProperties,
+        const(D2D1_RENDER_TARGET_PROPERTIES)* renderTargetProperties,
         /*out*/ ID2D1RenderTarget* renderTarget 
         );
     
@@ -3960,12 +3960,12 @@ extern(Windows)
 
     BOOL 
     D2D1IsMatrixInvertible(
-        const(D2D1_MATRIX_3X2_F*) matrix
+        const(D2D1_MATRIX_3X2_F)* matrix
         );
 
     BOOL 
     D2D1InvertMatrix(
-        /*inout*/ D2D1_MATRIX_3X2_F *matrix
+        /*inout*/ D2D1_MATRIX_3X2_F* matrix
         );
 
 }

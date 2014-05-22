@@ -1085,7 +1085,7 @@ interface IDWriteFontFace : IUnknown
     /// for the current font face, E_INVALIDARG will be returned.
     /// </returns>
     HRESULT GetDesignGlyphMetrics(
-        const(UINT16*) glyphIndices,
+        const(UINT16)* glyphIndices,
         UINT32 glyphCount,
         /*out*/ DWRITE_GLYPH_METRICS* glyphMetrics,
         BOOL isSideways = FALSE
@@ -1106,7 +1106,7 @@ interface IDWriteFontFace : IUnknown
     /// Standard HRESULT error code.
     /// </returns>
     HRESULT GetGlyphIndices(
-        const(UINT32*) codePoints,
+        const(UINT32)* codePoints,
         UINT32 codePointCount,
         /*out*/ UINT16* glyphIndices
         );
@@ -1180,9 +1180,9 @@ interface IDWriteFontFace : IUnknown
     /// </returns>
     HRESULT GetGlyphRunOutline(
         FLOAT emSize,
-        const(UINT16*) glyphIndices,
-        const(FLOAT*) glyphAdvances,
-        const(DWRITE_GLYPH_OFFSET*) glyphOffsets,
+        const(UINT16)* glyphIndices,
+        const(FLOAT)* glyphAdvances,
+        const(DWRITE_GLYPH_OFFSET)* glyphOffsets,
         UINT32 glyphCount,
         BOOL isSideways,
         BOOL isRightToLeft,
@@ -1230,7 +1230,7 @@ interface IDWriteFontFace : IUnknown
     HRESULT GetGdiCompatibleMetrics(
         FLOAT emSize,
         FLOAT pixelsPerDip,
-        const(DWRITE_MATRIX*) transform,
+        const(DWRITE_MATRIX)* transform,
         /*out*/ DWRITE_FONT_METRICS* fontFaceMetrics
         );
 
@@ -1262,9 +1262,9 @@ interface IDWriteFontFace : IUnknown
     HRESULT GetGdiCompatibleGlyphMetrics(
         FLOAT emSize,
         FLOAT pixelsPerDip,
-        const(DWRITE_MATRIX*) transform,
+        const(DWRITE_MATRIX)* transform,
         BOOL useGdiNatural,
-        const(UINT16*) glyphIndices,
+        const(UINT16)* glyphIndices,
         UINT32 glyphCount,
         /*out*/ DWRITE_GLYPH_METRICS* glyphMetrics,
         BOOL isSideways = FALSE
@@ -1360,7 +1360,7 @@ interface IDWriteLocalizedStrings : IUnknown
     /// but *index is UINT_MAX and *exists is FALSE.
     /// </returns>
     HRESULT FindLocaleName(
-        const(WCHAR*) localeName,
+        const(WCHAR)* localeName,
         /*out*/ UINT32* index,
         /*out*/ BOOL* exists
         );
@@ -1459,7 +1459,7 @@ interface IDWriteFontCollection : IUnknown
     /// Standard HRESULT error code. If the specified family name does not exist, the return value is S_OK, but *index is UINT_MAX and *exists is FALSE.
     /// </returns>
     HRESULT FindFamilyName(
-        const(WCHAR*) familyName,
+        const(WCHAR)* familyName,
         /*out*/ UINT32* index,
         /*out*/ BOOL* exists
         );
@@ -2120,7 +2120,7 @@ interface IDWriteTextFormat : IUnknown
     /// Standard HRESULT error code.
     /// </returns>
     HRESULT SetTrimming(
-        const(DWRITE_TRIMMING*) trimmingOptions,
+        const(DWRITE_TRIMMING)* trimmingOptions,
         IDWriteInlineObject trimmingSign
         );
 
@@ -2669,7 +2669,7 @@ interface IDWriteTextAnalysisSink : IUnknown
     HRESULT SetScriptAnalysis(
         UINT32 textPosition,
         UINT32 textLength,
-        const(DWRITE_SCRIPT_ANALYSIS*) scriptAnalysis
+        const(DWRITE_SCRIPT_ANALYSIS)* scriptAnalysis
         );
 
     /// <summary>
@@ -2685,7 +2685,7 @@ interface IDWriteTextAnalysisSink : IUnknown
     HRESULT SetLineBreakpoints(
         UINT32 textPosition,
         UINT32 textLength,
-        const(DWRITE_LINE_BREAKPOINT*) lineBreakpoints
+        const(DWRITE_LINE_BREAKPOINT)* lineBreakpoints
         );
 
     /// <summary>
@@ -2896,16 +2896,16 @@ interface IDWriteTextAnalyzer : IUnknown
     /// will be returned.  The application should allocate a larger buffer and try again.
     /// </remarks>
     HRESULT GetGlyphs(
-        const(WCHAR*) textString,
+        const(WCHAR)* textString,
         UINT32 textLength,
         IDWriteFontFace fontFace,
         BOOL isSideways,
         BOOL isRightToLeft,
-        const(DWRITE_SCRIPT_ANALYSIS*) scriptAnalysis,
-        const(WCHAR*) localeName,
+        const(DWRITE_SCRIPT_ANALYSIS)* scriptAnalysis,
+        const(WCHAR)* localeName,
         IDWriteNumberSubstitution numberSubstitution,
         const(DWRITE_TYPOGRAPHIC_FEATURES*)* features,
-        const(UINT32*) featureRangeLengths,
+        const(UINT32)* featureRangeLengths,
         UINT32 featureRanges,
         UINT32 maxGlyphCount,
         /*out*/ UINT16* clusterMap,
@@ -2949,20 +2949,20 @@ interface IDWriteTextAnalyzer : IUnknown
     /// </returns>
     HRESULT GetGlyphPlacements(
         const(WCHAR)* textString,
-        const(UINT16*) clusterMap,
+        const(UINT16)* clusterMap,
         DWRITE_SHAPING_TEXT_PROPERTIES* textProps,
         UINT32 textLength,
-        const(UINT16*) glyphIndices,
-        const(DWRITE_SHAPING_GLYPH_PROPERTIES*) glyphProps,
+        const(UINT16)* glyphIndices,
+        const(DWRITE_SHAPING_GLYPH_PROPERTIES)* glyphProps,
         UINT32 glyphCount,
         IDWriteFontFace fontFace,
         FLOAT fontEmSize,
         BOOL isSideways,
         BOOL isRightToLeft,
-        const(DWRITE_SCRIPT_ANALYSIS*) scriptAnalysis,
-        const(WCHAR*) localeName,
+        const(DWRITE_SCRIPT_ANALYSIS)* scriptAnalysis,
+        const(WCHAR)* localeName,
         const(DWRITE_TYPOGRAPHIC_FEATURES*)* features,
-        const(UINT32*) featureRangeLengths,
+        const(UINT32)* featureRangeLengths,
         UINT32 featureRanges,
         /*out*/ FLOAT* glyphAdvances,
         /*out*/ DWRITE_GLYPH_OFFSET* glyphOffsets
@@ -3010,24 +3010,24 @@ interface IDWriteTextAnalyzer : IUnknown
     /// Standard HRESULT error code.
     /// </returns>
     HRESULT GetGdiCompatibleGlyphPlacements(
-        const(WCHAR*) textString,
-        const(UINT16*) clusterMap,
+        const(WCHAR)* textString,
+        const(UINT16)* clusterMap,
         DWRITE_SHAPING_TEXT_PROPERTIES* textProps,
         UINT32 textLength,
-        const(UINT16*) glyphIndices,
-        const(DWRITE_SHAPING_GLYPH_PROPERTIES*) glyphProps,
+        const(UINT16)* glyphIndices,
+        const(DWRITE_SHAPING_GLYPH_PROPERTIES)* glyphProps,
         UINT32 glyphCount,
         IDWriteFontFace fontFace,
         FLOAT fontEmSize,
         FLOAT pixelsPerDip,
-        const(DWRITE_MATRIX*) transform,
+        const(DWRITE_MATRIX)* transform,
         BOOL useGdiNatural,
         BOOL isSideways,
         BOOL isRightToLeft,
-        const(DWRITE_SCRIPT_ANALYSIS*) scriptAnalysis,
-        const(WCHAR*) localeName,
+        const(DWRITE_SCRIPT_ANALYSIS)* scriptAnalysis,
+        const(WCHAR)* localeName,
         const(DWRITE_TYPOGRAPHIC_FEATURES*)* features,
-        const(UINT32*) featureRangeLengths,
+        const(UINT32)* featureRangeLengths,
         UINT32 featureRanges,
         /*out*/ FLOAT* glyphAdvances,
         /*out*/ DWRITE_GLYPH_OFFSET* glyphOffsets
