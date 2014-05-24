@@ -1230,7 +1230,7 @@ interface ID2D1Resource : IUnknown
     //
     // Retrieve the factory associated with this resource.
     //
-    void GetFactory( ID2D1Factory *factory ) const;
+    void GetFactory( ID2D1Factory* factory ) const;
 } // interface ID2D1Resource
 
 
@@ -1266,19 +1266,19 @@ interface ID2D1Bitmap : ID2D1Image
     //
     // Returns the size of the bitmap in resolution independent units.
     //
-    D2D1_SIZE_F GetSize() const;
+    ref D2D1_SIZE_F GetSize() const;
     
     
     //
     // Returns the size of the bitmap in resolution dependent units, (pixels).
     //
-	D2D1_SIZE_U GetPixelSize() const;
+	ref D2D1_SIZE_U GetPixelSize() const;
     
     
     //
     // Retrieve the format of the bitmap.
     //
-    D2D1_PIXEL_FORMAT GetPixelFormat() const;
+	ref D2D1_PIXEL_FORMAT GetPixelFormat() const;
     
     
     //
@@ -1453,7 +1453,7 @@ interface ID2D1SolidColorBrush : ID2D1Brush
     
     void SetColor( const(D2D1_COLOR_F)* color );
     
-    D2D1_COLOR_F GetColor() const;
+    ref D2D1_COLOR_F GetColor() const;
     
 	/*
     COM_DECLSPEC_NOTHROW
@@ -1489,9 +1489,9 @@ interface ID2D1LinearGradientBrush : ID2D1Brush
     //
     void SetEndPoint( D2D1_POINT_2F endPoint );
     
-    D2D1_POINT_2F GetStartPoint() const;
+    ref D2D1_POINT_2F GetStartPoint() const;
     
-    D2D1_POINT_2F GetEndPoint() const;
+    ref D2D1_POINT_2F GetEndPoint() const;
     
     void GetGradientStopCollection(
         /*out*/ ID2D1GradientStopCollection *gradientStopCollection 
@@ -1527,9 +1527,9 @@ interface ID2D1RadialGradientBrush : ID2D1Brush
     
     void SetRadiusY( FLOAT radiusY );
     
-    D2D1_POINT_2F GetCenter() const;
+    ref D2D1_POINT_2F GetCenter() const;
     
-    D2D1_POINT_2F GetGradientOriginOffset() const;
+    ref D2D1_POINT_2F GetGradientOriginOffset() const;
     
     FLOAT GetRadiusX() const;
     
@@ -2604,7 +2604,7 @@ mixin( uuid!(ID2D1Layer, "2cd9069b-12e2-11dc-9fed-001143a055f9") );
 interface ID2D1Layer : ID2D1Resource
 {
     extern(Windows):
-    D2D1_SIZE_F GetSize() const;
+    ref D2D1_SIZE_F GetSize() const;
 } // interface ID2D1Layer
 
 
@@ -3100,7 +3100,7 @@ interface ID2D1RenderTarget : ID2D1Resource
         /*out*/ D2D1_TAG *tag2 = null 
         );
     
-    D2D1_PIXEL_FORMAT GetPixelFormat() const;
+    ref D2D1_PIXEL_FORMAT GetPixelFormat() const;
     
     
     //
@@ -3127,13 +3127,13 @@ interface ID2D1RenderTarget : ID2D1Resource
     //
     // Returns the size of the render target in DIPs.
     //
-    D2D1_SIZE_F GetSize() const;
+    ref D2D1_SIZE_F GetSize() const;
     
     
     //
     // Returns the size of the render target in pixels.
     //
-    D2D1_SIZE_U GetPixelSize() const;
+    ref D2D1_SIZE_U GetPixelSize() const;
     
     
     //

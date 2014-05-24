@@ -2,6 +2,7 @@ module directx.dxgitype;
 
 import directx.win32;
 import directx.dxgiformat;
+import directx.d3d9types;
 
 
 enum _FACDXGI   = 0x87a;
@@ -61,6 +62,8 @@ struct DXGI_RGB
     float Green;
     float Blue;
 }
+
+alias DXGI_RGBA = D3DCOLORVALUE;
 
 struct DXGI_GAMMA_CONTROL
 {
