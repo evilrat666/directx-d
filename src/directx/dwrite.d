@@ -11,7 +11,7 @@ module directx.dwrite;
 // import diretx.winapi.specstrings;
 import directx.com;
 import directx.win32;
-import directx.dcommon;
+public import directx.dcommon;
 import directx.d2d1;
 import directx.d2d1helper;
 import directx.d2dbasetypes;

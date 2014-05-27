@@ -650,7 +650,7 @@ enum : DWRITE_GLYPH_ORIENTATION_ANGLE
 
 struct DWRITE_FONT_METRICS1 // : DWRITE_FONT_METRICS
 {
-	alias this dfm;
+	alias dfm this;
 	DWRITE_FONT_METRICS dfm;
 	
     /// <summary>
@@ -1260,7 +1260,7 @@ interface IDWriteFontFace1 : IDWriteFontFace
     /// <returns>
     /// Standard HRESULT error code.
     /// </returns>
-    STDMETHOD(GetGdiCompatibleGlyphAdvances)(
+    HRESULT GetGdiCompatibleGlyphAdvances(
         FLOAT emSize,
         FLOAT pixelsPerDip,
         const(DWRITE_MATRIX)* transform,
@@ -1431,7 +1431,7 @@ interface IDWriteFont1 : IDWriteFont
     /// <returns>
     /// Standard HRESULT error code.
     /// </returns>
-    STDMETHOD(GetUnicodeRanges)(
+    HRESULT GetUnicodeRanges(
         UINT32 maxRangeCount,
         /*out*/ DWRITE_UNICODE_RANGE* unicodeRanges,
         /*out*/ UINT32* actualRangeCount
@@ -1488,7 +1488,7 @@ interface IDWriteTextAnalyzer1 : IDWriteTextAnalyzer
     /// <returns>
     /// Standard HRESULT error code.
     /// </returns>
-    STDMETHOD(ApplyCharacterSpacing)(
+    HRESULT ApplyCharacterSpacing(
         FLOAT leadingSpacing,
         FLOAT trailingSpacing,
         FLOAT minimumAdvanceWidth,
@@ -1523,7 +1523,7 @@ interface IDWriteTextAnalyzer1 : IDWriteTextAnalyzer
     /// <returns>
     /// Standard HRESULT error code.
     /// </returns>
-    STDMETHOD(GetBaseline)(
+    HRESULT GetBaseline(
         IDWriteFontFace fontFace,
         DWRITE_BASELINE baseline,
         BOOL isVertical,

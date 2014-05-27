@@ -9,7 +9,7 @@ module directx.dwrite_2;
 //----------------------------------------------------------------------------
 
 import directx.com;
-import directx.dwrite_1;
+public import directx.dwrite_1;
 
 
 /// <summary>
@@ -62,7 +62,7 @@ enum : DWRITE_GRID_FIT_MODE
 /// </summary>
 struct DWRITE_TEXT_METRICS1 // : DWRITE_TEXT_METRICS
 {
-	alias this dtm;
+	alias dtm this;
 	DWRITE_TEXT_METRICS dtm;
 	
     /// <summary>
@@ -344,7 +344,7 @@ interface IDWriteTextLayout2 : IDWriteTextLayout1
     /// line heights. Additionally, visible swashes and other graphic
     /// adornments may extend outside the returned width and height.
     /// </remarks>
-    STDMETHOD(GetMetrics)(
+    HRESULT GetMetrics(
         /*out*/ DWRITE_TEXT_METRICS1* textMetrics
         );
 
@@ -740,7 +740,7 @@ interface IDWriteFontFace2 : IDWriteFontFace1
     /// <returns>
     /// Standard HRESULT error code.
     /// </returns>
-    STDMETHOD(GetRecommendedRenderingMode)(
+    HRESULT GetRecommendedRenderingMode(
         FLOAT fontEmSize,
         FLOAT dpiX,
         FLOAT dpiY,
@@ -856,7 +856,7 @@ interface IDWriteFactory2 : IDWriteFactory1
     /// <returns>
     /// Standard HRESULT error code.
     /// </returns>
-    STDMETHOD(GetSystemFontFallback)(
+    HRESULT GetSystemFontFallback(
         /*out*/ IDWriteFontFallback* fontFallback
         );
 
