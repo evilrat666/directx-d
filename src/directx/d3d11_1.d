@@ -57,45 +57,26 @@ struct D3D11_RENDER_TARGET_BLEND_DESC1
 
 struct D3D11_BLEND_DESC1
 {
-	BOOL AlphaToCoverageEnable;
-	BOOL IndependentBlendEnable;
+	BOOL AlphaToCoverageEnable = FALSE;
+	BOOL IndependentBlendEnable = FALSE;
 	D3D11_RENDER_TARGET_BLEND_DESC1[8] RenderTarget;
+
+	void Init() @property
+	{
+			const D3D11_RENDER_TARGET_BLEND_DESC1 defaultRenderTargetBlendDesc =
+			{
+				FALSE,FALSE,
+					D3D11_BLEND_ONE, D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD,
+					D3D11_BLEND_ONE, D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD,
+					D3D11_LOGIC_OP_NOOP,
+					D3D11_COLOR_WRITE_ENABLE_ALL,
+			};
+			for (UINT i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+				RenderTarget[ i ] = defaultRenderTargetBlendDesc;
+	}
 }
 } // extern C
 
-version(D3D11_NO_HELPERS)
-{
-}
-else
-{
-/*
-class CD3D11_BLEND_DESC1 : D3D11_BLEND_DESC1
-{
-    CD3D11_BLEND_DESC1()
-    {}
-    explicit CD3D11_BLEND_DESC1( const D3D11_BLEND_DESC1& o ) :
-        D3D11_BLEND_DESC1( o )
-    {}
-    explicit CD3D11_BLEND_DESC1( CD3D11_DEFAULT )
-    {
-        AlphaToCoverageEnable = FALSE;
-        IndependentBlendEnable = FALSE;
-        const D3D11_RENDER_TARGET_BLEND_DESC1 defaultRenderTargetBlendDesc =
-        {
-            FALSE,FALSE,
-            D3D11_BLEND_ONE, D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD,
-            D3D11_BLEND_ONE, D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD,
-            D3D11_LOGIC_OP_NOOP,
-            D3D11_COLOR_WRITE_ENABLE_ALL,
-        };
-        for (UINT i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
-            RenderTarget[ i ] = defaultRenderTargetBlendDesc;
-    }
-    ~CD3D11_BLEND_DESC1() {}
-    operator const D3D11_BLEND_DESC1&() const { return *this; }
-};
-*/
-}
 
 
 mixin( uuid!(ID3D11BlendState1, "cc86fabe-da55-401d-85e7-e3c9de2877e9") );
@@ -111,17 +92,17 @@ interface ID3D11BlendState1 : ID3D11BlendState
 
 extern(C) struct D3D11_RASTERIZER_DESC1
 {
-	D3D11_FILL_MODE FillMode;
-	D3D11_CULL_MODE CullMode;
-	BOOL FrontCounterClockwise;
-	INT DepthBias;
-	FLOAT DepthBiasClamp;
-	FLOAT SlopeScaledDepthBias;
-	BOOL DepthClipEnable;
-	BOOL ScissorEnable;
-	BOOL MultisampleEnable;
-	BOOL AntialiasedLineEnable;
-	UINT ForcedSampleCount;
+	D3D11_FILL_MODE FillMode = D3D11_FILL_SOLID;
+	D3D11_CULL_MODE CullMode = D3D11_CULL_BACK;
+	BOOL FrontCounterClockwise = FALSE;
+	INT DepthBias = D3D11_DEFAULT_DEPTH_BIAS;
+	FLOAT DepthBiasClamp = D3D11_DEFAULT_DEPTH_BIAS_CLAMP;
+	FLOAT SlopeScaledDepthBias = D3D11_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
+	BOOL DepthClipEnable = TRUE;
+	BOOL ScissorEnable = FALSE;
+	BOOL MultisampleEnable = FALSE;
+	BOOL AntialiasedLineEnable = FALSE;
+	UINT ForcedSampleCount = 0;
 }
 
 // TODO: add helper struct or functions

@@ -84,8 +84,8 @@ struct D3D11_VIEWPORT
 	FLOAT TopLeftY;
 	FLOAT Width;
 	FLOAT Height;
-	FLOAT MinDepth;
-	FLOAT MaxDepth;
+	FLOAT MinDepth = D3D11_MIN_DEPTH;
+	FLOAT MaxDepth = D3D11_MAX_DEPTH;
 }
 
 alias D3D11_RESOURCE_DIMENSION = int;
@@ -98,7 +98,7 @@ enum : D3D11_RESOURCE_DIMENSION
 	D3D11_RESOURCE_DIMENSION_TEXTURE3D	= 4
 }
 
-alias D3D_SRV_DIMENSION D3D11_SRV_DIMENSION;
+alias D3D11_SRV_DIMENSION = D3D_SRV_DIMENSION;
 
 alias D3D11_DSV_DIMENSION = int;
 enum : D3D11_DSV_DIMENSION
@@ -290,14 +290,14 @@ struct D3D11_DEPTH_STENCILOP_DESC
 
 struct D3D11_DEPTH_STENCIL_DESC
 {
-	BOOL DepthEnable;
-	D3D11_DEPTH_WRITE_MASK DepthWriteMask;
-	D3D11_COMPARISON_FUNC DepthFunc;
-	BOOL StencilEnable;
-	UINT8 StencilReadMask;
-	UINT8 StencilWriteMask;
-	D3D11_DEPTH_STENCILOP_DESC FrontFace;
-	D3D11_DEPTH_STENCILOP_DESC BackFace;
+	BOOL DepthEnable = TRUE;
+	D3D11_DEPTH_WRITE_MASK DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	D3D11_COMPARISON_FUNC DepthFunc = D3D11_COMPARISON_LESS;
+	BOOL StencilEnable = FALSE;
+	UINT8 StencilReadMask = D3D11_DEFAULT_STENCIL_READ_MASK;
+	UINT8 StencilWriteMask = D3D11_DEFAULT_STENCIL_WRITE_MASK;
+	D3D11_DEPTH_STENCILOP_DESC FrontFace = { D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_KEEP, D3D11_COMPARISON_ALWAYS };
+	D3D11_DEPTH_STENCILOP_DESC BackFace = { D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_KEEP, D3D11_COMPARISON_ALWAYS };
 }
 
 
@@ -366,9 +366,23 @@ struct D3D11_RENDER_TARGET_BLEND_DESC
 
 struct D3D11_BLEND_DESC
 {
-	BOOL AlphaToCoverageEnable;
-	BOOL IndependentBlendEnable;
+	BOOL AlphaToCoverageEnable = FALSE;
+	BOOL IndependentBlendEnable = FALSE;
 	D3D11_RENDER_TARGET_BLEND_DESC[8] RenderTarget;
+
+	// hack:
+	// default ctor not allowed in structs
+	void Init() @property
+	{
+		const D3D11_RENDER_TARGET_BLEND_DESC defaultRenderTargetBlendDesc = {
+		FALSE,
+		D3D11_BLEND_ONE, D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD,
+		D3D11_BLEND_ONE, D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD,
+		D3D11_COLOR_WRITE_ENABLE_ALL,
+		};
+		for (UINT i = 0; i < D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+			RenderTarget[ i ] = defaultRenderTargetBlendDesc;
+	}
 }
 
 
@@ -382,16 +396,16 @@ interface ID3D11BlendState : ID3D11DeviceChild
 
 struct D3D11_RASTERIZER_DESC
 {
-	D3D11_FILL_MODE FillMode;
-	D3D11_CULL_MODE CullMode;
-	BOOL FrontCounterClockwise;
-	INT DepthBias;
-	FLOAT DepthBiasClamp;
-	FLOAT SlopeScaledDepthBias;
-	BOOL DepthClipEnable;
-	BOOL ScissorEnable;
-	BOOL MultisampleEnable;
-	BOOL AntialiasedLineEnable;
+	D3D11_FILL_MODE FillMode = D3D11_FILL_SOLID;
+	D3D11_CULL_MODE CullMode = D3D11_CULL_BACK;
+	BOOL FrontCounterClockwise = FALSE;
+	INT DepthBias = D3D11_DEFAULT_DEPTH_BIAS;
+	FLOAT DepthBiasClamp = D3D11_DEFAULT_DEPTH_BIAS_CLAMP;
+	FLOAT SlopeScaledDepthBias = D3D11_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
+	BOOL DepthClipEnable = TRUE;
+	BOOL ScissorEnable = FALSE;
+	BOOL MultisampleEnable = FALSE;
+	BOOL AntialiasedLineEnable = FALSE;
 }
 
 
@@ -434,7 +448,7 @@ interface ID3D11Resource : ID3D11DeviceChild
 struct D3D11_BUFFER_DESC
 {
 	UINT ByteWidth;
-	D3D11_USAGE Usage;
+	D3D11_USAGE Usage = D3D11_USAGE_DEFAULT;
 	UINT BindFlags;
 	UINT CPUAccessFlags;
 	UINT MiscFlags;
@@ -454,10 +468,10 @@ struct D3D11_TEXTURE1D_DESC
 {
 	UINT Width;
 	UINT MipLevels;
-	UINT ArraySize;
+	UINT ArraySize = 1;
 	DXGI_FORMAT Format;
-	D3D11_USAGE Usage;
-	UINT BindFlags;
+	D3D11_USAGE Usage = D3D11_USAGE_DEFAULT;
+	UINT BindFlags = D3D11_BIND_SHADER_RESOURCE;
 	UINT CPUAccessFlags;
 	UINT MiscFlags;
 }
@@ -477,11 +491,11 @@ struct D3D11_TEXTURE2D_DESC
 	UINT Width;
 	UINT Height;
 	UINT MipLevels;
-	UINT ArraySize;
+	UINT ArraySize = 1;
 	DXGI_FORMAT Format;
-	DXGI_SAMPLE_DESC SampleDesc;
-	D3D11_USAGE Usage;
-	UINT BindFlags;
+	DXGI_SAMPLE_DESC SampleDesc = {Quality: 0, Count: 1};
+	D3D11_USAGE Usage = D3D11_USAGE_DEFAULT;
+	UINT BindFlags = D3D11_BIND_SHADER_RESOURCE;
 	UINT CPUAccessFlags;
 	UINT MiscFlags;
 }
@@ -502,8 +516,8 @@ struct D3D11_TEXTURE3D_DESC
 	UINT Depth;
 	UINT MipLevels;
 	DXGI_FORMAT Format;
-	D3D11_USAGE Usage;
-	UINT BindFlags;
+	D3D11_USAGE Usage = D3D11_USAGE_DEFAULT;
+	UINT BindFlags = D3D11_BIND_SHADER_RESOURCE;
 	UINT CPUAccessFlags;
 	UINT MiscFlags;
 }
@@ -630,7 +644,7 @@ struct D3D11_TEX2DMS_ARRAY_SRV
 
 struct D3D11_SHADER_RESOURCE_VIEW_DESC
 {
-	DXGI_FORMAT Format;
+	DXGI_FORMAT Format = DXGI_FORMAT_UNKNOWN;
 	D3D11_SRV_DIMENSION ViewDimension;
 	union 
 	{
@@ -645,6 +659,72 @@ struct D3D11_SHADER_RESOURCE_VIEW_DESC
 		D3D11_TEXCUBE_SRV TextureCube;
 		D3D11_TEXCUBE_ARRAY_SRV TextureCubeArray;
 		D3D11_BUFFEREX_SRV BufferEx;
+	}
+
+	this(
+		 D3D11_SRV_DIMENSION viewDimension,
+	     DXGI_FORMAT format = DXGI_FORMAT_UNKNOWN,
+	     UINT mostDetailedMip = 0, // FirstElement for BUFFER
+	     UINT mipLevels = -1, // NumElements for BUFFER
+	     UINT firstArraySlice = 0, // First2DArrayFace for TEXTURECUBEARRAY
+	     UINT arraySize = -1, // NumCubes for TEXTURECUBEARRAY
+	     UINT flags = 0 ) // BUFFEREX only
+	{
+		Format = format;
+		ViewDimension = viewDimension;
+		switch (viewDimension)
+		{
+			case D3D11_SRV_DIMENSION_BUFFER:
+				Buffer.FirstElement = mostDetailedMip;
+				Buffer.NumElements = mipLevels;
+				break;
+			case D3D11_SRV_DIMENSION_TEXTURE1D:
+				Texture1D.MostDetailedMip = mostDetailedMip;
+				Texture1D.MipLevels = mipLevels;
+				break;
+			case D3D11_SRV_DIMENSION_TEXTURE1DARRAY:
+				Texture1DArray.MostDetailedMip = mostDetailedMip;
+				Texture1DArray.MipLevels = mipLevels;
+				Texture1DArray.FirstArraySlice = firstArraySlice;
+				Texture1DArray.ArraySize = arraySize;
+				break;
+			case D3D11_SRV_DIMENSION_TEXTURE2D:
+				Texture2D.MostDetailedMip = mostDetailedMip;
+				Texture2D.MipLevels = mipLevels;
+				break;
+			case D3D11_SRV_DIMENSION_TEXTURE2DARRAY:
+				Texture2DArray.MostDetailedMip = mostDetailedMip;
+				Texture2DArray.MipLevels = mipLevels;
+				Texture2DArray.FirstArraySlice = firstArraySlice;
+				Texture2DArray.ArraySize = arraySize;
+				break;
+			case D3D11_SRV_DIMENSION_TEXTURE2DMS:
+				break;
+			case D3D11_SRV_DIMENSION_TEXTURE2DMSARRAY:
+				Texture2DMSArray.FirstArraySlice = firstArraySlice;
+				Texture2DMSArray.ArraySize = arraySize;
+				break;
+			case D3D11_SRV_DIMENSION_TEXTURE3D:
+				Texture3D.MostDetailedMip = mostDetailedMip;
+				Texture3D.MipLevels = mipLevels;
+				break;
+			case D3D11_SRV_DIMENSION_TEXTURECUBE:
+				TextureCube.MostDetailedMip = mostDetailedMip;
+				TextureCube.MipLevels = mipLevels;
+				break;
+			case D3D11_SRV_DIMENSION_TEXTURECUBEARRAY:
+				TextureCubeArray.MostDetailedMip = mostDetailedMip;
+				TextureCubeArray.MipLevels = mipLevels;
+				TextureCubeArray.First2DArrayFace = firstArraySlice;
+				TextureCubeArray.NumCubes = arraySize;
+				break;
+			case D3D11_SRV_DIMENSION_BUFFEREX:
+				BufferEx.FirstElement = mostDetailedMip;
+				BufferEx.NumElements = mipLevels;
+				BufferEx.Flags = flags;
+				break;
+			default: break;
+		}
 	}
 }
 
@@ -716,7 +796,7 @@ struct D3D11_TEX3D_RTV
 
 struct D3D11_RENDER_TARGET_VIEW_DESC
 {
-	DXGI_FORMAT Format;
+	DXGI_FORMAT Format = DXGI_FORMAT_UNKNOWN;
 	D3D11_RTV_DIMENSION ViewDimension;
 	union 
 	{
@@ -728,6 +808,52 @@ struct D3D11_RENDER_TARGET_VIEW_DESC
 		D3D11_TEX2DMS_RTV Texture2DMS;
 		D3D11_TEX2DMS_ARRAY_RTV Texture2DMSArray;
 		D3D11_TEX3D_RTV Texture3D;
+	}
+
+	this(
+		D3D11_RTV_DIMENSION viewDimension,
+		DXGI_FORMAT format = DXGI_FORMAT_UNKNOWN,
+		UINT mipSlice = 0, // FirstElement for BUFFER
+		UINT firstArraySlice = 0, // NumElements for BUFFER, FirstWSlice for TEXTURE3D
+		UINT arraySize = -1 ) // WSize for TEXTURE3D
+	{
+		Format = format;
+		ViewDimension = viewDimension;
+		switch (viewDimension)
+		{
+			case D3D11_RTV_DIMENSION_BUFFER:
+				Buffer.FirstElement = mipSlice;
+				Buffer.NumElements = firstArraySlice;
+				break;
+			case D3D11_RTV_DIMENSION_TEXTURE1D:
+				Texture1D.MipSlice = mipSlice;
+				break;
+			case D3D11_RTV_DIMENSION_TEXTURE1DARRAY:
+				Texture1DArray.MipSlice = mipSlice;
+				Texture1DArray.FirstArraySlice = firstArraySlice;
+				Texture1DArray.ArraySize = arraySize;
+				break;
+			case D3D11_RTV_DIMENSION_TEXTURE2D:
+				Texture2D.MipSlice = mipSlice;
+				break;
+			case D3D11_RTV_DIMENSION_TEXTURE2DARRAY:
+				Texture2DArray.MipSlice = mipSlice;
+				Texture2DArray.FirstArraySlice = firstArraySlice;
+				Texture2DArray.ArraySize = arraySize;
+				break;
+			case D3D11_RTV_DIMENSION_TEXTURE2DMS:
+				break;
+			case D3D11_RTV_DIMENSION_TEXTURE2DMSARRAY:
+				Texture2DMSArray.FirstArraySlice = firstArraySlice;
+				Texture2DMSArray.ArraySize = arraySize;
+				break;
+			case D3D11_RTV_DIMENSION_TEXTURE3D:
+				Texture3D.MipSlice = mipSlice;
+				Texture3D.FirstWSlice = firstArraySlice;
+				Texture3D.WSize = arraySize;
+				break;
+			default: break;
+		}
 	}
 }
 
@@ -785,7 +911,7 @@ enum : D3D11_DSV_FLAG
 
 struct D3D11_DEPTH_STENCIL_VIEW_DESC
 {
-	DXGI_FORMAT Format;
+	DXGI_FORMAT Format = DXGI_FORMAT_UNKNOWN;
 	D3D11_DSV_DIMENSION ViewDimension;
 	UINT Flags;
 	union 
@@ -796,6 +922,45 @@ struct D3D11_DEPTH_STENCIL_VIEW_DESC
 		D3D11_TEX2D_ARRAY_DSV Texture2DArray;
 		D3D11_TEX2DMS_DSV Texture2DMS;
 		D3D11_TEX2DMS_ARRAY_DSV Texture2DMSArray;
+	}
+
+	this(
+		D3D11_DSV_DIMENSION viewDimension,
+		DXGI_FORMAT format = DXGI_FORMAT_UNKNOWN,
+		UINT mipSlice = 0,
+		UINT firstArraySlice = 0,
+		UINT arraySize = -1,
+		UINT flags = 0 )
+	{
+		Format = format;
+		ViewDimension = viewDimension;
+		Flags = flags;
+		switch (viewDimension)
+		{
+			case D3D11_DSV_DIMENSION_TEXTURE1D:
+				Texture1D.MipSlice = mipSlice;
+				break;
+			case D3D11_DSV_DIMENSION_TEXTURE1DARRAY:
+				Texture1DArray.MipSlice = mipSlice;
+				Texture1DArray.FirstArraySlice = firstArraySlice;
+				Texture1DArray.ArraySize = arraySize;
+				break;
+			case D3D11_DSV_DIMENSION_TEXTURE2D:
+				Texture2D.MipSlice = mipSlice;
+				break;
+			case D3D11_DSV_DIMENSION_TEXTURE2DARRAY:
+				Texture2DArray.MipSlice = mipSlice;
+				Texture2DArray.FirstArraySlice = firstArraySlice;
+				Texture2DArray.ArraySize = arraySize;
+				break;
+			case D3D11_DSV_DIMENSION_TEXTURE2DMS:
+				break;
+			case D3D11_DSV_DIMENSION_TEXTURE2DMSARRAY:
+				Texture2DMSArray.FirstArraySlice = firstArraySlice;
+				Texture2DMSArray.ArraySize = arraySize;
+				break;
+			default: break;
+		}
 	}
 }
 
@@ -857,7 +1022,7 @@ struct D3D11_TEX3D_UAV
 
 struct D3D11_UNORDERED_ACCESS_VIEW_DESC
 {
-	DXGI_FORMAT Format;
+	DXGI_FORMAT Format = DXGI_FORMAT_UNKNOWN;
 	D3D11_UAV_DIMENSION ViewDimension;
 	union 
 	{
@@ -867,6 +1032,48 @@ struct D3D11_UNORDERED_ACCESS_VIEW_DESC
 		D3D11_TEX2D_UAV Texture2D;
 		D3D11_TEX2D_ARRAY_UAV Texture2DArray;
 		D3D11_TEX3D_UAV Texture3D;
+	}
+
+	this(
+		D3D11_UAV_DIMENSION viewDimension,
+		DXGI_FORMAT format = DXGI_FORMAT_UNKNOWN,
+		UINT mipSlice = 0, // FirstElement for BUFFER
+		UINT firstArraySlice = 0, // NumElements for BUFFER, FirstWSlice for TEXTURE3D
+		UINT arraySize = -1, // WSize for TEXTURE3D
+		UINT flags = 0 ) // BUFFER only
+	{
+		Format = format;
+		ViewDimension = viewDimension;
+		switch (viewDimension)
+		{
+			case D3D11_UAV_DIMENSION_BUFFER:
+				Buffer.FirstElement = mipSlice;
+				Buffer.NumElements = firstArraySlice;
+				Buffer.Flags = flags;
+				break;
+			case D3D11_UAV_DIMENSION_TEXTURE1D:
+				Texture1D.MipSlice = mipSlice;
+				break;
+			case D3D11_UAV_DIMENSION_TEXTURE1DARRAY:
+				Texture1DArray.MipSlice = mipSlice;
+				Texture1DArray.FirstArraySlice = firstArraySlice;
+				Texture1DArray.ArraySize = arraySize;
+				break;
+			case D3D11_UAV_DIMENSION_TEXTURE2D:
+				Texture2D.MipSlice = mipSlice;
+				break;
+			case D3D11_UAV_DIMENSION_TEXTURE2DARRAY:
+				Texture2DArray.MipSlice = mipSlice;
+				Texture2DArray.FirstArraySlice = firstArraySlice;
+				Texture2DArray.ArraySize = arraySize;
+				break;
+			case D3D11_UAV_DIMENSION_TEXTURE3D:
+				Texture3D.MipSlice = mipSlice;
+				Texture3D.FirstWSlice = firstArraySlice;
+				Texture3D.WSize = arraySize;
+				break;
+			default: break;
+		}
 	}
 }
 
@@ -1019,16 +1226,16 @@ enum : D3D11_TEXTURE_ADDRESS_MODE
 
 struct D3D11_SAMPLER_DESC
 {
-	D3D11_FILTER Filter;
-	D3D11_TEXTURE_ADDRESS_MODE AddressU;
-	D3D11_TEXTURE_ADDRESS_MODE AddressV;
-	D3D11_TEXTURE_ADDRESS_MODE AddressW;
-	FLOAT MipLODBias;
-	UINT MaxAnisotropy;
-	D3D11_COMPARISON_FUNC ComparisonFunc;
-	FLOAT[ 4 ] BorderColor;
-	FLOAT MinLOD;
-	FLOAT MaxLOD;
+	D3D11_FILTER Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	D3D11_TEXTURE_ADDRESS_MODE AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	D3D11_TEXTURE_ADDRESS_MODE AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	D3D11_TEXTURE_ADDRESS_MODE AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	FLOAT MipLODBias = 0;
+	UINT MaxAnisotropy = 1;
+	D3D11_COMPARISON_FUNC ComparisonFunc = D3D11_COMPARISON_NEVER;
+	FLOAT[ 4 ] BorderColor = [1.0f, 1.0f, 1.0f, 1.0f];
+	FLOAT MinLOD = -3.402823466e+38F;
+	FLOAT MaxLOD = 3.402823466e+38F;
 }
 
 	
