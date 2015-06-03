@@ -267,8 +267,8 @@ else
 	// Returned by IXAudio2::GetDeviceDetails
 	struct XAUDIO2_DEVICE_DETAILS
 	{
-		WCHAR DeviceID[256];                // String identifier for the audio device.
-		WCHAR DisplayName[256];             // Friendly name suitable for display to a human.
+		WCHAR[256] DeviceID;                // String identifier for the audio device.
+		WCHAR[256] DisplayName;             // Friendly name suitable for display to a human.
 		XAUDIO2_DEVICE_ROLE Role;           // Roles that the device should be used for.
 		WAVEFORMATEXTENSIBLE OutputFormat;  // The device's native PCM audio output format.
 	}

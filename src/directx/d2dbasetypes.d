@@ -174,7 +174,7 @@ struct D2D_MATRIX_4X3_F
             FLOAT _41, _42, _43;
         }
         
-        FLOAT m[4][3];
+        FLOAT[4][3] m;
     };
 }
 
@@ -199,7 +199,7 @@ struct D2D_MATRIX_4X4_F
         
         }
         
-        FLOAT m[4][4];
+        FLOAT[4][4] m;
     }
 }
 
@@ -224,6 +224,6 @@ struct D2D_MATRIX_5X4_F
         
         }
    
-        FLOAT m[5][4];
+        FLOAT[5][4] m;
     }
 }
