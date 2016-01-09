@@ -1,6 +1,6 @@
 module directx.com;
 public import directx.win32;
-public import std.c.windows.com;
+public import core.sys.windows.com;
 
 
 alias const(GUID)* REFGUID, REFIID, REFCLSID, REFFMTID;

@@ -1,7 +1,7 @@
 module directx.win32;
-public import std.c.windows.windows;
+public import core.sys.windows.windows;
 
-public import std.c.windows.com;
+public import core.sys.windows.com;
 
 HRESULT MAKE_HRESULT(bool s, uint f, uint c) {
 	return (s << 31) | (f << 16) | c;

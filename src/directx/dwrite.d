@@ -15,7 +15,6 @@ public import directx.dcommon;
 import directx.d2d1;
 import directx.d2d1helper;
 import directx.d2dbasetypes;
-import directx.wingdi;
 
 /// <summary>
 /// The type of a font represented by a single font file.
