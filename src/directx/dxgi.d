@@ -6,6 +6,21 @@ public import directx.dxgiformat;
 import directx.win32;
 import directx.com;
 
+__gshared _CreateDXGIFactory  CreateDXGIFactory;  // Windows Vista
+__gshared _CreateDXGIFactory1 CreateDXGIFactory1; // Windows 7
+__gshared _CreateDXGIFactory2 CreateDXGIFactory2; // Windows 8.1
+
+extern (Windows) {
+    alias _CreateDXGIFactory = HRESULT function(REFIID riid,
+                                                void** ppFactory);
+
+    alias _CreateDXGIFactory1 = HRESULT function(REFIID riid,
+                                                 void** ppFactory);
+
+    alias _CreateDXGIFactory2 = HRESULT function(UINT Flags, REFIID riid,
+                                                 void** ppFactory);
+}
+
 enum DXGI_CPU_ACCESS_NONE              = ( 0 );
 enum DXGI_CPU_ACCESS_DYNAMIC           = ( 1 );
 enum DXGI_CPU_ACCESS_READ_WRITE        = ( 2 );
@@ -371,11 +386,6 @@ interface IDXGIFactory : IDXGIObject
 				HMODULE Module, 
 				IDXGIAdapter* ppAdapter);
 }
-
-
-extern(Windows) HRESULT CreateDXGIFactory(REFIID riid, void** ppFactory);
-extern(Windows) HRESULT CreateDXGIFactory1(REFIID riid, void** ppFactory);
-
 
 mixin( uuid!(IDXGIDevice, "54ec77fa-1377-44e6-8c32-88fd5f44c84c") );
 interface IDXGIDevice : IDXGIObject

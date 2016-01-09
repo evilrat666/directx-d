@@ -8,7 +8,7 @@ module directx.d2dbasetypes;
 //---------------------------------------------------------------------------
 import directx.dxgitype;
 import directx.win32 : UINT32, FLOAT, POINT, RECT;
-import directx.d3d9types : D3DCOLORVALUE;
+import directx.d3dcommon : D3DCOLORVALUE;
 
 //+-----------------------------------------------------------------------------
 //

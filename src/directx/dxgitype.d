@@ -2,7 +2,7 @@ module directx.dxgitype;
 
 import directx.win32;
 import directx.dxgiformat;
-import directx.d3d9types;
+import directx.d3dcommon;
 
 
 enum _FACDXGI   = 0x87a;

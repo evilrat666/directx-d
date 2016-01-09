@@ -9,7 +9,6 @@ public import directx.dxgi;
 public import directx.d3dcommon;
 public import directx.com;
 
-
 enum _FACD3D11 = 0x87c;
 enum _FACD3D11DEBUG	= _FACD3D11 + 1;
 
@@ -2317,24 +2316,20 @@ import directx.d3d11sdklayers;
 //          D3D11CreateDevice
 //
 ///////////////////////////////////////////////////////////////////////////
-alias extern(Windows) HRESULT function ( IDXGIAdapter, 
-    D3D_DRIVER_TYPE, HMODULE, UINT, 
-    const(D3D_FEATURE_LEVEL)*,
-    UINT FeatureLevels, UINT, ID3D11Device*, 
-    D3D_FEATURE_LEVEL*, ID3D11DeviceContext* ) PFN_D3D11_CREATE_DEVICE;
 
-extern(Windows)
-HRESULT D3D11CreateDevice(
-    IDXGIAdapter pAdapter,
-    D3D_DRIVER_TYPE DriverType,
-    HMODULE Software,
-    UINT Flags,
-    const(D3D_FEATURE_LEVEL)* pFeatureLevels,
-    UINT FeatureLevels,
-    UINT SDKVersion,
-    ID3D11Device* ppDevice,
-    D3D_FEATURE_LEVEL* pFeatureLevel,
-    ID3D11DeviceContext* ppImmediateContext );
+__gshared _D3D11CreateDevice D3D11CreateDevice;
+
+extern (Windows)
+alias _D3D11CreateDevice = HRESULT function(IDXGIAdapter        pAdapter,
+                                            D3D_DRIVER_TYPE     DriverType,
+                                            HMODULE             Software,
+                                            UINT                Flags,
+                                            const(D3D_FEATURE_LEVEL)* pFeatureLevels,
+                                            UINT                FeatureLevels,
+                                            UINT                SDKVersion,
+                                            ID3D11Device        *ppDevice,
+                                            D3D_FEATURE_LEVEL   *pFeatureLevel,
+                                            ID3D11DeviceContext *ppImmediateContext);
 
 ///////////////////////////////////////////////////////////////////////////
 // D3D11CreateDeviceAndSwapChain
@@ -2390,15 +2385,10 @@ HRESULT D3D11CreateDevice(
 //
 ///////////////////////////////////////////////////////////////////////////
 
-alias extern(Windows) HRESULT function ( IDXGIAdapter, 
-    D3D_DRIVER_TYPE, HMODULE, UINT, 
-    const(D3D_FEATURE_LEVEL)*, 
-    UINT FeatureLevels, UINT, const(DXGI_SWAP_CHAIN_DESC)*, 
-    IDXGISwapChain*, ID3D11Device*, 
-    D3D_FEATURE_LEVEL*, ID3D11DeviceContext* ) PFN_D3D11_CREATE_DEVICE_AND_SWAP_CHAIN;
+__gshared _D3D11CreateDeviceAndSwapChain D3D11CreateDeviceAndSwapChain;
 
 extern(Windows)
-HRESULT D3D11CreateDeviceAndSwapChain(
+alias _D3D11CreateDeviceAndSwapChain = HRESULT function(
     IDXGIAdapter pAdapter,
     D3D_DRIVER_TYPE DriverType,
     HMODULE Software,
@@ -2410,6 +2400,4 @@ HRESULT D3D11CreateDeviceAndSwapChain(
     IDXGISwapChain* ppSwapChain,
     ID3D11Device* ppDevice,
     D3D_FEATURE_LEVEL* pFeatureLevel,
-    ID3D11DeviceContext* ppImmediateContext );
-
-
+    ID3D11DeviceContext* ppImmediateContext);
