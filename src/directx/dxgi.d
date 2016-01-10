@@ -1,32 +1,16 @@
 module directx.dxgi;
 
-public import directx.dxgitype;
-public import directx.dxgiformat;
-
 import directx.win32;
 import directx.com;
 
-__gshared _CreateDXGIFactory  CreateDXGIFactory;  // Windows Vista
-__gshared _CreateDXGIFactory1 CreateDXGIFactory1; // Windows 7
-__gshared _CreateDXGIFactory2 CreateDXGIFactory2; // Windows 8.1
-
-extern (Windows) {
-    alias _CreateDXGIFactory = HRESULT function(REFIID riid,
-                                                void** ppFactory);
-
-    alias _CreateDXGIFactory1 = HRESULT function(REFIID riid,
-                                                 void** ppFactory);
-
-    alias _CreateDXGIFactory2 = HRESULT function(UINT Flags, REFIID riid,
-                                                 void** ppFactory);
-}
+public import directx.dxgitype;
+public import directx.dxgiformat;
 
 enum DXGI_CPU_ACCESS_NONE              = ( 0 );
 enum DXGI_CPU_ACCESS_DYNAMIC           = ( 1 );
 enum DXGI_CPU_ACCESS_READ_WRITE        = ( 2 );
 enum DXGI_CPU_ACCESS_SCRATCH           = ( 3 );
 enum DXGI_CPU_ACCESS_FIELD             = 15;
-
 enum DXGI_USAGE_SHADER_INPUT           = ( 1L << (0 + 4) );
 enum DXGI_USAGE_RENDER_TARGET_OUTPUT   = ( 1L << (1 + 4) );
 enum DXGI_USAGE_BACK_BUFFER            = ( 1L << (2 + 4) );
@@ -50,15 +34,6 @@ struct DXGI_MAPPED_RECT
 	INT Pitch;
 	BYTE *pBits;
 }
-/*
-struct _LUID
-{
-	DWORD LowPart;
-	LONG HighPart;
-}
-alias _LUID LUID;
-alias _LUID* PLUID;
-*/
 
 struct DXGI_ADAPTER_DESC
 {
@@ -74,11 +49,10 @@ struct DXGI_ADAPTER_DESC
 }
 
 alias HANDLE HMONITOR;
-//DECLARE_HANDLE(HMONITOR);
 
 struct DXGI_OUTPUT_DESC
 {
-	WCHAR[ 32 ] DeviceName;
+	WCHAR[32] DeviceName;
 	RECT DesktopCoordinates;
 	BOOL AttachedToDesktop;
 	DXGI_MODE_ROTATION Rotation;
@@ -96,7 +70,6 @@ enum DXGI_RESOURCE_PRIORITY_NORMAL  = ( 0x78000000 );
 enum DXGI_RESOURCE_PRIORITY_HIGH    = ( 0xa0000000 );
 enum DXGI_RESOURCE_PRIORITY_MAXIMUM = ( 0xc8000000 );
 
-
 alias DXGI_RESIDENCY = int;
 enum : DXGI_RESIDENCY
 {
@@ -113,7 +86,6 @@ struct DXGI_SURFACE_DESC
 	DXGI_SAMPLE_DESC SampleDesc;
 }
 
-
 alias DXGI_SWAP_EFFECT = int;
 enum : DXGI_SWAP_EFFECT
 {
@@ -122,7 +94,6 @@ enum : DXGI_SWAP_EFFECT
     DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL = 3,
     DXGI_SWAP_EFFECT_FLIP_DISCARD    = 4
 }
-
 
 alias DXGI_SWAP_CHAIN_FLAG = int;
 enum : DXGI_SWAP_CHAIN_FLAG
@@ -144,11 +115,9 @@ struct DXGI_SWAP_CHAIN_DESC
 	UINT Flags;
 }
 
-
 mixin( uuid!(IDXGIObject, "aec22fb8-76f3-4639-9be0-28eb43a67a2e") );
-interface IDXGIObject : IUnknown
+extern (C++) interface IDXGIObject : IUnknown
 {
-	extern(Windows):
 	HRESULT SetPrivateData( 
 				REFGUID Name,
 				UINT DataSize,
@@ -167,22 +136,18 @@ interface IDXGIObject : IUnknown
 				REFIID riid,
 				void** ppParent);
 }
-   
 
 mixin( uuid!(IDXGIDeviceSubObject, "3d3e0379-f9de-4d58-bb6c-18d62992f1a6") );
-interface IDXGIDeviceSubObject : IDXGIObject
+extern (C++) interface IDXGIDeviceSubObject : IDXGIObject
 {
-	extern(Windows):
     HRESULT GetDevice( 
 				REFIID riid,
 				void** ppDevice);
 }
-  
-
+ 
 mixin( uuid!(IDXGIResource, "035f3ab4-482e-4e50-b41f-8a7f8bd8960b") );
-interface IDXGIResource : IDXGIDeviceSubObject
+extern (C++) interface IDXGIResource : IDXGIDeviceSubObject
 {
-    extern(Windows):
 	HRESULT GetSharedHandle( 
 				HANDLE* pSharedHandle);
 
@@ -195,12 +160,10 @@ interface IDXGIResource : IDXGIDeviceSubObject
 	HRESULT GetEvictionPriority( 
 				UINT* pEvictionPriority);
 }
-   
 
 mixin( uuid!(IDXGIKeyedMutex, "9d8e1289-d7b3-465f-8126-250e349af85d") );
-interface IDXGIKeyedMutex : IDXGIDeviceSubObject
+extern (C++) interface IDXGIKeyedMutex : IDXGIDeviceSubObject
 {
-	extern(Windows):
 	HRESULT AcquireSync( 
 				UINT64 Key,
 				DWORD dwMilliseconds);
@@ -209,16 +172,13 @@ interface IDXGIKeyedMutex : IDXGIDeviceSubObject
 				UINT64 Key);
 }
 
-
 enum DXGI_MAP_READ    = ( 1UL );
 enum DXGI_MAP_WRITE   = ( 2UL );
 enum DXGI_MAP_DISCARD = ( 4UL );
 
-
 mixin( uuid!(IDXGISurface, "cafcb56c-6ac3-4889-bf47-9e23bbd260ec") );
-interface IDXGISurface : IDXGIDeviceSubObject
+extern (C++) interface IDXGISurface : IDXGIDeviceSubObject
 {
-	extern(Windows):
 	HRESULT GetDesc( 
 				DXGI_SURFACE_DESC* pDesc);
 
@@ -229,11 +189,9 @@ interface IDXGISurface : IDXGIDeviceSubObject
 	HRESULT Unmap();
 }
  
-
 mixin( uuid!(IDXGISurface1, "4AE63092-6327-4c1b-80AE-BFE12EA32B86") );
-interface IDXGISurface1 : IDXGISurface
+extern (C++) interface IDXGISurface1 : IDXGISurface
 {
-	extern(Windows):
 	HRESULT GetDC( 
 				BOOL Discard,
 				HDC* phdc);
@@ -241,12 +199,10 @@ interface IDXGISurface1 : IDXGISurface
 	HRESULT ReleaseDC( 
 				RECT* pDirtyRect);
 }
-    
 
 mixin( uuid!(IDXGIAdapter, "2411e7e1-12ac-4ccf-bd14-9798e8534dc0") );
-interface IDXGIAdapter : IDXGIObject
+extern (C++) interface IDXGIAdapter : IDXGIObject
 {
-	extern(Windows):
 	HRESULT EnumOutputs( 
 				UINT Output,
 				IDXGIOutput* ppOutput);
@@ -259,11 +215,9 @@ interface IDXGIAdapter : IDXGIObject
 				LARGE_INTEGER* pUMDVersion);
 }
 
-
 mixin( uuid!(IDXGIOutput, "ae02eedb-c735-4690-8d52-5a8dc20213aa") );
-interface IDXGIOutput : IDXGIObject
+extern (C++) interface IDXGIOutput : IDXGIObject
 {
-	extern(Windows):
 	HRESULT GetDesc( 
 				DXGI_OUTPUT_DESC* pDesc);
 
@@ -304,19 +258,20 @@ interface IDXGIOutput : IDXGIObject
 	HRESULT  GetFrameStatistics( 
 				DXGI_FRAME_STATISTICS* pStats);
 }
-    
 
-enum DXGI_MAX_SWAP_CHAIN_BUFFERS      = ( 16 );
-enum DXGI_PRESENT_TEST                = 0x00000001UL;
-enum DXGI_PRESENT_DO_NOT_SEQUENCE     = 0x00000002UL;
-enum DXGI_PRESENT_RESTART             = 0x00000004UL;
-
-
+enum DXGI_MAX_SWAP_CHAIN_BUFFERS          = ( 16 );
+enum DXGI_PRESENT_TEST                    = 0x00000001UL;
+enum DXGI_PRESENT_DO_NOT_SEQUENCE         = 0x00000002UL;
+enum DXGI_PRESENT_RESTART                 = 0x00000004UL;
+enum DXGI_PRESENT_DO_NOT_WAIT             = 0x00000008UL;
+enum DXGI_PRESENT_STEREO_PREFER_RIGHT     = 0x00000010UL;
+enum DXGI_PRESENT_STEREO_TEMPORARY_MONO   = 0x00000020UL;
+enum DXGI_PRESENT_RESTRICT_TO_OUTPUT      = 0x00000040UL;
+enum DXGI_PRESENT_USE_DURATION            = 0x00000100UL;
 
 mixin( uuid!(IDXGISwapChain, "310d36a0-d2e7-4c0a-aa04-6a9d23b8886a") );
-interface IDXGISwapChain : IDXGIDeviceSubObject
+extern (C++) interface IDXGISwapChain : IDXGIDeviceSubObject
 {
-    extern(Windows):
 	HRESULT Present( 
 				UINT SyncInterval,
 				UINT Flags);
@@ -357,17 +312,14 @@ interface IDXGISwapChain : IDXGIDeviceSubObject
 				UINT* pLastPresentCount);
 }
     
-
 enum DXGI_MWA_NO_WINDOW_CHANGES      = ( 1 << 0 );
 enum DXGI_MWA_NO_ALT_ENTER           = ( 1 << 1 );
 enum DXGI_MWA_NO_PRINT_SCREEN        = ( 1 << 2 );
 enum DXGI_MWA_VALID                  = ( 0x7 );
-    
 
 mixin( uuid!(IDXGIFactory, "7b7166ec-21c7-44ae-b21a-c9ae321ae369") );
-interface IDXGIFactory : IDXGIObject
+extern (C++) interface IDXGIFactory : IDXGIObject
 {
-	extern(Windows):
 	HRESULT EnumAdapters( 
 				UINT Adapter,
 				IDXGIAdapter* ppAdapter);
@@ -389,10 +341,20 @@ interface IDXGIFactory : IDXGIObject
 				IDXGIAdapter* ppAdapter);
 }
 
+__gshared _CreateDXGIFactory CreateDXGIFactory;
+__gshared _CreateDXGIFactory1 CreateDXGIFactory1;
+
+extern (Windows) {
+    alias _CreateDXGIFactory = HRESULT function(REFIID riid,
+                                                void** ppFactory);
+
+    alias _CreateDXGIFactory1 = HRESULT function(REFIID riid,
+                                                 void** ppFactory);
+}
+
 mixin( uuid!(IDXGIDevice, "54ec77fa-1377-44e6-8c32-88fd5f44c84c") );
-interface IDXGIDevice : IDXGIObject
+extern (C++) interface IDXGIDevice : IDXGIObject
 {
-	extern(Windows):
 	HRESULT GetAdapter( 
 				IDXGIAdapter* pAdapter);
 
@@ -415,7 +377,6 @@ interface IDXGIDevice : IDXGIObject
 				INT* pPriority);
 }
 
-
 alias DXGI_ADAPTER_FLAG = int;
 enum : DXGI_ADAPTER_FLAG
 {
@@ -426,7 +387,7 @@ enum : DXGI_ADAPTER_FLAG
 
 struct DXGI_ADAPTER_DESC1
 {
-	WCHAR[ 128 ] Description;
+	WCHAR[128] Description;
 	UINT VendorId;
 	UINT DeviceId;
 	UINT SubSysId;
@@ -440,15 +401,13 @@ struct DXGI_ADAPTER_DESC1
 
 struct DXGI_DISPLAY_COLOR_SPACE
 {
-	FLOAT[ 8 ][ 2 ] PrimaryCoordinates;
-	FLOAT[ 16 ][ 2 ] WhitePoints;
+	FLOAT[8 ][2] PrimaryCoordinates;
+	FLOAT[16][2] WhitePoints;
 }
 
-
 mixin( uuid!(IDXGIFactory1, "770aae78-f26f-4dba-a829-253c83d1b387") );
-interface IDXGIFactory1 : IDXGIFactory
+extern (C++) interface IDXGIFactory1 : IDXGIFactory
 {
-	extern(Windows):
 	HRESULT EnumAdapters1( 
 				UINT Adapter,
 				IDXGIAdapter1* ppAdapter);
@@ -456,20 +415,16 @@ interface IDXGIFactory1 : IDXGIFactory
 	BOOL IsCurrent();
 }
    
-
 mixin( uuid!(IDXGIAdapter1, "29038f61-3839-4626-91fd-086879011a05") );
-interface IDXGIAdapter1 : IDXGIAdapter
+extern (C++) interface IDXGIAdapter1 : IDXGIAdapter
 {
-	extern(Windows):
 	HRESULT GetDesc1( 
 				DXGI_ADAPTER_DESC1* pDesc);
 }
 
-
 mixin( uuid!(IDXGIDevice1, "77db970f-6276-48ba-ba28-070143b4392c") );
-interface IDXGIDevice1 : IDXGIDevice
+extern (C++) interface IDXGIDevice1 : IDXGIDevice
 {
-	extern(Windows):
 	HRESULT SetMaximumFrameLatency( 
 				UINT MaxLatency);
 

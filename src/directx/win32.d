@@ -1,8 +1,9 @@
 module directx.win32;
-public import core.sys.windows.windows;
 
+public import core.sys.windows.windows;
 public import core.sys.windows.com;
 
+pure nothrow @safe @nogc
 HRESULT MAKE_HRESULT(bool s, uint f, uint c) {
 	return (s << 31) | (f << 16) | c;
 }
@@ -43,9 +44,8 @@ alias SIZEL = SIZE;
 alias PSIZEL = SIZE*;
 alias LPSIZEL = SIZE*;
 
-
 // ======= XAudio2 stuff
-version(HAS_WIN32)
+version (HAS_WIN32)
 {
 }
 else
@@ -79,4 +79,5 @@ struct WAVEFORMATEXTENSIBLE
 	DWORD dwChannelMask;          // Positions of the audio channels
 	GUID SubFormat;               // Format identifier GUID
 }
-}
+
+} // !version (HAS_WIN32)

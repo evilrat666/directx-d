@@ -1,20 +1,16 @@
 module directx.dxgi1_2;
 
-import directx.dxgi;
-import directx.dxgitype;
 import directx.win32;
 import directx.com;
- 
+import directx.dxgi;
 	
 mixin( uuid!(IDXGIDisplayControl, "ea9dbf1a-c88e-4486-854a-98aa0138f30c") );
-interface IDXGIDisplayControl : IUnknown
+extern (C++) interface IDXGIDisplayControl : IUnknown
 {
-	extern(Windows):
     BOOL IsStereoEnabled();
 
 	void SetStereoEnabled( 
             BOOL enabled);
-
 }
 
 struct DXGI_OUTDUPL_MOVE_RECT
@@ -35,7 +31,6 @@ struct DXGI_OUTDUPL_POINTER_POSITION
 	POINT Position;
 	BOOL Visible;
 }
-
 
 alias DXGI_OUTDUPL_POINTER_SHAPE_TYPE = int;
 enum : DXGI_OUTDUPL_POINTER_SHAPE_TYPE
@@ -66,12 +61,9 @@ struct DXGI_OUTDUPL_FRAME_INFO
 	UINT PointerShapeBufferSize;
 }
 
-
-
 mixin( uuid!(IDXGIOutputDuplication, "191cfac3-a341-470d-b26e-a864f428319c") );
-interface IDXGIOutputDuplication : IDXGIObject
+extern (C++) interface IDXGIOutputDuplication : IDXGIObject
 {
-    extern(Windows):
 	void GetDesc( 
             /*out*/ DXGI_OUTDUPL_DESC* pDesc);
 
@@ -102,7 +94,6 @@ interface IDXGIOutputDuplication : IDXGIObject
 	HRESULT UnMapDesktopSurface();
 
 	HRESULT ReleaseFrame();
-
 }
 
 alias DXGI_ALPHA_MODE = int;
@@ -115,23 +106,18 @@ enum : DXGI_ALPHA_MODE
 	DXGI_ALPHA_MODE_FORCE_DWORD	= 0xffffffff
 }
 
-
 mixin( uuid!(IDXGISurface2, "aba496dd-b617-4cb8-a866-bc44d7eb1fa2") );
-interface IDXGISurface2 : IDXGISurface1
+extern (C++) interface IDXGISurface2 : IDXGISurface1
 {
-	extern(Windows):
 	HRESULT GetResource( 
             REFIID riid,
             /*out*/ void** ppParentResource,
             /*out*/ UINT* pSubresourceIndex);
-
 }
-    
 
 mixin( uuid!(IDXGIResource1, "30961379-4609-4a41-998e-54fe567ee0c1") );
-interface IDXGIResource1 : IDXGIResource
+extern (C++) interface IDXGIResource1 : IDXGIResource
 {
-	extern(Windows):
 	HRESULT CreateSubresourceSurface( 
             UINT index,
             /*out*/ IDXGISurface2* ppSurface);
@@ -141,9 +127,7 @@ interface IDXGIResource1 : IDXGIResource
             DWORD dwAccess,
             LPCWSTR lpName,
             /*out*/ HANDLE* pHandle);
-
 }
-    
 
 alias DXGI_OFFER_RESOURCE_PRIORITY = int;
 enum : DXGI_OFFER_RESOURCE_PRIORITY
@@ -153,12 +137,9 @@ enum : DXGI_OFFER_RESOURCE_PRIORITY
 	DXGI_OFFER_RESOURCE_PRIORITY_HIGH	= ( DXGI_OFFER_RESOURCE_PRIORITY_NORMAL + 1 ) 
 }
 
-
-    
 mixin( uuid!(IDXGIDevice2, "05008617-fbfd-4051-a790-144884b4f6a9") );
-interface IDXGIDevice2 : IDXGIDevice1
+extern (C++) interface IDXGIDevice2 : IDXGIDevice1
 {
-	extern(Windows):
 	HRESULT OfferResources( 
             UINT NumResources,
             const(IDXGIResource)* ppResources,
@@ -171,10 +152,7 @@ interface IDXGIDevice2 : IDXGIDevice1
 
 	HRESULT EnqueueSetEvent( 
             HANDLE hEvent);
-
 }
-    
-
 
 enum DXGI_ENUM_MODES_STEREO	= ( 4UL );
 enum DXGI_ENUM_MODES_DISABLED_STEREO =	( 8UL );
@@ -231,12 +209,9 @@ struct DXGI_PRESENT_PARAMETERS
 	POINT *pScrollOffset;
 }
 
-
-
 mixin( uuid!(IDXGISwapChain1, "790a45f7-0d42-4876-983a-0a55cfe6f4aa") );
-interface IDXGISwapChain1 : IDXGISwapChain
+extern (C++) interface IDXGISwapChain1 : IDXGISwapChain
 {
-	extern(Windows):
 	HRESULT GetDesc1( 
             /*out*/ DXGI_SWAP_CHAIN_DESC1* pDesc);
 
@@ -270,15 +245,12 @@ interface IDXGISwapChain1 : IDXGISwapChain
             DXGI_MODE_ROTATION Rotation);
 
 	HRESULT GetRotation( 
-            /*out*/ DXGI_MODE_ROTATION* pRotation) ;
-
+            /*out*/ DXGI_MODE_ROTATION* pRotation);
 }
-    
-   
+
 mixin( uuid!(IDXGIFactory2, "50c83a1c-e072-4c48-87b0-3630fa36a6d0") );
-interface IDXGIFactory2 : IDXGIFactory1
+extern (C++) interface IDXGIFactory2 : IDXGIFactory1
 {
-	extern(Windows):
 	BOOL IsWindowedStereoEnabled();
         
 	HRESULT CreateSwapChainForHwnd( 
@@ -329,7 +301,6 @@ interface IDXGIFactory2 : IDXGIFactory1
             const(DXGI_SWAP_CHAIN_DESC1)* pDesc,
             IDXGIOutput pRestrictToOutput,
             /*out*/ IDXGISwapChain1* ppSwapChain);
-
 }
     
 alias DXGI_GRAPHICS_PREEMPTION_GRANULARITY = int;
@@ -368,22 +339,16 @@ struct DXGI_ADAPTER_DESC2
 	DXGI_COMPUTE_PREEMPTION_GRANULARITY ComputePreemptionGranularity;
 }
 
-
-
 mixin( uuid!(IDXGIAdapter2, "0AA1AE0A-FA0E-4B84-8644-E05FF8E5ACB5") );
-interface IDXGIAdapter2 : IDXGIAdapter1
+extern (C++) interface IDXGIAdapter2 : IDXGIAdapter1
 {
-	extern(Windows):
 	HRESULT GetDesc2( 
             /*out*/ DXGI_ADAPTER_DESC2* pDesc);
-
 }
-    
-   
+
 mixin( uuid!(IDXGIOutput1, "00cddea8-939b-4b83-a340-a685226666cc") );
-interface IDXGIOutput1 : IDXGIOutput
+extern (C++) interface IDXGIOutput1 : IDXGIOutput
 {
-	extern(Windows):
 	HRESULT GetDisplayModeList1( 
             DXGI_FORMAT EnumFormat,
             UINT Flags,
@@ -401,7 +366,4 @@ interface IDXGIOutput1 : IDXGIOutput
 	HRESULT DuplicateOutput( 
             IUnknown pDevice,
             /*out*/ IDXGIOutputDuplication* ppOutputDuplication);
-
 }
-    
-

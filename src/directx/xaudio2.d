@@ -1,24 +1,22 @@
-/**************************************************************************
-*
-* Copyright (c) Microsoft Corporation.  All rights reserved.
-*
-* File:    xaudio2.h
-* Content: Declarations for the XAudio2 game audio API.
-*
-**************************************************************************/
-
-/**************************************************************************
-*
-* XAudio2 COM object class and interface IDs.
-*
-**************************************************************************/
-
 module directx.xaudio2;
+/**************************************************************************
+ *
+ * Copyright (c) Microsoft Corporation.  All rights reserved.
+ *
+ * File:    xaudio2.h
+ * Content: Declarations for the XAudio2 game audio API.
+ *
+ **************************************************************************/
+
+/**************************************************************************
+ *
+ * XAudio2 COM object class and interface IDs.
+ *
+ **************************************************************************/
 
 import std.math;
 
 import directx.com;
-
 
 // oops, bad way defining it here
 //version=DXSDK_2010_6;

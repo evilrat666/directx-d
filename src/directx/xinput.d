@@ -1,12 +1,13 @@
-/***************************************************************************
-*                                                                          *
-*   XInput.h -- This module defines XBOX controller APIs                   *
-*               and constansts for the Windows platform.                   *
-*                                                                          *
-*   Copyright (c) Microsoft Corp. All rights reserved.                     *
-*                                                                          *
-***************************************************************************/
 module directx.xinput;
+/***************************************************************************
+ *                                                                          *
+ *   XInput.h -- This module defines XBOX controller APIs                   *
+ *               and constansts for the Windows platform.                   *
+ *                                                                          *
+ *   Copyright (c) Microsoft Corp. All rights reserved.                     *
+ *                                                                          *
+ ***************************************************************************/
+
 
 import directx.win32;
 

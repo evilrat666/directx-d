@@ -1,4 +1,12 @@
 module directx.d3d9;
+/*==========================================================================;
+ *
+ *  Copyright (C) Microsoft Corporation.  All Rights Reserved.
+ *
+ *  File:   d3d9.h
+ *  Content:    Direct3D include file
+ *
+ ****************************************************************************/
 
 import directx.win32;
 import directx.d3dcommon;

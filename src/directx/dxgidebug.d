@@ -1,8 +1,8 @@
 module directx.dxgidebug;
 
+import directx.win32;
 import directx.dxgi;
 import directx.com;
-import directx.win32;
 
 alias DXGI_DEBUG_RLO_FLAGS = DWORD;
 enum : DXGI_DEBUG_RLO_FLAGS {
@@ -45,7 +45,6 @@ enum : DXGI_INFO_QUEUE_MESSAGE_SEVERITY {
 alias int DXGI_INFO_QUEUE_MESSAGE_ID;
 
 enum DXGI_INFO_QUEUE_MESSAGE_ID_STRING_FROM_APPLICATION = 0;
-
 struct DXGI_INFO_QUEUE_MESSAGE {
     DXGI_DEBUG_ID                    Producer;
     DXGI_INFO_QUEUE_MESSAGE_CATEGORY Category;
@@ -57,11 +56,11 @@ struct DXGI_INFO_QUEUE_MESSAGE {
 
 struct DXGI_INFO_QUEUE_FILTER_DESC {
     UINT NumCategories;
-    DXGI_INFO_QUEUE_MESSAGE_CATEGORY *pCategoryList;
+    DXGI_INFO_QUEUE_MESSAGE_CATEGORY* pCategoryList;
     UINT NumSeverities;
-    DXGI_INFO_QUEUE_MESSAGE_SEVERITY *pSeverityList;
+    DXGI_INFO_QUEUE_MESSAGE_SEVERITY* pSeverityList;
     UINT NumIDs;
-    DXGI_INFO_QUEUE_MESSAGE_ID *pIDList;
+    DXGI_INFO_QUEUE_MESSAGE_ID* pIDList;
 }
 
 struct DXGI_INFO_QUEUE_FILTER {
@@ -71,12 +70,10 @@ struct DXGI_INFO_QUEUE_FILTER {
 
 enum DXGI_INFO_QUEUE_DEFAULT_MESSAGE_COUNT_LIMIT = 1024;
 
-__gshared _DXGIGetDebugInterface  DXGIGetDebugInterface;  // Windows 8
-__gshared _DXGIGetDebugInterface1 DXGIGetDebugInterface1; // Windows 8.1
+__gshared _DXGIGetDebugInterface DXGIGetDebugInterface;
 
 extern (Windows) {
-    alias _DXGIGetDebugInterface  = HRESULT function(REFIID riid, void **ppDebug);
-    alias _DXGIGetDebugInterface1 = HRESULT function(UINT Flags, REFIID riid, void **pDebug);
+    alias _DXGIGetDebugInterface = HRESULT function(REFIID riid, void** ppDebug);
 }
 
 mixin(uuid!(IDXGIInfoQueue, "D67441C7-672A-476f-9E82-CD55B44949CE"));
@@ -89,7 +86,7 @@ extern (C++) interface IDXGIInfoQueue : IUnknown {
     HRESULT GetMessage(DXGI_DEBUG_ID Producer,
                        UINT64 MessageIndex,
                        DXGI_INFO_QUEUE_MESSAGE *pMessage,
-                       SIZE_T *pMessageByteLength);
+                       SIZE_T* pMessageByteLength);
 
     UINT64 GetNumStoredMessagesAllowedByRetrievalFilters(DXGI_DEBUG_ID Producer);
 
@@ -104,11 +101,11 @@ extern (C++) interface IDXGIInfoQueue : IUnknown {
     UINT64 GetNumMessagesDeniedByStorageFilter(DXGI_DEBUG_ID Producer);
 
     HRESULT AddStorageFilterEntries(DXGI_DEBUG_ID Producer,
-                                    DXGI_INFO_QUEUE_FILTER *pFilter);
+                                    DXGI_INFO_QUEUE_FILTER* pFilter);
 
     HRESULT GetStorageFilter(DXGI_DEBUG_ID Producer,
                              DXGI_INFO_QUEUE_FILTER *pFilter,
-                             SIZE_T *pFilterByteLength);
+                             SIZE_T* pFilterByteLength);
 
     void ClearStorageFilter(DXGI_DEBUG_ID Producer);
 
@@ -119,18 +116,18 @@ extern (C++) interface IDXGIInfoQueue : IUnknown {
     HRESULT PushCopyOfStorageFilter(DXGI_DEBUG_ID Producer);
 
     HRESULT PushStorageFilter(DXGI_DEBUG_ID Producer,
-                              DXGI_INFO_QUEUE_FILTER *pFilter);
+                              DXGI_INFO_QUEUE_FILTER* pFilter);
 
     void PopStorageFilter(DXGI_DEBUG_ID Producer);
 
     UINT GetStorageFilterStackSize(DXGI_DEBUG_ID Producer);
 
     HRESULT AddRetrievalFilterEntries(DXGI_DEBUG_ID Producer,
-                                      DXGI_INFO_QUEUE_FILTER *pFilter);
+                                      DXGI_INFO_QUEUE_FILTER* pFilter);
 
     HRESULT GetRetrievalFilter(DXGI_DEBUG_ID Producer,
                                DXGI_INFO_QUEUE_FILTER *pFilter,
-                               SIZE_T *pFilterByteLength);
+                               SIZE_T* pFilterByteLength);
 
     void ClearRetrievalFilter(DXGI_DEBUG_ID Producer);
 
@@ -141,7 +138,7 @@ extern (C++) interface IDXGIInfoQueue : IUnknown {
     HRESULT PushCopyOfRetrievalFilter(DXGI_DEBUG_ID Producer);
 
     HRESULT PushRetrievalFilter(DXGI_DEBUG_ID Producer,
-                                DXGI_INFO_QUEUE_FILTER *pFilter);
+                                DXGI_INFO_QUEUE_FILTER* pFilter);
 
     void PopRetrievalFilter(DXGI_DEBUG_ID Producer);
 
@@ -183,10 +180,8 @@ extern (C++) interface IDXGIInfoQueue : IUnknown {
 }
 
 mixin(uuid!(IDXGIDebug, "119E7452-DE9E-40fe-8806-88F90C12B441"));
-extern (C++) interface IDXGIDebug :  IUnknown {
-    HRESULT ReportLiveObjects(
-                              GUID apiid,
-                              DXGI_DEBUG_RLO_FLAGS flags);
+extern (C++) interface IDXGIDebug : IUnknown {
+    HRESULT ReportLiveObjects(GUID apiid, DXGI_DEBUG_RLO_FLAGS flags);
 }
 
 mixin(uuid!(IDXGIDebug1, "c5a05f0c-16f2-4adf-9f4d-a8c4d58ac550"));

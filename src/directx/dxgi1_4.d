@@ -47,9 +47,9 @@ mixin(uuid!(IDXGIFactory4, "1bc6ea02-ef36-464f-bf0c-21ca39e5168a"));
 extern (C++) interface IDXGIFactory4 : IDXGIFactory3 {
     HRESULT EnumAdapterByLuid(LUID AdapterLuid,
                               REFIID riid,
-                              void** ppvAdapter);
+                              IDXGIAdapter* ppvAdapter);
 
-    HRESULT EnumWarpAdapter(REFIID riid, void** ppvAdapter);
+    HRESULT EnumWarpAdapter(REFIID riid, IDXGIAdapter* ppvAdapter);
 }
 
 alias DWORD DXGI_MEMORY_SEGMENT_GROUP;

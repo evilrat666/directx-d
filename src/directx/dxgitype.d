@@ -1,9 +1,11 @@
 module directx.dxgitype;
+//
+//    Copyright (C) Microsoft.  All rights reserved.
+//
 
 import directx.win32;
 import directx.dxgiformat;
 import directx.d3dcommon;
-
 
 enum _FACDXGI   = 0x87a;
 
@@ -15,6 +17,7 @@ HRESULT MAKE_DXGI_STATUS(T)(T code) {
 	return MAKE_HRESULT(0, _FACDXGI, code);
 }
 
+// DXGI error messages have moved to winerror.h
 enum DXGI_STATUS_OCCLUDED                   = MAKE_DXGI_STATUS(1);
 enum DXGI_STATUS_CLIPPED                    = MAKE_DXGI_STATUS(2);
 enum DXGI_STATUS_NO_REDIRECTION             = MAKE_DXGI_STATUS(4);
@@ -22,7 +25,6 @@ enum DXGI_STATUS_NO_DESKTOP_ACCESS          = MAKE_DXGI_STATUS(5);
 enum DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE = MAKE_DXGI_STATUS(6);
 enum DXGI_STATUS_MODE_CHANGED               = MAKE_DXGI_STATUS(7);
 enum DXGI_STATUS_MODE_CHANGE_IN_PROGRESS    = MAKE_DXGI_STATUS(8);
-
 
 enum DXGI_ERROR_INVALID_CALL                = MAKE_DXGI_HRESULT(1);
 enum DXGI_ERROR_NOT_FOUND                   = MAKE_DXGI_HRESULT(2);
@@ -40,22 +42,6 @@ enum DXGI_ERROR_NOT_CURRENTLY_AVAILABLE     = MAKE_DXGI_HRESULT(34);
 enum DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED  = MAKE_DXGI_HRESULT(35);
 enum DXGI_ERROR_REMOTE_OUTOFMEMORY          = MAKE_DXGI_HRESULT(36);
 
-
-
-enum DXGI_CPU_ACCESS_NONE                   = 0;
-enum DXGI_CPU_ACCESS_DYNAMIC                = 1;
-enum DXGI_CPU_ACCESS_READ_WRITE             = 2;
-enum DXGI_CPU_ACCESS_SCRATCH                = 3;
-enum DXGI_CPU_ACCESS_FIELD                  = 15;
-
-enum DXGI_USAGE_SHADER_INPUT                = 1L << (0 + 4);
-enum DXGI_USAGE_RENDER_TARGET_OUTPUT        = 1L << (1 + 4);
-enum DXGI_USAGE_BACK_BUFFER                 = 1L << (2 + 4);
-enum DXGI_USAGE_SHARED                      = 1L << (3 + 4);
-enum DXGI_USAGE_READ_ONLY                   = 1L << (4 + 4);
-enum DXGI_USAGE_DISCARD_ON_PRESENT          = 1L << (5 + 4);
-enum DXGI_USAGE_UNORDERED_ACCESS            = 1L << (6 + 4);
-
 struct DXGI_RGB
 {
     float Red;
@@ -63,7 +49,7 @@ struct DXGI_RGB
     float Blue;
 }
 
-alias DXGI_RGBA = D3DCOLORVALUE;
+alias D3DCOLORVALUE DXGI_RGBA;
 
 struct DXGI_GAMMA_CONTROL
 {
@@ -123,6 +109,10 @@ struct DXGI_MODE_DESC
     DXGI_MODE_SCANLINE_ORDER ScanlineOrdering;
     DXGI_MODE_SCALING Scaling;
 }
+
+// The following values are used with DXGI_SAMPLE_DESC::Quality:
+enum DXGI_STANDARD_MULTISAMPLE_QUALITY_PATTERN = 0xffffffff;
+enum DXGI_CENTER_MULTISAMPLE_QUALITY_PATTERN   = 0xfffffffe;
 
 struct DXGI_SAMPLE_DESC
 {

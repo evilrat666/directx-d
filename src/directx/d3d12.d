@@ -1,4 +1,9 @@
 module directx.d3d12;
+/*-------------------------------------------------------------------------------------
+ *
+ * Copyright (c) Microsoft Corporation
+ *
+ *-------------------------------------------------------------------------------------*/
 
 import directx.com;
 import directx.dxgi;
@@ -2425,22 +2430,22 @@ extern (C++) interface ID3D12Device : ID3D12Object {
     HRESULT CreateCommandQueue(
         const(D3D12_COMMAND_QUEUE_DESC)* pDesc,
         REFIID riid,
-        void** ppCommandQueue);
+        ID3D12CommandQueue* ppCommandQueue);
 
     HRESULT CreateCommandAllocator(
         D3D12_COMMAND_LIST_TYPE type,
         REFIID riid,
-        void** ppCommandAllocator);
+        ID3D12CommandAllocator* ppCommandAllocator);
 
     HRESULT CreateGraphicsPipelineState(
         const(D3D12_GRAPHICS_PIPELINE_STATE_DESC)* pDesc,
         REFIID riid,
-        void** ppPipelineState);
+        ID3D12PipelineState* ppPipelineState);
 
     HRESULT CreateComputePipelineState(
         const(D3D12_COMPUTE_PIPELINE_STATE_DESC)* pDesc,
         REFIID riid,
-        void** ppPipelineState);
+        ID3D12PipelineState* ppPipelineState);
 
     HRESULT CreateCommandList(
         UINT nodeMask,
@@ -2448,7 +2453,7 @@ extern (C++) interface ID3D12Device : ID3D12Object {
         ID3D12CommandAllocator pCommandAllocator,
         ID3D12PipelineState pInitialState,
         REFIID riid,
-        void** ppCommandList);
+        ID3D12CommandList* ppCommandList);
 
     HRESULT CheckFeatureSupport(
         D3D12_FEATURE Feature,
@@ -2458,7 +2463,7 @@ extern (C++) interface ID3D12Device : ID3D12Object {
     HRESULT CreateDescriptorHeap(
         const(D3D12_DESCRIPTOR_HEAP_DESC)* pDescriptorHeapDesc,
         REFIID riid,
-        void** ppvHeap);
+        ID3D12DescriptorHeap* ppvHeap);
 
     UINT GetDescriptorHandleIncrementSize(
         D3D12_DESCRIPTOR_HEAP_TYPE DescriptorHeapType);
@@ -2468,7 +2473,7 @@ extern (C++) interface ID3D12Device : ID3D12Object {
         const(void)* pBlobWithRootSignature,
         SIZE_T blobLengthInBytes,
         REFIID riid,
-        void** ppvRootSignature);
+        ID3D12RootSignature* ppvRootSignature);
 
     void CreateConstantBufferView(
         const(D3D12_CONSTANT_BUFFER_VIEW_DESC)* pDesc,
@@ -2530,12 +2535,12 @@ extern (C++) interface ID3D12Device : ID3D12Object {
         D3D12_RESOURCE_STATES InitialResourceState,
         const(D3D12_CLEAR_VALUE)* pOptimizedClearValue,
         REFIID riidResource,
-        void** ppvResource);
+        ID3D12Resource* ppvResource);
 
     HRESULT CreateHeap(
         const(D3D12_HEAP_DESC)* pDesc,
         REFIID riid,
-        void** ppvHeap);
+        ID3D12Heap* ppvHeap);
 
     HRESULT CreatePlacedResource(
         ID3D12Heap pHeap,
@@ -2544,14 +2549,14 @@ extern (C++) interface ID3D12Device : ID3D12Object {
         D3D12_RESOURCE_STATES InitialState,
         const(D3D12_CLEAR_VALUE)* pOptimizedClearValue,
         REFIID riid,
-        void** ppvResource);
+        ID3D12Resource* ppvResource);
 
     HRESULT CreateReservedResource(
         const(D3D12_RESOURCE_DESC)* pDesc,
         D3D12_RESOURCE_STATES InitialState,
         const(D3D12_CLEAR_VALUE)* pOptimizedClearValue,
         REFIID riid,
-        void** ppvResource);
+        ID3D12Resource* ppvResource);
 
     HRESULT CreateSharedHandle(
         ID3D12DeviceChild pObject,
@@ -2582,7 +2587,7 @@ extern (C++) interface ID3D12Device : ID3D12Object {
         UINT64 InitialValue,
         D3D12_FENCE_FLAGS Flags,
         REFIID riid,
-        void** ppFence);
+        ID3D12Fence* ppFence);
 
     HRESULT GetDeviceRemovedReason();
 
@@ -2599,7 +2604,7 @@ extern (C++) interface ID3D12Device : ID3D12Object {
     HRESULT CreateQueryHeap(
         const(D3D12_QUERY_HEAP_DESC)* pDesc,
         REFIID riid,
-        void** ppvHeap);
+        ID3D12QueryHeap* ppvHeap);
 
     HRESULT SetStablePowerState(
         BOOL Enable);
@@ -2608,7 +2613,7 @@ extern (C++) interface ID3D12Device : ID3D12Object {
         const(D3D12_COMMAND_SIGNATURE_DESC)* pDesc,
         ID3D12RootSignature pRootSignature,
         REFIID riid,
-        void** ppvCommandSignature);
+        ID3D12CommandSignature* ppvCommandSignature);
 
     void GetResourceTiling(
         ID3D12Resource pTiledResource,
@@ -2664,7 +2669,7 @@ extern (Windows) {
         HRESULT function(IUnknown          pAdapter,
                          D3D_FEATURE_LEVEL MinimumFeatureLevel,
                          REFIID            riid, // Expected: ID3D12Device
-                         void              *ppDevice);
+                         ID3D12Device     *ppDevice);
 
     alias PFN_D3D12_GET_DEBUG_INTERFACE = HRESULT function(REFIID riid,
                                                            void** ppvDebug);
