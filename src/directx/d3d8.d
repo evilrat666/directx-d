@@ -4,14 +4,6 @@ import directx.win32;
 import directx.com;
 import directx.d3dcommon;
 
-enum D3D_SDK_VERSION = 220;
-
-__gshared _Direct3DCreate8 Direct3DCreate8;
-
-extern (Windows) {
-    alias _Direct3DCreate8 = IDirect3D8 function(UINT SDKVersion);
-}
-
 extern (C++) interface IDirect3D8 : IUnknown {
     HRESULT RegisterSoftwareDevice(void* pInitializeFunction);
     UINT GetAdapterCount();
@@ -233,3 +225,11 @@ struct D3DLIGHT8 {
     float           Theta;            /* Inner angle of spotlight cone */
     float           Phi;              /* Outer angle of spotlight cone */
 }
+
+__gshared LPDIRECT3DCREATE8 Direct3DCreate8;
+
+extern (Windows) {
+    alias LPDIRECT3DCREATE8 = IDirect3D8 function(UINT SDKVersion);
+}
+
+enum D3D_SDK_VERSION = 220;

@@ -4,42 +4,6 @@ import directx.win32;
 import directx.com;
 import directx.d3dcommon;
 
-__gshared _DirectDrawCreateEx     DirectDrawCreateEx;
-__gshared _DirectDrawEnumerateExA DirectDrawEnumerateExA;
-
-extern (Windows) {
-    //alias LPDDENUMMODESCALLBACK = HRESULT function(LPDDSURFACEDESC, LPVOID);
-    alias LPDDENUMMODESCALLBACK2 = HRESULT function(LPDDSURFACEDESC2, LPVOID);
-    //alias LPDDENUMSURFACESCALLBACK = HRESULT function(LPDIRECTDRAWSURFACE, LPDDSURFACEDESC, LPVOID);
-    //alias LPDDENUMSURFACESCALLBACK2 = HRESULT function(LPDIRECTDRAWSURFACE4, LPDDSURFACEDESC2, LPVOID);
-    alias LPDDENUMSURFACESCALLBACK7 = HRESULT function(LPDIRECTDRAWSURFACE7, LPDDSURFACEDESC2, LPVOID);
-
-    alias LPCLIPPERCALLBACK = DWORD function(LPDIRECTDRAWCLIPPER lpDDClipper, HWND hWnd, DWORD code,
-                                             LPVOID lpContext);
-
-    enum {
-        DDCREATE_HARDWAREONLY  = 0x00000001,
-        DDCREATE_EMULATIONONLY = 0x00000002
-    }
-
-    alias _DirectDrawCreateEx = HRESULT function(GUID* lpGUID,
-                                                 LPVOID* lplpDD,
-                                                 REFIID iid,
-                                                 IUnknown* pUnkOuter);
-
-    enum {
-        DDENUM_ATTACHEDSECONDARYDEVICES = 0x00000001
-    }
-
-    alias LPDDENUMCALLBACKEXA = BOOL function(GUID*, LPSTR, LPSTR,
-                                              LPVOID, HMONITOR);
-
-    alias _DirectDrawEnumerateExA =
-        HRESULT function(LPDDENUMCALLBACKEXA lpCallback,
-                         LPVOID              lpContext,
-                         DWORD               dwFlags);
-}
-
 enum DD_ROP_SPACE = 256 / 32;
 
 struct DDSCAPS {
@@ -664,3 +628,39 @@ extern (C++) interface IDirect3DVertexBuffer7 : IUnknown {
     HRESULT ProcessVerticesStrided(DWORD,DWORD,DWORD,LPD3DDRAWPRIMITIVESTRIDEDDATA,DWORD,LPDIRECT3DDEVICE7,DWORD);
 };
 alias LPDIRECT3DVERTEXBUFFER7 = IDirect3DVertexBuffer7;
+
+__gshared LPDIRECTDRAWCREATEEX     DirectDrawCreateEx;
+__gshared LPDIRECTDRAWENUMERATEEXA DirectDrawEnumerateExA;
+
+extern (Windows) {
+    //alias LPDDENUMMODESCALLBACK = HRESULT function(LPDDSURFACEDESC, LPVOID);
+    alias LPDDENUMMODESCALLBACK2 = HRESULT function(LPDDSURFACEDESC2, LPVOID);
+    //alias LPDDENUMSURFACESCALLBACK = HRESULT function(LPDIRECTDRAWSURFACE, LPDDSURFACEDESC, LPVOID);
+    //alias LPDDENUMSURFACESCALLBACK2 = HRESULT function(LPDIRECTDRAWSURFACE4, LPDDSURFACEDESC2, LPVOID);
+    alias LPDDENUMSURFACESCALLBACK7 = HRESULT function(LPDIRECTDRAWSURFACE7, LPDDSURFACEDESC2, LPVOID);
+
+    alias LPCLIPPERCALLBACK = DWORD function(LPDIRECTDRAWCLIPPER lpDDClipper, HWND hWnd, DWORD code,
+                                             LPVOID lpContext);
+
+    enum {
+        DDCREATE_HARDWAREONLY  = 0x00000001,
+        DDCREATE_EMULATIONONLY = 0x00000002
+    }
+
+    alias LPDIRECTDRAWCREATEEX = HRESULT function(GUID* lpGUID,
+                                                  LPVOID* lplpDD,
+                                                  REFIID iid,
+                                                  IUnknown* pUnkOuter);
+
+    enum {
+        DDENUM_ATTACHEDSECONDARYDEVICES = 0x00000001
+    }
+
+    alias LPDDENUMCALLBACKEXA = BOOL function(GUID*, LPSTR, LPSTR,
+                                              LPVOID, HMONITOR);
+
+    alias LPDIRECTDRAWENUMERATEEXA =
+        HRESULT function(LPDDENUMCALLBACKEXA lpCallback,
+                         LPVOID              lpContext,
+                         DWORD               dwFlags);
+}

@@ -3,18 +3,6 @@ module directx.d3d9;
 import directx.win32;
 import directx.d3dcommon;
 
-enum D3D_SDK_VERSION = 32;
-
-__gshared _Direct3DCreate9   Direct3DCreate9;
-__gshared _Direct3DCreate9Ex Direct3DCreate9Ex;
-
-extern (Windows) {
-    alias _Direct3DCreate9 = IDirect3D9 function(UINT SDKVersion);
-
-    alias _Direct3DCreate9Ex = HRESULT function(UINT SDKVersion,
-                                                IDirect3D9Ex* ppD3D);
-}
-
 struct D3DVIEWPORT9 {
     DWORD       X;
     DWORD       Y;            /* Viewport Top left */
@@ -533,3 +521,15 @@ struct D3DENCRYPTED_BLOCK_INFO {
     UINT NumBytesInSkipPattern;
     UINT NumBytesInEncryptPattern;
 }
+
+__gshared LPDIRECT3DCREATE9   Direct3DCreate9;
+__gshared LPDIRECT3DCREATE9EX Direct3DCreate9Ex;
+
+extern (Windows) {
+    alias LPDIRECT3DCREATE9 = IDirect3D9 function(UINT SDKVersion);
+
+    alias LPDIRECT3DCREATE9EX = HRESULT function(UINT SDKVersion,
+                                                 IDirect3D9Ex* ppD3D);
+}
+
+enum D3D_SDK_VERSION = 32;
