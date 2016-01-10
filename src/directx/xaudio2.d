@@ -251,7 +251,8 @@ else
 	// Used in XAUDIO2_DEVICE_DETAILS below to describe the types of applications
 	// that the user has specified each device as a default for.  0 means that the
 	// device isn't the default for any role.
-	enum XAUDIO2_DEVICE_ROLE
+    alias DWORD XAUDIO2_DEVICE_ROLE;
+	enum : XAUDIO2_DEVICE_ROLE
 	{
 		NotDefaultDevice            = 0x0,
 		DefaultConsoleDevice        = 0x1,
