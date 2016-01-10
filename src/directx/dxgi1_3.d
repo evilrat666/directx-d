@@ -7,8 +7,8 @@ import directx.dxgi1_2;
 
 
 enum DXGI_CREATE_FACTORY_DEBUG = 0x1;
-extern(Windows) HRESULT CreateDXGIFactory2(UINT Flags, REFIID riid, /*out*/ void** ppFactory);
-extern(Windows) HRESULT DXGIGetDebugInterface1(UINT Flags, REFIID riid, /*out*/ void** pDebug);
+//extern(Windows) HRESULT CreateDXGIFactory2(UINT Flags, REFIID riid, /*out*/ void** ppFactory);
+//extern(Windows) HRESULT DXGIGetDebugInterface1(UINT Flags, REFIID riid, /*out*/ void** pDebug);
 
 
 
@@ -187,5 +187,18 @@ interface IDXGISwapChainMedia : IUnknown
             UINT DesiredPresentDuration,
             /*out*/ UINT* pClosestSmallerPresentDuration,
             /*out*/ UINT* pClosestLargerPresentDuration);
+}
 
+alias DWORD DXGI_OVERLAY_SUPPORT_FLAG;
+enum : DXGI_OVERLAY_SUPPORT_FLAG {
+    DXGI_OVERLAY_SUPPORT_FLAG_DIRECT  = 0x1,
+    DXGI_OVERLAY_SUPPORT_FLAG_SCALING = 0x2
+}
+
+mixin(uuid!(IDXGIOutput3, "8a6bb301-7e7e-41F4-a8e0-5b32f7f99b18"));
+
+extern (C++) interface IDXGIOutput3 : IDXGIOutput2 {
+    HRESULT CheckOverlaySupport(DXGI_FORMAT EnumFormat,
+                                IUnknown pConcernedDevice,
+                                UINT* pFlags);
 }

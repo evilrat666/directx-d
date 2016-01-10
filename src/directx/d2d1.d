@@ -3924,53 +3924,36 @@ interface ID2D1Factory : IUnknown
 	*/
 } // interface ID2D1Factory
 
-
+__gshared _D2D1CreateFactory      D2D1CreateFactory;
+__gshared _D2D1MakeRotateMatrix   D2D1MakeRotateMatrix;
+__gshared _D2D1MakeSkewMatrix     D2D1MakeSkewMatrix;
+__gshared _D2D1IsMatrixInvertible D2D1IsMatrixInvertible;
+__gshared _D2D1InvertMatrix       D2D1InvertMatrix;
            
-extern(Windows)
-{
-
-
+extern(Windows) {
     //
     // This export cannot be in a namespace because compiler name mangling isn't consistent
     // also, this must be 'C' callable.
     //
-    HRESULT
-    D2D1CreateFactory(
-        D2D1_FACTORY_TYPE factoryType,
-        REFIID riid,
-        const(D2D1_FACTORY_OPTIONS)* pFactoryOptions,
-        /*out*/ void **ppIFactory
-        );
+    alias _D2D1CreateFactory = HRESULT function(D2D1_FACTORY_TYPE factoryType,
+                                                REFIID riid,
+                                                const(D2D1_FACTORY_OPTIONS)* pFactoryOptions,
+                                                /*out*/ void **ppIFactory);
 
+    alias _D2D1MakeRotateMatrix = void function(FLOAT angle,
+                                                D2D1_POINT_2F center,
+                                                /*out*/ D2D1_MATRIX_3X2_F *matrix);
 
-    void 
-    D2D1MakeRotateMatrix(
-        FLOAT angle,
-        D2D1_POINT_2F center,
-        /*out*/ D2D1_MATRIX_3X2_F *matrix
-        );
+    alias _D2D1MakeSkewMatrix = void function(FLOAT angleX,
+                                              FLOAT angleY,
+                                              D2D1_POINT_2F center,
+                                              /*out*/ D2D1_MATRIX_3X2_F *matrix);
 
-    void 
-    D2D1MakeSkewMatrix(
-        FLOAT angleX,
-        FLOAT angleY,
-        D2D1_POINT_2F center,
-        /*out*/ D2D1_MATRIX_3X2_F *matrix
-        );
+    alias _D2D1IsMatrixInvertible = BOOL function(const(D2D1_MATRIX_3X2_F)* matrix);
 
-    BOOL 
-    D2D1IsMatrixInvertible(
-        const(D2D1_MATRIX_3X2_F)* matrix
-        );
-
-    BOOL 
-    D2D1InvertMatrix(
-        /*inout*/ D2D1_MATRIX_3X2_F* matrix
-        );
-
+    alias _D2D1InvertMatrix = BOOL function(/*inout*/ D2D1_MATRIX_3X2_F* matrix);
 }
-
-
+/+
 HRESULT
 D2D1CreateFactory(
     D2D1_FACTORY_TYPE factoryType,
@@ -3999,7 +3982,7 @@ HRESULT
             mixin("&IID_"~Factory.stringof),
             cast(void**)factory);
 }
-/+
+
 HRESULT
 D2D1CreateFactory(Factory)(
      D2D1_FACTORY_TYPE factoryType,
