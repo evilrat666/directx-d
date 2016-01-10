@@ -5,15 +5,8 @@ module directx.d3d11_2;
  *
  *-------------------------------------------------------------------------------------*/
 
-
-import directx.dxgi1_3;
-import directx.d3dcommon;
-import directx.d3d11;
-import directx.d3d11_1;
-
-
-extern(C)
-{
+public import directx.dxgi1_3;
+public import directx.d3d11_1;
 
 struct D3D11_TILED_RESOURCE_COORDINATE
 {
@@ -85,13 +78,9 @@ enum : D3D11_TILE_COPY_FLAG
 	D3D11_TILE_COPY_SWIZZLED_TILED_RESOURCE_TO_LINEAR_BUFFER	= 0x4
 }
 
-} // extern(C)
-
-
 mixin( uuid!(ID3D11DeviceContext2, "420d5b32-b90c-4da4-bef0-359f6a24a83a") );
-interface ID3D11DeviceContext2 : ID3D11DeviceContext1
+extern (C++) interface ID3D11DeviceContext2 : ID3D11DeviceContext1
 {
-    extern(Windows):
 	HRESULT UpdateTileMappings( 
 		ID3D11Resource pTiledResource,
 		UINT NumTiledResourceRegions,
@@ -104,78 +93,72 @@ interface ID3D11DeviceContext2 : ID3D11DeviceContext1
 		const(UINT)* pRangeTileCounts,
 		UINT Flags);
         
-		HRESULT CopyTileMappings( 
-			ID3D11Resource pDestTiledResource,
-			const(D3D11_TILED_RESOURCE_COORDINATE)* pDestRegionStartCoordinate,
-			ID3D11Resource pSourceTiledResource,
-			const(D3D11_TILED_RESOURCE_COORDINATE)* pSourceRegionStartCoordinate,
-			const(D3D11_TILE_REGION_SIZE)* pTileRegionSize,
-			UINT Flags);
+	HRESULT CopyTileMappings( 
+		ID3D11Resource pDestTiledResource,
+		const(D3D11_TILED_RESOURCE_COORDINATE)* pDestRegionStartCoordinate,
+		ID3D11Resource pSourceTiledResource,
+		const(D3D11_TILED_RESOURCE_COORDINATE)* pSourceRegionStartCoordinate,
+		const(D3D11_TILE_REGION_SIZE)* pTileRegionSize,
+		UINT Flags);
         
-		void CopyTiles( 
-			ID3D11Resource pTiledResource,
-			const(D3D11_TILED_RESOURCE_COORDINATE)* pTileRegionStartCoordinate,
-			const(D3D11_TILE_REGION_SIZE)* pTileRegionSize,
-			ID3D11Buffer pBuffer,
-			UINT64 BufferStartOffsetInBytes,
-			UINT Flags);
+	void CopyTiles( 
+		ID3D11Resource pTiledResource,
+		const(D3D11_TILED_RESOURCE_COORDINATE)* pTileRegionStartCoordinate,
+		const(D3D11_TILE_REGION_SIZE)* pTileRegionSize,
+		ID3D11Buffer pBuffer,
+		UINT64 BufferStartOffsetInBytes,
+		UINT Flags);
         
-        void UpdateTiles( 
-			ID3D11Resource pDestTiledResource,
-			const(D3D11_TILED_RESOURCE_COORDINATE)* pDestTileRegionStartCoordinate,
-			const(D3D11_TILE_REGION_SIZE)* pDestTileRegionSize,
-			const(void*) pSourceTileData,
-			UINT Flags);
+    void UpdateTiles( 
+		ID3D11Resource pDestTiledResource,
+		const(D3D11_TILED_RESOURCE_COORDINATE)* pDestTileRegionStartCoordinate,
+		const(D3D11_TILE_REGION_SIZE)* pDestTileRegionSize,
+		const(void*) pSourceTileData,
+		UINT Flags);
         
-		HRESULT ResizeTilePool( 
-			ID3D11Buffer pTilePool,
-			UINT64 NewSizeInBytes);
+	HRESULT ResizeTilePool( 
+		ID3D11Buffer pTilePool,
+		UINT64 NewSizeInBytes);
         
-		void TiledResourceBarrier( 
-			ID3D11DeviceChild pTiledResourceOrViewAccessBeforeBarrier,
-			ID3D11DeviceChild pTiledResourceOrViewAccessAfterBarrier);
+	void TiledResourceBarrier( 
+		ID3D11DeviceChild pTiledResourceOrViewAccessBeforeBarrier,
+		ID3D11DeviceChild pTiledResourceOrViewAccessAfterBarrier);
         
-		BOOL IsAnnotationEnabled();
+	BOOL IsAnnotationEnabled();
         
-		void SetMarkerInt( 
-			LPCWSTR pLabel,
-			INT Data);
+	void SetMarkerInt( 
+		LPCWSTR pLabel,
+		INT Data);
         
-		void BeginEventInt( 
-			LPCWSTR pLabel,
-			INT Data);
+	void BeginEventInt( 
+		LPCWSTR pLabel,
+		INT Data);
         
-		void EndEvent();
-        
+	void EndEvent();
 }
-    
 
 mixin( uuid!(ID3D11Device2, "9d06dffa-d1e5-4d07-83a8-1bb123f2f841") );
-interface ID3D11Device2 : ID3D11Device1
+extern (C++) interface ID3D11Device2 : ID3D11Device1
 {
-    extern(Windows):
-		void GetImmediateContext2( 
-			/*out*/ ID3D11DeviceContext2* ppImmediateContext);
+	void GetImmediateContext2( 
+		/*out*/ ID3D11DeviceContext2* ppImmediateContext);
         
-		HRESULT CreateDeferredContext2( 
-			UINT ContextFlags,
-			/*out*/ ID3D11DeviceContext2* ppDeferredContext);
+	HRESULT CreateDeferredContext2( 
+		UINT ContextFlags,
+		/*out*/ ID3D11DeviceContext2* ppDeferredContext);
         
-		void GetResourceTiling( 
-			ID3D11Resource pTiledResource,
-			/*out*/ UINT* pNumTilesForEntireResource,
-			/*out*/ D3D11_PACKED_MIP_DESC* pPackedMipDesc,
-			/*out*/ D3D11_TILE_SHAPE* pStandardTileShapeForNonPackedMips,
-			/*inout*/ UINT *pNumSubresourceTilings,
-			UINT FirstSubresourceTilingToGet,
-			/*out*/ D3D11_SUBRESOURCE_TILING* pSubresourceTilingsForNonPackedMips);
+	void GetResourceTiling( 
+		ID3D11Resource pTiledResource,
+		/*out*/ UINT* pNumTilesForEntireResource,
+		/*out*/ D3D11_PACKED_MIP_DESC* pPackedMipDesc,
+		/*out*/ D3D11_TILE_SHAPE* pStandardTileShapeForNonPackedMips,
+		/*inout*/ UINT *pNumSubresourceTilings,
+		UINT FirstSubresourceTilingToGet,
+		/*out*/ D3D11_SUBRESOURCE_TILING* pSubresourceTilingsForNonPackedMips);
         
-		HRESULT CheckMultisampleQualityLevels1(
-            DXGI_FORMAT Format,
-            UINT SampleCount,
-            UINT Flags,
-            /*out*/ UINT* pNumQualityLevels);
-        
+	HRESULT CheckMultisampleQualityLevels1(
+        DXGI_FORMAT Format,
+        UINT SampleCount,
+        UINT Flags,
+        /*out*/ UINT* pNumQualityLevels);
 }
-    
-    

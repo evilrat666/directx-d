@@ -5,7 +5,7 @@ module directx.d3d11sdklayers;
  *
  *-------------------------------------------------------------------------------------*/
 
-import directx.d3d11;
+public import directx.d3d11;
 
 enum D3D11_SDK_LAYERS_VERSION       = ( 1 );
 enum D3D11_DEBUG_FEATURE_FLUSH_PER_RENDER_OP = ( 0x1 );

@@ -8,7 +8,7 @@ module directx.d3d12shader;
 //
 //////////////////////////////////////////////////////////////////////////////
 
-import directx.d3dcommon;
+public import directx.d3dcommon;
 
 alias DWORD D3D12_SHADER_VERSION_TYPE;
 enum : D3D12_SHADER_VERSION_TYPE

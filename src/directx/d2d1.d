@@ -7,22 +7,14 @@ module directx.d2d1;
 // File name: D2D1.h
 //---------------------------------------------------------------------------
 
-import directx.com;
-import directx.win32;
 public import directx.dcommon;
 public import directx.d2derr;
 public import directx.d2dbasetypes;
-import directx.dwrite;
-import directx.d2d1helper;
-import directx.dxgiformat;
-import directx.dxgi;
+public import directx.dxgi;
+
 import directx.d3dcommon;
 import directx.dwrite;
 import directx.wincodec;
-
-//import directx.d3d10_1;
-//import directx.d3dcommon;
-
 
 static if ( __traits(compiles, UINT32.sizeof) )
 {

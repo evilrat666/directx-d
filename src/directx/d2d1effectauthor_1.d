@@ -7,4 +7,7 @@ module directx.d2d1effectauthor_1;
 // File name: D2D1EffectAuthor_1.h
 //---------------------------------------------------------------------------
 
+public import directx.d2d1_3;
+public import directx.d2d1effectauthor;
+
 // TODO:

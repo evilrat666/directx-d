@@ -5,8 +5,8 @@ module directx.d3d11on12;
  *
  *-------------------------------------------------------------------------------------*/
 
-import directx.d3d11;
-import directx.d3d12;
+public import directx.d3d11;
+public import directx.d3d12;
 
 ///////////////////////////////////////////////////////////////////////////
 // D3D11On12CreateDevice

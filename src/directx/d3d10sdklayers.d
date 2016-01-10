@@ -5,4 +5,6 @@ module directx.d3d10sdklayers;
  *
  *-------------------------------------------------------------------------------------*/
 
+public import directx.dxgi;
+
 // TODO:

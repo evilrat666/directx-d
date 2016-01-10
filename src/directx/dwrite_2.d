@@ -8,9 +8,7 @@ module directx.dwrite_2;
 //
 //----------------------------------------------------------------------------
 
-import directx.com;
 public import directx.dwrite_1;
-
 
 /// <summary>
 /// How to align glyphs to the margin.

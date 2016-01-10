@@ -1,6 +1,6 @@
 module directx.dxgiformat;
 
-alias DXGI_FORMAT = int;
+alias DXGI_FORMAT = uint;
 enum : DXGI_FORMAT
 {
     DXGI_FORMAT_UNKNOWN	                    = 0,

@@ -1,10 +1,6 @@
 module directx.dxgi1_4;
 
-import directx.com;
-import directx.dxgi;
-import directx.dxgi1_2;
-import directx.dxgi1_3;
-import directx.win32;
+public import directx.dxgi1_3;
 
 alias DWORD DXGI_SWAP_CHAIN_COLOR_SPACE_SUPPORT_FLAG;
 enum : DXGI_SWAP_CHAIN_COLOR_SPACE_SUPPORT_FLAG {

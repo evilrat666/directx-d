@@ -8,9 +8,7 @@ module directx.dwrite_1;
 //
 //----------------------------------------------------------------------------
 
-import directx.com;
 public import directx.dwrite;
-
 
 /// <summary>
 /// The overall kind of family.

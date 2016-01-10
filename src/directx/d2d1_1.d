@@ -7,4 +7,7 @@ module directx.d2d1_1;
 // File name: D2D1_1.h
 //---------------------------------------------------------------------------
 
+public import directx.d2d1;
+public import directx.d2d1effects;
+
 // TODO:

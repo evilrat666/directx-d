@@ -5,7 +5,6 @@ module directx.d3d11;
  *
  *-------------------------------------------------------------------------------------*/
 
-public import directx.com;
 public import directx.dxgi;
 public import directx.d3dcommon;
 

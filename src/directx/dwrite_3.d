@@ -8,4 +8,6 @@ module directx.dwrite_3;
 //
 //----------------------------------------------------------------------------
 
+public import directx.dwrite_2;
+
 // TODO:

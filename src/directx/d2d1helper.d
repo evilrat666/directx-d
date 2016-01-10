@@ -11,14 +11,7 @@ module directx.d2d1helper;
 
 \*=========================================================================*/
 
-import directx.dcommon;
-import directx.d2d1;
-import directx.d2dbasetypes;
-import directx.win32;
-import directx.dxgi;
-import directx.dxgiformat;
-import directx.dxgitype;
-
+public import directx.d2d1;
 
 struct D2D1
 {

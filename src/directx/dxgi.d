@@ -1,10 +1,7 @@
 module directx.dxgi;
 
-import directx.win32;
-import directx.com;
-
+public import directx.com;
 public import directx.dxgitype;
-public import directx.dxgiformat;
 
 enum DXGI_CPU_ACCESS_NONE              = ( 0 );
 enum DXGI_CPU_ACCESS_DYNAMIC           = ( 1 );

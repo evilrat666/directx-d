@@ -5,13 +5,8 @@ module directx.d3d11_3;
 *
 *-------------------------------------------------------------------------------------*/
 
-import directx.win32;
-import directx.dxgi;
-import directx.dxgi1_2;
-import directx.dxgi1_3;
-import directx.d3d11;
-import directx.d3d11_1;
-import directx.d3d11_2;
+public import directx.dxgi1_3;
+public import directx.d3d11_2;
 
 alias DWORD D3D11_CONTEXT_TYPE;
 enum : D3D11_CONTEXT_TYPE

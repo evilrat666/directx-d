@@ -8,13 +8,8 @@ module directx.dwrite;
 //
 //----------------------------------------------------------------------------
 
-// import diretx.winapi.specstrings;
-import directx.com;
-import directx.win32;
+public import directx.com;
 public import directx.dcommon;
-import directx.d2d1;
-import directx.d2d1helper;
-import directx.d2dbasetypes;
 
 /// <summary>
 /// The type of a font represented by a single font file.

@@ -5,9 +5,8 @@ module directx.d3d12;
  *
  *-------------------------------------------------------------------------------------*/
 
-import directx.com;
-import directx.dxgi;
-import directx.d3dcommon;
+public import directx.dxgi;
+public import directx.d3dcommon;
 
 enum {
     D3D12_16BIT_INDEX_STRIP_CUT_VALUE = 0xffff,

@@ -4,16 +4,14 @@ module directx.d2derr;
     Copyright (c) Microsoft Corporation.  All rights reserved.
 
 \*=========================================================================*/
-//#include <winapifamily.h>
-import directx.com;
 
+import directx.com;
 
 /*=========================================================================*\
     D2D Status Codes
 \*=========================================================================*/
 
 enum FACILITY_D2D = 0x899;
-
 
 HRESULT MAKE_D2DHR(alias sev, T)(T code) {
 	return MAKE_HRESULT(sev, FACILITY_D2D, code);
@@ -22,7 +20,6 @@ HRESULT MAKE_D2DHR(alias sev, T)(T code) {
 HRESULT MAKE_D2DHR_ERR(T)(T code) {
 	return MAKE_D2DHR(1, code);
 }
-
 
 //+----------------------------------------------------------------------------
 //
@@ -53,7 +50,6 @@ HRESULT MAKE_D2DHR_ERR(T)(T code) {
 //
 //alias D2DERR_INSUFFICIENT_BUFFER =         HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER)
 
-
 //
 // The file specified was not found.
 //
@@ -62,7 +58,6 @@ HRESULT MAKE_D2DHR_ERR(T)(T code) {
 //
 // D2D specific codes now live in winerror.h
 //
-
 
 // some stuff from winerror.h
 

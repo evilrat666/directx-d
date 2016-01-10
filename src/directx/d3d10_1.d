@@ -5,4 +5,6 @@ module directx.d3d10_1;
  *
  *-------------------------------------------------------------------------------------*/
 
-import directx.d3d10;
+public import directx.d3d10;
+
+// TODO:

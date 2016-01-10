@@ -5,8 +5,8 @@ module directx.d3d10;
  *
  *-------------------------------------------------------------------------------------*/
 
-import directx.dxgi;
-import directx.win32;
+public import directx.dxgi;
+public import directx.d3dcommon;
 
 version (none): // TODO: implement
 

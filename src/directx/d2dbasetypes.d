@@ -6,9 +6,9 @@ module directx.d2dbasetypes;
 //
 // File name: D2DBaseTypes.h
 //---------------------------------------------------------------------------
-import directx.dxgitype;
-import directx.win32 : UINT32, FLOAT, POINT, RECT;
-import directx.d3dcommon : D3DCOLORVALUE;
+
+public import directx.dxgitype;
+public import directx.d3dcommon;
 
 //+-----------------------------------------------------------------------------
 //

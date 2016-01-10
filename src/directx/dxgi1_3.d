@@ -1,9 +1,6 @@
 module directx.dxgi1_3;
 
-import directx.win32;
-import directx.com;
-import directx.dxgi;
-import directx.dxgi1_2;
+public import directx.dxgi1_2;
 
 enum DXGI_CREATE_FACTORY_DEBUG = 0x1;
 

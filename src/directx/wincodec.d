@@ -2,7 +2,6 @@
 module directx.wincodec;
 
 import directx.com;
-import directx.win32;
 
 alias WICPixelFormatGUID = GUID;
 alias WICInProcPointer = BYTE*;

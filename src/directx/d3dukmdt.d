@@ -11,7 +11,7 @@ module directx.d3dukmdt;
 
 import std.bitmanip : bitfields;
 
-import directx.win32;
+public import directx.win32;
 
 alias UINT  D3DDDI_VIDEO_PRESENT_SOURCE_ID;
 alias UINT  D3DDDI_VIDEO_PRESENT_TARGET_ID;

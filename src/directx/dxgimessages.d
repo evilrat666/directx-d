@@ -6,9 +6,7 @@ module directx.dxgimessages;
 *  Content: DXGI Debug Message Enumeration
 */
 
-import directx.win32;
-
-alias DWORD DXGI_Message_Id;
+alias uint DXGI_Message_Id;
 enum : DXGI_Message_Id
 {
     DXGI_MSG_IDXGISwapChain_CreationOrResizeBuffers_InvalidOutputWindow = 0,

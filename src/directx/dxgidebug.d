@@ -1,8 +1,6 @@
 module directx.dxgidebug;
 
-import directx.win32;
-import directx.dxgi;
-import directx.com;
+public import directx.dxgi;
 
 alias DXGI_DEBUG_RLO_FLAGS = DWORD;
 enum : DXGI_DEBUG_RLO_FLAGS {

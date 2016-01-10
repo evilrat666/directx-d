@@ -1,8 +1,5 @@
 module directx.d3d11shadertracing;
 
-import directx.com;
-import directx.win32;
-import directx.d3d11;
 import directx.d3d11shader;
 
 extern(C) {

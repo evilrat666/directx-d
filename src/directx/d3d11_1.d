@@ -5,12 +5,8 @@ module directx.d3d11_1;
  *
  *-------------------------------------------------------------------------------------*/
 
-import directx.dxgi1_2;
-import directx.d3dcommon;
-import directx.d3d11;
-
-extern(C)
-{
+public import directx.dxgi1_2;
+public import directx.d3d11;
 
 alias D3D11_COPY_FLAGS = int;
 enum : D3D11_COPY_FLAGS
@@ -18,7 +14,6 @@ enum : D3D11_COPY_FLAGS
 	D3D11_COPY_NO_OVERWRITE	= 0x1,
 	D3D11_COPY_DISCARD	= 0x2
 }
-
 
 alias D3D11_LOGIC_OP = int;
 enum : D3D11_LOGIC_OP
@@ -75,22 +70,15 @@ struct D3D11_BLEND_DESC1
 				RenderTarget[ i ] = defaultRenderTargetBlendDesc;
 	}
 }
-} // extern C
-
-
 
 mixin( uuid!(ID3D11BlendState1, "cc86fabe-da55-401d-85e7-e3c9de2877e9") );
-interface ID3D11BlendState1 : ID3D11BlendState
+extern (C++) interface ID3D11BlendState1 : ID3D11BlendState
 {
-	extern(Windows):
-	public:
-		void GetDesc1( 
-            /*out*/ D3D11_BLEND_DESC1* pDesc);
-
+	void GetDesc1( 
+        /*out*/ D3D11_BLEND_DESC1* pDesc);
 }
 
-
-extern(C) struct D3D11_RASTERIZER_DESC1
+struct D3D11_RASTERIZER_DESC1
 {
 	D3D11_FILL_MODE FillMode = D3D11_FILL_SOLID;
 	D3D11_CULL_MODE CullMode = D3D11_CULL_BACK;
@@ -105,87 +93,27 @@ extern(C) struct D3D11_RASTERIZER_DESC1
 	UINT ForcedSampleCount = 0;
 }
 
-// TODO: add helper struct or functions
-/*
-struct CD3D11_RASTERIZER_DESC1 : D3D11_RASTERIZER_DESC1
-{
-    CD3D11_RASTERIZER_DESC1()
-    {}
-    explicit CD3D11_RASTERIZER_DESC1( const D3D11_RASTERIZER_DESC1& o ) :
-        D3D11_RASTERIZER_DESC1( o )
-    {}
-    explicit CD3D11_RASTERIZER_DESC1( CD3D11_DEFAULT )
-    {
-        FillMode = D3D11_FILL_SOLID;
-        CullMode = D3D11_CULL_BACK;
-        FrontCounterClockwise = FALSE;
-        DepthBias = D3D11_DEFAULT_DEPTH_BIAS;
-        DepthBiasClamp = D3D11_DEFAULT_DEPTH_BIAS_CLAMP;
-        SlopeScaledDepthBias = D3D11_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
-        DepthClipEnable = TRUE;
-        ScissorEnable = FALSE;
-        MultisampleEnable = FALSE;
-        AntialiasedLineEnable = FALSE;
-        ForcedSampleCount = 0;
-    }
-    explicit CD3D11_RASTERIZER_DESC1(
-        D3D11_FILL_MODE fillMode,
-        D3D11_CULL_MODE cullMode,
-        BOOL frontCounterClockwise,
-        INT depthBias,
-        FLOAT depthBiasClamp,
-        FLOAT slopeScaledDepthBias,
-        BOOL depthClipEnable,
-        BOOL scissorEnable,
-        BOOL multisampleEnable,
-        BOOL antialiasedLineEnable, 
-        UINT forcedSampleCount )
-    {
-        FillMode = fillMode;
-        CullMode = cullMode;
-        FrontCounterClockwise = frontCounterClockwise;
-        DepthBias = depthBias;
-        DepthBiasClamp = depthBiasClamp;
-        SlopeScaledDepthBias = slopeScaledDepthBias;
-        DepthClipEnable = depthClipEnable;
-        ScissorEnable = scissorEnable;
-        MultisampleEnable = multisampleEnable;
-        AntialiasedLineEnable = antialiasedLineEnable;
-        ForcedSampleCount = forcedSampleCount;
-    }
-    ~CD3D11_RASTERIZER_DESC1() {}
-    operator const D3D11_RASTERIZER_DESC1&() const { return *this; }
-
-};
-*/	
-    
 mixin( uuid!(ID3D11RasterizerState1, "1217d7a6-5039-418c-b042-9cbe256afd6e") );
-interface ID3D11RasterizerState1 : ID3D11RasterizerState
+extern (C++) interface ID3D11RasterizerState1 : ID3D11RasterizerState
 {
-	extern(Windows):
     void GetDesc1( 
             /*out*/ D3D11_RASTERIZER_DESC1* pDesc);
 }
-    
- 
+
 alias D3D11_1_CREATE_DEVICE_CONTEXT_STATE_FLAG = int;
 enum : D3D11_1_CREATE_DEVICE_CONTEXT_STATE_FLAG
 {
 	D3D11_1_CREATE_DEVICE_CONTEXT_STATE_SINGLETHREADED	= 0x1
 }
 
-
 mixin( uuid!(ID3DDeviceContextState, "5c1e0d8a-7c23-48f9-8c59-a92958ceff11") );
-interface ID3DDeviceContextState : ID3D11DeviceChild
+extern (C++) interface ID3DDeviceContextState : ID3D11DeviceChild
 {
-	extern(Windows):
 }
 
-
 mixin( uuid!(ID3D11DeviceContext1, "bb2c6faa-b5fb-4082-8e6b-388b8cfa90e1") );
-interface ID3D11DeviceContext1 : ID3D11DeviceContext
+extern (C++) interface ID3D11DeviceContext1 : ID3D11DeviceContext
 {
-	extern(Windows):
 	void CopySubresourceRegion1( 
             ID3D11Resource pDstResource,
             UINT DstSubresource,
@@ -310,14 +238,11 @@ interface ID3D11DeviceContext1 : ID3D11DeviceContext
             ID3D11View pResourceView,
             const(D3D11_RECT)* pRects,
             UINT NumRects);
-
 }
 
-    
 mixin( uuid!(ID3D11Device1, "a04bfb29-08ef-43d6-a49c-a9bdbdcbe686") );
-interface ID3D11Device1 : ID3D11Device
+extern (C++) interface ID3D11Device1 : ID3D11Device
 {
-	extern(Windows):
 	void GetImmediateContext1( 
             /*out*/ ID3D11DeviceContext1* ppImmediateContext);
         
@@ -352,14 +277,11 @@ interface ID3D11Device1 : ID3D11Device
             DWORD dwDesiredAccess,
             REFIID returnedInterface,
             /*out*/ void** ppResource);
-
 }
-    
- 
+
 mixin( uuid!(ID3DUserDefinedAnnotation, "b2daad8b-03d4-4dbf-95eb-32ab4b63d0ab") );
-interface ID3DUserDefinedAnnotation : IUnknown
+extern (C++) interface ID3DUserDefinedAnnotation : IUnknown
 {
-    extern(Windows):
 	INT BeginEvent( 
             LPCWSTR Name);
         
@@ -369,5 +291,4 @@ interface ID3DUserDefinedAnnotation : IUnknown
             LPCWSTR Name);
         
 	BOOL GetStatus();
-        
 }

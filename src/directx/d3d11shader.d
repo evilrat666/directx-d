@@ -8,9 +8,7 @@ module directx.d3d11shader;
 //
 //////////////////////////////////////////////////////////////////////////////
 
-import directx.d3dcommon;
-import directx.win32;
-import directx.com;
+public import directx.d3dcommon;
 
 alias D3D11_SHADER_VERSION_TYPE = int;
 enum : D3D11_SHADER_VERSION_TYPE
@@ -40,7 +38,6 @@ int D3D11_SHVER_GET_MINOR(T)(_Version) {
 alias D3D_RESOURCE_RETURN_TYPE D3D11_RESOURCE_RETURN_TYPE;
 
 alias D3D_CBUFFER_TYPE D3D11_CBUFFER_TYPE;
-
 
 struct _D3D11_SIGNATURE_PARAMETER_DESC
 {

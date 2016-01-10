@@ -7,3 +7,7 @@ module directx.d3d10_1shader;
 //  Content:    D3D10.1 Shader Types and APIs
 //
 //////////////////////////////////////////////////////////////////////////////
+
+public import directx.d3d10shader;
+
+// TODO:

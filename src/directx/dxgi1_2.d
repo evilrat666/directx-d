@@ -1,8 +1,6 @@
 module directx.dxgi1_2;
 
-import directx.win32;
-import directx.com;
-import directx.dxgi;
+public import directx.dxgi;
 	
 mixin( uuid!(IDXGIDisplayControl, "ea9dbf1a-c88e-4486-854a-98aa0138f30c") );
 extern (C++) interface IDXGIDisplayControl : IUnknown

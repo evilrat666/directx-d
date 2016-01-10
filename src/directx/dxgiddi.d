@@ -7,11 +7,10 @@ module directx.dxgiddi;
 *
 ***************************************************************************/
 
-import directx.dxgitype;
+public import directx.dxgitype;
 
 import std.bitmanip : bitfields;
 
-import directx.win32;
 import directx.dxgi;
 import directx.d3dukmdt;
 

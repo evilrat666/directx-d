@@ -7,6 +7,7 @@ module directx.d3dx11async;
 //  Content:    D3DX11 Asynchronous Shader loaders / compilers
 //
 //////////////////////////////////////////////////////////////////////////////
+
 import directx.d3d11;
 import directx.d3dcommon;
 import directx.win32;
@@ -14,11 +15,9 @@ import directx.d3dx11core;
 import directx.d3dcommon;
 import directx.d3dx11tex;
 
-
 // declared in d3d10shader.h
 alias LPD3DINCLUDE LPD3D10INCLUDE;
 alias D3D_SHADER_MACRO D3D10_SHADER_MACRO;
-
 
 extern (Windows) {
 

@@ -12,7 +12,6 @@ import directx.com;
 import directx.win32;
 import directx.d3dx11;
 
-
 //----------------------------------------------------------------------------
 // D3DX11_FILTER flags:
 // ------------------

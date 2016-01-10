@@ -19,7 +19,6 @@ public import directx.d3dx11core;
 public import directx.d3dx11tex;
 public import directx.d3dx11async;
 
-
 // Errors
 enum _FACDD  = 0x876;
 

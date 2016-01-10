@@ -7,8 +7,11 @@ module directx.dcommon;
 //     Public API definitions for DWrite, D2D and DImage.
 //
 //----------------------------------------------------------------------------
-import directx.dxgiformat;
+
+public import directx.dxgiformat;
+
 import directx.dxgi : IDXGISurface;
+
 /*
 #ifndef DX_DECLARE_INTERFACE
 #define DX_DECLARE_INTERFACE(x) DECLSPEC_UUID(x) DECLSPEC_NOVTABLE

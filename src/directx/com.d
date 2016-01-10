@@ -1,4 +1,5 @@
 module directx.com;
+
 public import directx.win32;
 public import core.sys.windows.com;
 

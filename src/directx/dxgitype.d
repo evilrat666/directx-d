@@ -3,8 +3,8 @@ module directx.dxgitype;
 //    Copyright (C) Microsoft.  All rights reserved.
 //
 
-import directx.win32;
-import directx.dxgiformat;
+public import directx.dxgiformat;
+
 import directx.d3dcommon;
 
 enum _FACDXGI   = 0x87a;
