@@ -2625,15 +2625,6 @@ enum : D3D11_CREATE_DEVICE_FLAG
 
 enum D3D11_SDK_VERSION = ( 7 );
 
-//public import directx._d3d10.d3d10_1;
-version(D3D11_IGNORE_SDK_LAYERS) 
-import directx.d3d11sdklayers;
-
-//public import directx._d3d10misc;
-//public import directx._d3d10shader;
-//public import directx._d3d10effect; 
-//public import directx._d3d10_1shader;
-
 ///////////////////////////////////////////////////////////////////////////
 // D3D11CreateDevice
 // ------------------

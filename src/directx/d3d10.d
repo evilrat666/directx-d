@@ -7,6 +7,10 @@ module directx.d3d10;
 
 public import directx.dxgi;
 public import directx.d3dcommon;
+public import directx.d3d10sdklayers;
+public import directx.d3d10misc;
+public import directx.d3d10shader;
+public import directx.d3d10effect;
 
 enum D3D10_16BIT_INDEX_STRIP_CUT_VALUE      = ( 0xffff );
 enum D3D10_32BIT_INDEX_STRIP_CUT_VALUE      = ( 0xffffffff );
@@ -1676,3 +1680,5 @@ enum : D3D10_CREATE_DEVICE_FLAG
     D3D10_CREATE_DEVICE_STRICT_VALIDATION       = 0x200,
     D3D10_CREATE_DEVICE_DEBUGGABLE      = 0x400
 }
+
+enum D3D10_SDK_VERSION = ( 29 );
