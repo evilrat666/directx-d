@@ -1663,7 +1663,8 @@ extern (C++) interface ID3D10Multithread : IUnknown {
     BOOL GetMultithreadProtected();
 }
 
-enum D3D10_CREATE_DEVICE_FLAG
+alias DWORD D3D10_CREATE_DEVICE_FLAG;
+enum : D3D10_CREATE_DEVICE_FLAG
 {
     D3D10_CREATE_DEVICE_SINGLETHREADED  = 0x1,
     D3D10_CREATE_DEVICE_DEBUG   = 0x2,
