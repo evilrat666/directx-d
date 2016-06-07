@@ -999,9 +999,9 @@ interface IDWriteRenderingParams : IUnknown
 }
 
 // Forward declarations of D2D types
-interface ID2D1SimplifiedGeometrySink;
+//interface ID2D1SimplifiedGeometrySink;
 
-alias IDWriteGeometrySink = ID2D1SimplifiedGeometrySink;
+alias IDWriteGeometrySink = directx.d2d1.ID2D1SimplifiedGeometrySink;
 
 /// <summary>
 /// The interface that represents an absolute reference to a font face.

@@ -680,7 +680,7 @@ struct D2D1
     }
 
 
-    class Matrix3x2F //: public D2D1_MATRIX_3X2_F
+    struct Matrix3x2F //: public D2D1_MATRIX_3X2_F
     {
     public:
 		D2D1_MATRIX_3X2_F matrix;
@@ -707,16 +707,6 @@ struct D2D1
             this._31 = _31;
             this._32 = _32;
         }
-
-		this()
-		{
-			this._11 = 1.0f;
-            this._12 = 0.0f;
-            this._21 = 0.0f;
-            this._22 = 1.0f;
-            this._31 = 0.0f;
-            this._32 = 0.0f;
-		}
 
         //
         // Named quasi-constructors
@@ -907,12 +897,13 @@ struct D2D1
 
             return result;
         }
-
+/* TODO
 		static Matrix3x2F MakeFromBaseType(in D2D1_MATRIX_3X2_F mat)
 		{
 			Matrix3x2F matrix = new Matrix3x2F(mat);
 			return matrix;
 		}
+		*/
     }
 
     static IdentityMatrix()
