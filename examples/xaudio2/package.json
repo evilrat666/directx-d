@@ -3,9 +3,9 @@
 	"description": "DirectX D XAudio2 example",
 	"targetType": "executable",
 	"authors": [ "evilrat666" ],
-	"libs": [ "ole32" ],
+	"libs": [ "ole32", "user32" ],
 	"workingDirectory": "../resources",
-	"mainSourceFile": "xaudio.d",
+	"mainSourceFile": "source/xaudio.d",
 	"dependencies": {
                 "directx-d": {"version": "~master", "path": "../../"}
 	},

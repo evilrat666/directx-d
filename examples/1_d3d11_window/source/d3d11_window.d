@@ -1,6 +1,6 @@
-import std.c.windows.windows;
-import std.c.stdio;
-import std.c.string;
+import core.sys.windows.windows;
+import core.stdc.stdio;
+import core.stdc.string;
 import std.stdio;
 import std.string;
 
@@ -8,7 +8,7 @@ import directx.d3d11;
 
 
 extern (Windows)
-int WindowProc(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam) nothrow
+LRESULT WindowProc(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam) nothrow
 {
     switch (uMsg)
     {
@@ -26,27 +26,27 @@ int WindowProc(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam) nothrow
             break;
     }
 
-    return DefWindowProcA(hWnd, uMsg, wParam, lParam);
+    return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
 int myWinMain(){
-	HINSTANCE hInst = GetModuleHandleA(null);
+	HINSTANCE hInst = GetModuleHandle(null);
     WNDCLASS  wc;
 
-    wc.lpszClassName = "DWndClass";
+    wc.lpszClassName = "DWndClass\0";
     wc.style         = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
     wc.lpfnWndProc   = &WindowProc;
     wc.hInstance     = hInst;
-    wc.hIcon         = LoadIconA(cast(HINSTANCE) null, IDI_APPLICATION);
-    wc.hCursor       = LoadCursorA(cast(HINSTANCE) null, IDC_CROSS);
+    wc.hIcon         = LoadIcon(cast(HINSTANCE) null, IDI_APPLICATION);
+    wc.hCursor       = LoadCursor(cast(HINSTANCE) null, IDC_CROSS);
     wc.hbrBackground = cast(HBRUSH) (COLOR_WINDOW + 1);
     wc.lpszMenuName  = null;
     wc.cbClsExtra    = wc.cbWndExtra = 0;
-    auto a = RegisterClassA(&wc);
+    auto a = RegisterClass(&wc);
     assert(a);
 
     HWND hWnd;
-    hWnd = CreateWindowA("DWndClass", "D3D Window", WS_THICKFRAME |
+    hWnd = CreateWindow("DWndClass\0", "D3D Window\0", WS_THICKFRAME |
                          WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_VISIBLE,
                          CW_USEDEFAULT, CW_USEDEFAULT, 400, 300, HWND_DESKTOP,
                          cast(HMENU) null, hInst, null);
@@ -58,9 +58,9 @@ int myWinMain(){
     MSG msg;
     while(true)
     {
-        if( PeekMessageA(&msg, cast(HWND) null, 0, 0, PM_REMOVE) ){
+        if( PeekMessage(&msg, cast(HWND) null, 0, 0, PM_REMOVE) ){
             TranslateMessage(&msg);
-            DispatchMessageA(&msg);
+            DispatchMessage(&msg);
             
             if( msg.message == WM_QUIT )
                 break;
@@ -73,10 +73,10 @@ int myWinMain(){
     return 1;
 }
 
-ID3D11Device dev;
-ID3D11DeviceContext devcon;
-IDXGISwapChain swapchain;
-ID3D11RenderTargetView backbuffer;
+ID3D11Device dev = null;
+ID3D11DeviceContext devcon = null;
+IDXGISwapChain swapchain = null;
+ID3D11RenderTargetView backbuffer = null;
 
 
 void InitD3D(HWND hWnd)
@@ -108,7 +108,7 @@ void InitD3D(HWND hWnd)
                                   &dev,
                                   null,
                                   &devcon);
-    
+
     // get the address of the back buffer
     ID3D11Texture2D pBackBuffer;
     swapchain.GetBuffer(0, &IID_ID3D11Texture2D, cast(void**)&pBackBuffer);
@@ -168,7 +168,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 
     catch (Exception e)            // catch any uncaught exceptions
     {
-        MessageBoxA(null, toStringz(e.msg), "Error",
+        MessageBox(null, cast(wchar*)toStringz(e.msg), "Error\0",
                     MB_OK | MB_ICONEXCLAMATION);
         result = 0;             // failed
     }

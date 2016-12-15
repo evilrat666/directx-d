@@ -63,7 +63,7 @@ public:
 	HRESULT Initialize()
 	{
 		HRESULT hr;
-		HINSTANCE hinst = GetModuleHandleA(null);
+		HINSTANCE hinst = GetModuleHandle(null);
 
 		// Initialize device-indpendent resources, such
 		// as the Direct2D factory.
@@ -72,20 +72,20 @@ public:
 		if (SUCCEEDED(hr))
 		{
 
-			HINSTANCE hInst = GetModuleHandleA(null);
+			HINSTANCE hInst = GetModuleHandle(null);
 			WNDCLASS  wc;
 
 			wc.lpszClassName = "D2DDemoApp";
 			wc.style         = CS_HREDRAW | CS_VREDRAW;
 			wc.lpfnWndProc   = &DemoApp.WndProc;
 			wc.hInstance     = hinst;
-			wc.hIcon         = LoadIconA(null, IDI_APPLICATION);
-			wc.hCursor       = LoadCursorA(null, IDC_CROSS);
+			wc.hIcon         = LoadIcon(null, IDI_APPLICATION);
+			wc.hCursor       = LoadCursor(null, IDC_CROSS);
 			wc.hbrBackground = null;
 			wc.lpszMenuName  = null;
 			wc.cbClsExtra    = wc.cbWndExtra = LONG_PTR.sizeof;
 			
-			auto wca = RegisterClassA(&wc);
+			auto wca = RegisterClass(&wc);
 			assert(wca);
 
 			// Because the CreateWindow function takes its size in pixels,
@@ -96,7 +96,7 @@ public:
 			// to create its own windows.
 			m_pDirect2dFactory.GetDesktopDpi(&dpiX, &dpiY);
 
-			m_hwnd = CreateWindowA("D2DDemoApp", 
+			m_hwnd = CreateWindow("D2DDemoApp", 
 								 "Direct2D Demo App", 
 								 WS_OVERLAPPEDWINDOW,
 								 CW_USEDEFAULT, 
@@ -129,10 +129,10 @@ public:
 	{
 		MSG msg;
 
-		while (GetMessageA(&msg, null, 0, 0))
+		while (GetMessage(&msg, null, 0, 0))
 		{
 			TranslateMessage(&msg);
-			DispatchMessageA(&msg);
+			DispatchMessage(&msg);
 		}
 	}
 
@@ -143,8 +143,7 @@ private:
 		HRESULT hr = S_OK;
 
 		// Create a Direct2D factory.
-		hr = D2D1CreateFactory!ID2D1Factory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory);
-
+		hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &IID_ID2D1Factory, null, cast(void**)&m_pDirect2dFactory);
 		return hr;
 	}
 
@@ -211,13 +210,16 @@ private:
 	
 		if (SUCCEEDED(hr))
 		{
-			auto mat = new D2D1.Matrix3x2F();
+			auto mat = D2D1.Matrix3x2F();
+
 			m_pRenderTarget.BeginDraw();
 
-			m_pRenderTarget.SetTransform(&mat.matrix); // ugly
+			m_pRenderTarget.SetTransform(&mat.matrix);
 
-			m_pRenderTarget.Clear(&new const D2D1.ColorF(D2D1.ColorF.White).color); // super ugly! (and unsafe)
+			//m_pRenderTarget.Clear(&new const D2D1.ColorF(D2D1.ColorF.White).color); // super ugly! (and unsafe)
+			m_pRenderTarget.Clear(&D2D1.ColorF(D2D1.ColorF.White).color); // super ugly! (and unsafe)
 
+			// FIXME: crash
 			auto rtSize = m_pRenderTarget.GetSize();
 			
 
@@ -288,7 +290,7 @@ private:
 				}
 			}
 		}
-		catch (Throwable e)
+		catch (Exception e)
 		{
 		}
 	}
@@ -308,7 +310,7 @@ private:
 			LPCREATESTRUCT pcs = cast(LPCREATESTRUCT)lParam;
 			DemoApp pDemoApp = cast(DemoApp)pcs.lpCreateParams;
 
-			SetWindowLongA(
+			SetWindowLong(
 				hWnd,
 				GWLP_USERDATA,
 				cast(int)cast(void*)pDemoApp
@@ -319,7 +321,7 @@ private:
 		else
 		{
 			DemoApp pDemoApp = cast(DemoApp)cast(void*)(
-					GetWindowLongA(
+					GetWindowLong(
 					hWnd,
 					GWLP_USERDATA
 				));
@@ -354,7 +356,7 @@ private:
 							 pDemoApp.OnRender();
 							 ValidateRect(hWnd, null);
 							}
-							catch( Throwable e )
+							catch( Exception e )
 							{
 							}
 						}
@@ -385,11 +387,11 @@ private:
 	}
 
 private:
-	HWND m_hwnd;
-	ID2D1Factory m_pDirect2dFactory;
-	ID2D1HwndRenderTarget m_pRenderTarget;
-	ID2D1SolidColorBrush m_pLightSlateGrayBrush;
-	ID2D1SolidColorBrush m_pCornflowerBlueBrush;
+	__gshared HWND m_hwnd;
+	__gshared ID2D1Factory m_pDirect2dFactory;
+	__gshared ID2D1HwndRenderTarget m_pRenderTarget;
+	__gshared ID2D1SolidColorBrush m_pLightSlateGrayBrush;
+	__gshared ID2D1SolidColorBrush m_pCornflowerBlueBrush;
 }
 
 

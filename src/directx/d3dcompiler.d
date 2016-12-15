@@ -148,7 +148,7 @@ HRESULT D3DCompile(
 				ID3DBlob* ppCode,
 				ID3DBlob* ppErrorMsgs);
 
-alias extern(Windows) HRESULT function
+alias pD3DCompile = extern(Windows) HRESULT function
     (LPCVOID                         pSrcData,
      SIZE_T                          SrcDataSize,
      LPCSTR                          pFileName,
@@ -159,7 +159,7 @@ alias extern(Windows) HRESULT function
      UINT                            Flags1,
      UINT                            Flags2,
      ID3DBlob*                       ppCode,
-     ID3DBlob*                       ppErrorMsgs) pD3DCompile;
+     ID3DBlob*                       ppErrorMsgs);
 	 
 	 
 	 
@@ -192,14 +192,14 @@ HRESULT D3DPreprocess(
 				ID3DBlob* ppCodeText,
 				ID3DBlob* ppErrorMsgs);
 
-alias extern(Windows) HRESULT function
+alias pD3DPreprocess = extern(Windows) HRESULT function
     (LPCVOID                      pSrcData,
      SIZE_T                       SrcDataSize,
      LPCSTR                       pFileName,
      const(D3D_SHADER_MACRO)*     pDefines,
      ID3DInclude                  pInclude,
      ID3DBlob*                    ppCodeText,
-     ID3DBlob*                    ppErrorMsgs) pD3DPreprocess;
+     ID3DBlob*                    ppErrorMsgs);
 
 //----------------------------------------------------------------------------
 // D3DGetDebugInfo:
@@ -248,12 +248,12 @@ HRESULT D3DDisassemble(
 				LPCSTR szComments,
 				ID3DBlob* ppDisassembly);
 
-alias extern(Windows) HRESULT function
+alias pD3DDisassemble = extern(Windows) HRESULT function
     (LPCVOID pSrcData,
      SIZE_T SrcDataSize,
      UINT Flags,
      LPCSTR szComments,
-     ID3DBlob* ppDisassembly) pD3DDisassemble;
+     ID3DBlob* ppDisassembly);
 
 //----------------------------------------------------------------------------
 // D3DDisassemble10Effect:

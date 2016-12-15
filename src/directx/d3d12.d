@@ -2660,6 +2660,7 @@ struct D3D12_MEMCPY_DEST {
 //
 ///////////////////////////////////////////////////////////////////////////
 
+// TODO: if this crashes make plain function 
 __gshared PFN_D3D12_CREATE_DEVICE       D3D12CreateDevice;
 __gshared PFN_D3D12_GET_DEBUG_INTERFACE D3D12GetDebugInterface;
 

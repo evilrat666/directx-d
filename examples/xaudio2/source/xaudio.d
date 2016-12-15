@@ -3,8 +3,8 @@ XAudio2 tutorial ported to D
 http://www.win32developer.com/tutorial/xaudio/xaudio_tutorial_1.shtm
 */
 
-import std.c.windows.com;
-import std.c.windows.windows;
+import core.sys.windows.com;
+import core.sys.windows.windows;
 import std.stdio;
 import std.string;
 

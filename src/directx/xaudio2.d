@@ -476,7 +476,7 @@ else
 		//
 		HRESULT Initialize (
 							UINT32 Flags = 0,
-							XAUDIO2_PROCESSOR XAudio2Processor = XAUDIO2_WINDOWS_PROCESSOR_SPECIFIER.XAUDIO2_DEFAULT_PROCESSOR );
+							XAUDIO2_PROCESSOR XAudio2Processor = XAUDIO2_DEFAULT_PROCESSOR); // XAUDIO2_WINDOWS_PROCESSOR_SPECIFIER.XAUDIO2_DEFAULT_PROCESSOR );
 		}
 
 		// NAME: IXAudio2::RegisterForCallbacks
@@ -1085,7 +1085,8 @@ else
 			IXAudio2 pXAudio2;
 
 			HRESULT hr = CoCreateInstance((Flags & XAUDIO2_DEBUG_ENGINE) ? &IID_XAudio2_Debug : &IID_XAudio2,
-										  null, CLSCTX_INPROC_SERVER, &IID_IXAudio2, cast(void**)&pXAudio2);
+
+			null, CLSCTX_INPROC_SERVER, &IID_IXAudio2, cast(void**)&pXAudio2);
 			if (SUCCEEDED(hr))
 			{
 				hr = pXAudio2.Initialize(Flags, XAudio2Processor);
