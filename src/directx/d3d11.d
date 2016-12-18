@@ -721,6 +721,7 @@ struct D3D11_RENDER_TARGET_BLEND_DESC
 	UINT8 RenderTargetWriteMask;
 }
 
+// TODO: move Init() to CTFE and assign its result to RenderTarget initializer
 struct D3D11_BLEND_DESC
 {
 	BOOL AlphaToCoverageEnable = FALSE;
@@ -2665,7 +2666,7 @@ enum D3D11_SDK_VERSION = ( 7 );
 //          D3D11CreateDevice
 //
 ///////////////////////////////////////////////////////////////////////////
-extern (Windows)
+extern (Windows) nothrow
 HRESULT D3D11CreateDevice(IDXGIAdapter        pAdapter,
                                                  D3D_DRIVER_TYPE     DriverType,
                                                  HMODULE             Software,
@@ -2678,7 +2679,7 @@ HRESULT D3D11CreateDevice(IDXGIAdapter        pAdapter,
                                                  ID3D11DeviceContext *ppImmediateContext);
 
 
-alias PFN_D3D11_CREATE_DEVICE = extern (Windows) HRESULT function(IDXGIAdapter        pAdapter,
+alias PFN_D3D11_CREATE_DEVICE = extern (Windows) nothrow HRESULT function(IDXGIAdapter        pAdapter,
                                                  D3D_DRIVER_TYPE     DriverType,
                                                  HMODULE             Software,
                                                  UINT                Flags,
@@ -2744,7 +2745,7 @@ alias PFN_D3D11_CREATE_DEVICE = extern (Windows) HRESULT function(IDXGIAdapter  
 ///////////////////////////////////////////////////////////////////////////
 
 
-extern(Windows) 
+extern(Windows) nothrow
 HRESULT D3D11CreateDeviceAndSwapChain(
     IDXGIAdapter pAdapter,
     D3D_DRIVER_TYPE DriverType,
@@ -2759,7 +2760,7 @@ HRESULT D3D11CreateDeviceAndSwapChain(
     D3D_FEATURE_LEVEL* pFeatureLevel,
     ID3D11DeviceContext* ppImmediateContext);
 
-alias PFN_D3D11_CREATE_DEVICE_AND_SWAP_CHAIN = extern(Windows) HRESULT function(
+alias PFN_D3D11_CREATE_DEVICE_AND_SWAP_CHAIN = extern(Windows) nothrow HRESULT function(
     IDXGIAdapter pAdapter,
     D3D_DRIVER_TYPE DriverType,
     HMODULE Software,

@@ -338,16 +338,20 @@ extern (C++) interface IDXGIFactory : IDXGIObject
 				IDXGIAdapter* ppAdapter);
 }
 
-__gshared _CreateDXGIFactory CreateDXGIFactory;
-__gshared _CreateDXGIFactory1 CreateDXGIFactory1;
 
-extern (Windows) {
-    alias _CreateDXGIFactory = HRESULT function(REFIID riid,
+extern(Windows) nothrow 
+HRESULT CreateDXGIFactory(REFIID riid, IDXGIFactory* ppFactory);
+
+extern(Windows) nothrow 
+HRESULT CreateDXGIFactory1(REFIID riid, void** ppFactory);
+
+
+alias _CreateDXGIFactory = extern(Windows) nothrow HRESULT function(REFIID riid,
                                                 void** ppFactory);
 
-    alias _CreateDXGIFactory1 = HRESULT function(REFIID riid,
+alias _CreateDXGIFactory1 = extern(Windows) nothrow HRESULT function(REFIID riid,
                                                  void** ppFactory);
-}
+
 
 mixin( uuid!(IDXGIDevice, "54ec77fa-1377-44e6-8c32-88fd5f44c84c") );
 extern (C++) interface IDXGIDevice : IDXGIObject
