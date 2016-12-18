@@ -4,9 +4,8 @@
 	"targetType": "executable",
 	"authors": [ "evilrat666" ],
 	"mainSourceFile": "source/d3d11_window.d",
-	"libs": [ "ole32", "d3dcompiler", "d3d11", "dxgi", "user32" ],
+	"libs": [ "ole32", "user32", "d3dcompiler", "d3d11", "dxgi" ],
 	"dependencies": {
-                "directx-d": {"version": "~master", "path": "../../"}
-	},
-	"dflags": [ "-m32mscoff" ]
+                "directx-d": {"version": "", "path": "../../"}
+	}
 }

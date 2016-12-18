@@ -37,6 +37,7 @@ struct SimpleVertex
 //--------------------------------------------------------------------------------------
 // Global Variables
 //--------------------------------------------------------------------------------------
+// NOTE: in D this is thread-local, use __gshared for C style globals
 HINSTANCE               g_hInst = null;
 HWND                    g_hWnd = null;
 D3D_DRIVER_TYPE         g_driverType = D3D_DRIVER_TYPE_NULL;
@@ -103,8 +104,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 
     catch (Exception e)            // catch any uncaught exceptions
     {
-        MessageBox(null, cast(wchar*)toStringz(e.msg), "Error",
-                    MB_OK | MB_ICONEXCLAMATION);
+        MessageBox(null, toUTF16z(e.msg), "Error", MB_OK | MB_ICONEXCLAMATION);
         result = 0;             // failed
     }
 
@@ -165,23 +165,17 @@ debug {
 }
 
     ID3DBlob pErrorBlob;
-	
-version(Win8)
-{
+
 	hr = D3DCompileFromFile ( toUTF16z(szFileName), null, null, toStringz(szEntryPoint), toStringz(szShaderModel),
 		dwShaderFlags, 0, ppBlobOut, &pErrorBlob);
-}
-else 
-{
-pragma(msg, "info: if you build this on windows 8 don't forget to use Win8 version or Windows8 dub config. >> file: ", __FILE__, "line: ", __LINE__);
-    hr = D3DX11CompileFromFileA( toStringz(szFileName) , null, null, toStringz(szEntryPoint), toStringz(szShaderModel), 
-        dwShaderFlags, 0, null, ppBlobOut, &pErrorBlob, null );
-}
+
     if( FAILED(hr) )
     {
-        if( pErrorBlob !is null )
-            MessageBox( null, cast(wchar*)pErrorBlob.GetBufferPointer(), "Error", MB_OK );
-        if( pErrorBlob ) pErrorBlob.Release();
+        if( pErrorBlob ) 
+        {
+            MessageBoxA( null, cast(char*)pErrorBlob.GetBufferPointer(), "Error", MB_OK );
+            pErrorBlob.Release();
+        }
         return hr;
     }
     if( pErrorBlob ) pErrorBlob.Release();
