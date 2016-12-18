@@ -103,7 +103,8 @@ int xinput_tutorial()
 				// ================================
 
 				// system call to clear console
-				system("cls");
+				// FIXME: it is gone!
+				//system("cls");
 			
 				writeln("prees [B] to stop\npress [start] to toggle vibration on/off\n\n");
 				writefln( "\t\t[LS]\t\t[RS]\n[NormalizedX]\t%f\t%f\n[NormalizedY]\t%f\t%f\n[Magnitude]\t%f\t%f\n\n",   normalizedLX, normalizedRX, 

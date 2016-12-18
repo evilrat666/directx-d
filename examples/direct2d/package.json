@@ -5,7 +5,7 @@
 	"authors": [ "evilrat666" ],
 	"libs": [ "ole32", "d2d1", "dxgi", "user32", "dwrite" ],
 	"workingDirectory": "../resources",
-	"mainSourceFile": "boxsample.d",
+	"mainSourceFile": "source/boxsample.d",
 	"dependencies": {
                 "directx-d": {"version": "~master", "path": "../../"}
 	},

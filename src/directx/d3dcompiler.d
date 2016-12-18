@@ -11,6 +11,68 @@ module directx.d3dcompiler;
 public import directx.d3d11shader;
 public import directx.d3d12shader;
 
+
+// useful enums for shader versions
+alias LPCSTR_D3D_SHADER_TARGET_ext = LPCSTR;
+enum : LPCSTR_D3D_SHADER_TARGET_ext
+{
+	// Direct3D 11.0 and 11.1
+
+	cs_5_0 = "cs_5_0",
+	ds_5_0 = "ds_5_0",
+	gs_5_0 = "gs_5_0",
+	hs_5_0 = "hs_5_0",
+	ps_5_0 = "ps_5_0",
+	vs_5_0 = "vs_5_0",
+
+	// Direct3D 10.1
+
+	cs_4_1 = "cs_4_1",
+	gs_4_1 = "gs_4_1",
+	ps_4_1 = "ps_4_1",
+	vs_4_1 = "vs_4_1",
+
+	// Direct3D 10.0
+
+	cs_4_0 = "cs_4_0",
+	gs_4_0 = "gs_4_0",
+	ps_4_0 = "ps_4_0",
+	vs_4_0 = "vs_4_0",
+
+	// Direct3D 9.1, 9.2, 9.3
+
+	ps_4_0_level_9_1 = "ps_4_0_level_9_1",
+	ps_4_0_level_9_3 = "ps_4_0_level_9_3",
+	vs_4_0_level_9_1 = "vs_4_0_level_9_1",
+	vs_4_0_level_9_3 = "vs_4_0_level_9_3",
+
+	// Legacy Direct3D 9 SM 3.0
+
+	ps_3_0 = "ps_3_0",
+	ps_3_sw = "ps_3_sw",
+	vs_3_0 = "vs_3_0",
+	vs_3_sw = "vs_3_sw",
+
+	// Legacy Direct3D 9 SM 2.0
+
+	ps_2_0 = "ps_2_0",
+	ps_2_a = "ps_2_a",
+	ps_2_b = "ps_2_b",
+	ps_2_sw = "ps_2_sw",
+	vs_2_0 = "vs_2_0",
+	vs_2_a = "vs_2_a",
+	vs_2_sw = "vs_2_sw",
+
+	// Legacy effects
+
+	fx_2_0 = "fx_2_0",
+	fx_4_0 = "fx_4_0",
+	fx_4_1 = "fx_4_1",
+	fx_5_0 = "fx_5_0",
+
+} // enum LPCSTR_D3D_SHADER_TARGET_ext
+
+
 //////////////////////////////////////////////////////////////////////////////
 // APIs //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -134,7 +196,7 @@ enum D3DCOMPILE_EFFECT_ALLOW_SLOW_OPS            = (1 << 1);
 // ----------
 // Compile source text into bytecode appropriate for the given target.
 //----------------------------------------------------------------------------
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DCompile(
 				LPCVOID pSrcData,
 				SIZE_T SrcDataSize,
@@ -148,22 +210,22 @@ HRESULT D3DCompile(
 				ID3DBlob* ppCode,
 				ID3DBlob* ppErrorMsgs);
 
-alias extern(Windows) HRESULT function
-    (LPCVOID                         pSrcData,
+alias pD3DCompile = extern(Windows) nothrow HRESULT function(
+     LPCVOID                         pSrcData,
      SIZE_T                          SrcDataSize,
      LPCSTR                          pFileName,
      const(D3D_SHADER_MACRO)*        pDefines,
      ID3DInclude                     pInclude,
      LPCSTR                          pEntrypoint,
-     LPCSTR                          pTarget,
+     LPCSTR_D3D_SHADER_TARGET_ext    pTarget,
      UINT                            Flags1,
      UINT                            Flags2,
      ID3DBlob*                       ppCode,
-     ID3DBlob*                       ppErrorMsgs) pD3DCompile;
+     ID3DBlob*                       ppErrorMsgs);
 	 
 	 
-	 
-version(Win8) extern(Windows)
+// NOTE: Since D3DCompiler_44 D3DCompileFromFile is now part of the DirectX rather than Windows
+extern(Windows) nothrow
 HRESULT D3DCompileFromFile(
 				LPCWSTR pFileName,
 				const(D3D_SHADER_MACRO)* pDefines,
@@ -182,7 +244,7 @@ HRESULT D3DCompileFromFile(
 // the resulting text.
 //----------------------------------------------------------------------------
 
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DPreprocess(
 				LPCVOID pSrcData,
 				SIZE_T SrcDataSize,
@@ -192,14 +254,14 @@ HRESULT D3DPreprocess(
 				ID3DBlob* ppCodeText,
 				ID3DBlob* ppErrorMsgs);
 
-alias extern(Windows) HRESULT function
-    (LPCVOID                      pSrcData,
+alias pD3DPreprocess = extern(Windows) nothrow HRESULT function(
+     LPCVOID                      pSrcData,
      SIZE_T                       SrcDataSize,
      LPCSTR                       pFileName,
      const(D3D_SHADER_MACRO)*     pDefines,
      ID3DInclude                  pInclude,
      ID3DBlob*                    ppCodeText,
-     ID3DBlob*                    ppErrorMsgs) pD3DPreprocess;
+     ID3DBlob*                    ppErrorMsgs);
 
 //----------------------------------------------------------------------------
 // D3DGetDebugInfo:
@@ -208,7 +270,7 @@ alias extern(Windows) HRESULT function
 // embedded in the body of the shader.
 //----------------------------------------------------------------------------
 
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DGetDebugInfo(
 				LPCVOID pSrcData,
 				SIZE_T SrcDataSize,
@@ -221,7 +283,7 @@ HRESULT D3DGetDebugInfo(
 // reflection APIs.
 //----------------------------------------------------------------------------
 
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DReflect(
 				LPCVOID pSrcData,
 				SIZE_T SrcDataSize,
@@ -240,7 +302,7 @@ enum D3D_DISASM_ENABLE_INSTRUCTION_NUMBERING = 0x00000004;
 enum D3D_DISASM_ENABLE_INSTRUCTION_CYCLE     = 0x00000008;
 enum D3D_DISASM_DISABLE_DEBUG_INFO           = 0x00000010;
 
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DDisassemble(
 				LPCVOID pSrcData,
 				SIZE_T SrcDataSize,
@@ -248,12 +310,12 @@ HRESULT D3DDisassemble(
 				LPCSTR szComments,
 				ID3DBlob* ppDisassembly);
 
-alias extern(Windows) HRESULT function
-    (LPCVOID pSrcData,
+alias pD3DDisassemble = extern(Windows) nothrow HRESULT function(
+     LPCVOID pSrcData,
      SIZE_T SrcDataSize,
      UINT Flags,
      LPCSTR szComments,
-     ID3DBlob* ppDisassembly) pD3DDisassemble;
+     ID3DBlob* ppDisassembly);
 
 //----------------------------------------------------------------------------
 // D3DDisassemble10Effect:
@@ -262,7 +324,7 @@ alias extern(Windows) HRESULT function
 // buffer containing text assembly.
 //----------------------------------------------------------------------------
 
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DDisassemble10Effect(
 				ID3D10Effect pEffect,
 				UINT Flags,
@@ -274,7 +336,7 @@ HRESULT D3DDisassemble10Effect(
 // Retrieve the input signature from a compilation result.
 //----------------------------------------------------------------------------
 
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DGetInputSignatureBlob(
 				LPCVOID pSrcData,
 				SIZE_T SrcDataSize,
@@ -286,7 +348,7 @@ HRESULT D3DGetInputSignatureBlob(
 // Retrieve the output signature from a compilation result.
 //----------------------------------------------------------------------------
 
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DGetOutputSignatureBlob(
 				LPCVOID pSrcData,
 				SIZE_T SrcDataSize,
@@ -298,7 +360,7 @@ HRESULT D3DGetOutputSignatureBlob(
 // Retrieve the input and output signatures from a compilation result.
 //----------------------------------------------------------------------------
 
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DGetInputAndOutputSignatureBlob(
 				LPCVOID pSrcData,
 				SIZE_T SrcDataSize,
@@ -318,7 +380,7 @@ enum D3DCOMPILER_STRIP_FLAGS
     D3DCOMPILER_STRIP_FORCE_DWORD     = 0x7fffffff,
 }
 
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DStripShader(
 				LPCVOID pShaderBytecode,
 				SIZE_T BytecodeLength,
@@ -350,7 +412,7 @@ enum : D3D_BLOB_PART
     D3D_BLOB_TEST_COMPILE_PERF,
 }
 
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DGetBlobPart(
 				LPCVOID pSrcData,
 				SIZE_T SrcDataSize,
@@ -373,7 +435,7 @@ alias _D3D_SHADER_DATA D3D_SHADER_DATA;
 
 enum D3D_COMPRESS_SHADER_KEEP_ALL_PARTS = 0x00000001;
 
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DCompressShaders(
 				UINT uNumShaders,
 				D3D_SHADER_DATA* pShaderData,
@@ -386,7 +448,7 @@ HRESULT D3DCompressShaders(
 // Decompresses one or more shaders from a compressed set.
 //----------------------------------------------------------------------------
 
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DDecompressShaders(
 				LPCVOID pSrcData,
 				SIZE_T SrcDataSize,
@@ -403,7 +465,7 @@ HRESULT D3DDecompressShaders(
 // Create an ID3DBlob instance.
 //----------------------------------------------------------------------------
 
-extern(Windows)
+extern(Windows) nothrow
 HRESULT D3DCreateBlob(
 				SIZE_T Size,
 				ID3DBlob* ppBlob);

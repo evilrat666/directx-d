@@ -1,14 +1,46 @@
-import std.c.windows.windows;
-import std.c.stdio;
-import std.c.string;
+import core.sys.windows.windows;
+import core.stdc.stdio;
+import core.stdc.string;
 import std.stdio;
 import std.string;
+import std.utf;
 
 import directx.d3d11;
 
+// our objects instances, keep in mind that this is thread-local
+ID3D11Device device;
+ID3D11DeviceContext context;
+IDXGISwapChain swapchain;
+ID3D11RenderTargetView backbuffer;
 
-extern (Windows)
-int WindowProc(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam) nothrow
+/////////////////////////
+// Windows specific stuff
+
+extern(Windows)
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+    int result;
+
+	import core.runtime;
+	try
+    {
+        Runtime.initialize();
+		result = myWinMain();
+		Runtime.terminate();
+    }
+
+    catch (Exception e)            // catch any uncaught exceptions
+    {
+        MessageBox(null, toUTF16z(e.msg), "Error", MB_OK | MB_ICONEXCLAMATION);
+        result = 0; // failed
+    }
+
+	return result;
+}
+
+
+extern(Windows)
+LRESULT WindowProc(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam) nothrow
 {
     switch (uMsg)
     {
@@ -26,66 +58,68 @@ int WindowProc(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam) nothrow
             break;
     }
 
-    return DefWindowProcA(hWnd, uMsg, wParam, lParam);
+    return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
-int myWinMain(){
-	HINSTANCE hInst = GetModuleHandleA(null);
+
+int myWinMain()
+{
+	HINSTANCE hInst = GetModuleHandle(null);
     WNDCLASS  wc;
 
     wc.lpszClassName = "DWndClass";
     wc.style         = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
     wc.lpfnWndProc   = &WindowProc;
     wc.hInstance     = hInst;
-    wc.hIcon         = LoadIconA(cast(HINSTANCE) null, IDI_APPLICATION);
-    wc.hCursor       = LoadCursorA(cast(HINSTANCE) null, IDC_CROSS);
+    wc.hIcon         = LoadIcon(cast(HINSTANCE) null, IDI_APPLICATION);
+    wc.hCursor       = LoadCursor(cast(HINSTANCE) null, IDC_CROSS);
     wc.hbrBackground = cast(HBRUSH) (COLOR_WINDOW + 1);
     wc.lpszMenuName  = null;
     wc.cbClsExtra    = wc.cbWndExtra = 0;
-    auto a = RegisterClassA(&wc);
-    assert(a);
+
+    auto a = RegisterClass(&wc);
+    assert(a); //note that asserts only run in debug mode
 
     HWND hWnd;
-    hWnd = CreateWindowA("DWndClass", "D3D Window", WS_THICKFRAME |
+    hWnd = CreateWindow("DWndClass", "D3D Window", WS_THICKFRAME |
                          WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_VISIBLE,
                          CW_USEDEFAULT, CW_USEDEFAULT, 400, 300, HWND_DESKTOP,
                          cast(HMENU) null, hInst, null);
     assert(hWnd);
 
   
+    // init our pipeline
     InitD3D(hWnd);
     
+    // our main loop
     MSG msg;
     while(true)
     {
-        if( PeekMessageA(&msg, cast(HWND) null, 0, 0, PM_REMOVE) ){
+        if( PeekMessage(&msg, null, 0, 0, PM_REMOVE) ){
             TranslateMessage(&msg);
-            DispatchMessageA(&msg);
+            DispatchMessage(&msg);
             
             if( msg.message == WM_QUIT )
                 break;
         }
+
+        // clear, draw, present
         RenderFrame();
     }
     
+    // release resources
     CleanD3D();
 
-    return 1;
+    return S_OK;
 }
 
-ID3D11Device dev;
-ID3D11DeviceContext devcon;
-IDXGISwapChain swapchain;
-ID3D11RenderTargetView backbuffer;
-
+///////////////////////////////////////
+//// Direct3D stuff
 
 void InitD3D(HWND hWnd)
 {
     // create a struct to hold information about the swap chain
     DXGI_SWAP_CHAIN_DESC scd;
-
-    // clear out the struct for use
-    memset(&scd, 0, DXGI_SWAP_CHAIN_DESC.sizeof );
 
     // fill the swap chain description struct
     scd.BufferCount = 1;                                    // one back buffer
@@ -105,38 +139,36 @@ void InitD3D(HWND hWnd)
                                   D3D11_SDK_VERSION,
                                   &scd,
                                   &swapchain,
-                                  &dev,
+                                  &device,
                                   null,
-                                  &devcon);
-    
+                                  &context);
+
     // get the address of the back buffer
     ID3D11Texture2D pBackBuffer;
     swapchain.GetBuffer(0, &IID_ID3D11Texture2D, cast(void**)&pBackBuffer);
     
     // use the back buffer address to create the render target
-    dev.CreateRenderTargetView(pBackBuffer, null, &backbuffer);
+    device.CreateRenderTargetView(pBackBuffer, null, &backbuffer);
     pBackBuffer.Release();
 
     // set the render target as the back buffer
-    devcon.OMSetRenderTargets(1, &backbuffer, null);
+    context.OMSetRenderTargets(1, &backbuffer, null);
     
     // Set the viewport
     D3D11_VIEWPORT viewport;
-    memset(&viewport, 0, D3D11_VIEWPORT.sizeof);
-
     viewport.TopLeftX = 0;
     viewport.TopLeftY = 0;
     viewport.Width = 800;
     viewport.Height = 600;
 
-    devcon.RSSetViewports(1, &viewport);
+    context.RSSetViewports(1, &viewport);
 }
 
 void RenderFrame()
 {
     float[4] color = [0.0f, 0.2f, 0.4f, 1.0f];
     // clear the back buffer to a deep blue
-    devcon.ClearRenderTargetView(backbuffer, color.ptr);
+    context.ClearRenderTargetView(backbuffer, color.ptr);
 
     // do 3D rendering on the back buffer here
 
@@ -147,33 +179,8 @@ void RenderFrame()
 void CleanD3D()
 {
     // close and release all existing COM objects
-    swapchain.Release();
-    backbuffer.Release();
-    dev.Release();
-    devcon.Release();
+    if(swapchain) swapchain.Release();
+    if(backbuffer) backbuffer.Release();
+    if(device) device.Release();
+    if(context) context.Release();
 }
-
-extern (Windows)
-int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-{
-    int result;
-
-	import core.runtime;
-	try
-    {
-        Runtime.initialize();
-		result = myWinMain();
-		Runtime.terminate();
-    }
-
-    catch (Exception e)            // catch any uncaught exceptions
-    {
-        MessageBoxA(null, toStringz(e.msg), "Error",
-                    MB_OK | MB_ICONEXCLAMATION);
-        result = 0;             // failed
-    }
-
-	return result;
-}
-
-

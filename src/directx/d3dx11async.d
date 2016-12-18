@@ -81,6 +81,7 @@ HRESULT D3DX11CompileFromFileA(LPCSTR pSrcFile, const(D3D10_SHADER_MACRO)* pDefi
 HRESULT D3DX11CompileFromFileW(LPCWSTR pSrcFile, const(D3D10_SHADER_MACRO)* pDefines, LPD3D10INCLUDE pInclude,
         LPCSTR pFunctionName, LPCSTR pProfile, UINT Flags1, UINT Flags2, ID3DX11ThreadPump pPump, ID3D10Blob* ppShader, ID3D10Blob* ppErrorMsgs, HRESULT* pHResult);
 
+// TODO: make sure this matches phobos win32 style
 alias D3DX11CompileFromFileW D3DX11CompileFromFile;
 
 

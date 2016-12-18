@@ -37,6 +37,7 @@ struct SimpleVertex
 //--------------------------------------------------------------------------------------
 // Global Variables
 //--------------------------------------------------------------------------------------
+// NOTE: in D this is thread-local, use __gshared for C style globals
 HINSTANCE               g_hInst = null;
 HWND                    g_hWnd = null;
 D3D_DRIVER_TYPE         g_driverType = D3D_DRIVER_TYPE_NULL;
@@ -71,10 +72,10 @@ int myWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
     MSG msg;
     while( WM_QUIT != msg.message )
     {
-        if( PeekMessageA( &msg, null, 0, 0, PM_REMOVE ) )
+        if( PeekMessage( &msg, null, 0, 0, PM_REMOVE ) )
         {
             TranslateMessage( &msg );
-            DispatchMessageA( &msg );
+            DispatchMessage( &msg );
         }
         else
         {
@@ -103,8 +104,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 
     catch (Exception e)            // catch any uncaught exceptions
     {
-        MessageBoxA(null, toStringz(e.msg), "Error",
-                    MB_OK | MB_ICONEXCLAMATION);
+        MessageBox(null, toUTF16z(e.msg), "Error", MB_OK | MB_ICONEXCLAMATION);
         result = 0;             // failed
     }
 
@@ -123,15 +123,15 @@ HRESULT InitWindow( HINSTANCE hInstance, int nCmdShow )
     wc.style         = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
     wc.lpfnWndProc   = &WndProc;
     wc.hInstance     = hInst;
-    wc.hIcon         = LoadIconA(cast(HINSTANCE) null, IDI_APPLICATION);
-    wc.hCursor       = LoadCursorA(cast(HINSTANCE) null, IDC_CROSS);
+    wc.hIcon         = LoadIcon(cast(HINSTANCE) null, IDI_APPLICATION);
+    wc.hCursor       = LoadCursor(cast(HINSTANCE) null, IDC_CROSS);
     wc.hbrBackground = cast(HBRUSH) (COLOR_WINDOW + 1);
     wc.lpszMenuName  = null;
     wc.cbClsExtra    = wc.cbWndExtra = 0;
-    auto a = RegisterClassA(&wc);
+    auto a = RegisterClass(&wc);
     assert(a);
 
-    g_hWnd = CreateWindowA("DWndClass", "D3D Triangle", WS_THICKFRAME |
+    g_hWnd = CreateWindow("DWndClass", "D3D Triangle", WS_THICKFRAME |
                          WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_VISIBLE,
                          CW_USEDEFAULT, CW_USEDEFAULT, 400, 300, HWND_DESKTOP,
                          cast(HMENU) null, hInst, null);
@@ -165,21 +165,17 @@ debug {
 }
 
     ID3DBlob pErrorBlob;
-	
-version(Win8)
+
 	hr = D3DCompileFromFile ( toUTF16z(szFileName), null, null, toStringz(szEntryPoint), toStringz(szShaderModel),
 		dwShaderFlags, 0, ppBlobOut, &pErrorBlob);
-else 
-{
-pragma(msg, "info: if you build this on windows 8 don't forget to use Win8 version or Windows8 dub config. >> file: ", __FILE__, "line: ", __LINE__);
-    hr = D3DX11CompileFromFileA( toStringz(szFileName) , null, null, toStringz(szEntryPoint), toStringz(szShaderModel), 
-        dwShaderFlags, 0, null, ppBlobOut, &pErrorBlob, null );
-}
+
     if( FAILED(hr) )
     {
-        if( pErrorBlob !is null )
+        if( pErrorBlob ) 
+        {
             MessageBoxA( null, cast(char*)pErrorBlob.GetBufferPointer(), "Error", MB_OK );
-        if( pErrorBlob ) pErrorBlob.Release();
+            pErrorBlob.Release();
+        }
         return hr;
     }
     if( pErrorBlob ) pErrorBlob.Release();
@@ -211,7 +207,7 @@ debug {
         D3D_DRIVER_TYPE_WARP,
         D3D_DRIVER_TYPE_REFERENCE,
     ];
-    UINT numDriverTypes = driverTypes.length;
+    UINT numDriverTypes = cast(UINT)driverTypes.length;
 
     D3D_FEATURE_LEVEL[] featureLevels =
     [
@@ -219,7 +215,7 @@ debug {
         D3D_FEATURE_LEVEL_10_1,
         D3D_FEATURE_LEVEL_10_0,
     ];
-	UINT numFeatureLevels = featureLevels.length;
+	UINT numFeatureLevels = cast(UINT)featureLevels.length;
 
     DXGI_SWAP_CHAIN_DESC sd;
     memset( &sd, 0, DXGI_SWAP_CHAIN_DESC.sizeof );
@@ -274,7 +270,7 @@ debug {
     hr = CompileShaderFromFile( "Tutorial02.fx" , "VS", "vs_4_0", &pVSBlob );
     if( FAILED( hr ) )
     {
-        MessageBoxA( null,
+        MessageBox( null,
                     "The FX file cannot be compiled.  Please run this executable from the directory that contains the FX file.", "Error", MB_OK );
         return hr;
     }
@@ -292,7 +288,7 @@ debug {
     [
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
     ];
-	UINT numElements =  layout.length;
+	UINT numElements =  cast(UINT)layout.length;
 
     // Create the input layout
 	hr = g_pd3dDevice.CreateInputLayout( layout.ptr, numElements, pVSBlob.GetBufferPointer(),
@@ -309,7 +305,7 @@ debug {
     hr = CompileShaderFromFile( "Tutorial02.fx", "PS", "ps_4_0", &pPSBlob );
     if( FAILED( hr ) )
     {
-        MessageBoxA( null,
+        MessageBox( null,
                     "The FX file cannot be compiled.  Please run this executable from the directory that contains the FX file.", "Error", MB_OK );
         return hr;
     }
@@ -390,7 +386,7 @@ extern(Windows) LRESULT WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM 
             break;
 
         default:
-            return DefWindowProcA( hWnd, message, wParam, lParam );
+            return DefWindowProc( hWnd, message, wParam, lParam );
     }
 
     return 0;
