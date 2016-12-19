@@ -4,9 +4,9 @@ ___
 ## Running samples:
 
 Open sample folder in terminal *(a quick way is to shift-RMB in that folder in explorer and choose open command window)* 
-and symply type :
+and simply type :
 
-__`dub run --build=x86_64`__
+__`dub run --arch=x86_64`__
 
 or for x86
 
@@ -16,7 +16,7 @@ __`dub run`__
 
 Some samples requires using Windows8 config if you are on Windows 8 or Windows 10, if you see linker errors just specify that config in build:
 
-__`dub run --build=x86_64 --config=Windows8`__
+__`dub run --arch=x86_64 --config=Windows8`__
 
 
 
