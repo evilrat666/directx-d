@@ -4,6 +4,7 @@ Simple XInput tutorial
 
 import core.thread;
 import core.stdc.string; // for memset
+import core.stdc.stdlib : system;
 import std.math;
 import std.process;
 import std.stdio;
@@ -103,8 +104,7 @@ int xinput_tutorial()
 				// ================================
 
 				// system call to clear console
-				// FIXME: it is gone!
-				//system("cls");
+				system("cls");
 			
 				writeln("prees [B] to stop\npress [start] to toggle vibration on/off\n\n");
 				writefln( "\t\t[LS]\t\t[RS]\n[NormalizedX]\t%f\t%f\n[NormalizedY]\t%f\t%f\n[Magnitude]\t%f\t%f\n\n",   normalizedLX, normalizedRX, 

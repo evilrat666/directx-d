@@ -92,6 +92,7 @@ public:
 			// obtain the system DPI and use it to scale the window size.
 			FLOAT dpiX, dpiY;
 
+			m_pDirect2dFactory.ReloadSystemMetrics();
 			// The factory returns the current system DPI. This is also the value it will use
 			// to create its own windows.
 			m_pDirect2dFactory.GetDesktopDpi(&dpiX, &dpiY);
@@ -210,14 +211,13 @@ private:
 	
 		if (SUCCEEDED(hr))
 		{
-			auto mat = D2D1.Matrix3x2F();
+			auto mat = D2D1.Matrix3x2F.Identity;
 
 			m_pRenderTarget.BeginDraw();
 
 			m_pRenderTarget.SetTransform(&mat.matrix);
 
-			//m_pRenderTarget.Clear(&new const D2D1.ColorF(D2D1.ColorF.White).color); // super ugly! (and unsafe)
-			m_pRenderTarget.Clear(&D2D1.ColorF(D2D1.ColorF.White).color); // super ugly! (and unsafe)
+			m_pRenderTarget.Clear(&D2D1.ColorF(D2D1.ColorF.White).color); // ugh...
 
 			// FIXME: crash
 			auto rtSize = m_pRenderTarget.GetSize();
@@ -379,7 +379,7 @@ private:
 
 			if (!wasHandled)
 			{
-				result = DefWindowProcA(hWnd, message, wParam, lParam);
+				result = DefWindowProc(hWnd, message, wParam, lParam);
 			}
 		}
 
