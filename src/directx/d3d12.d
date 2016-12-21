@@ -522,12 +522,12 @@ struct D3D12_SO_DECLARATION_ENTRY {
 }
 
 struct D3D12_VIEWPORT {
-    FLOAT TopLeftX;
-    FLOAT TopLeftY;
-    FLOAT Width;
-    FLOAT Height;
-    FLOAT MinDepth;
-    FLOAT MaxDepth;
+    FLOAT TopLeftX = 0.0f;
+    FLOAT TopLeftY = 0.0f;
+    FLOAT Width = 0.0f;
+    FLOAT Height = 0.0f;
+    FLOAT MinDepth = 0.0f;
+    FLOAT MaxDepth = 0.0f;
 }
 
 alias RECT D3D12_RECT;
@@ -676,22 +676,23 @@ enum : D3D12_CONSERVATIVE_RASTERIZATION_MODE {
     D3D12_CONSERVATIVE_RASTERIZATION_MODE_ON  = 1
 }
 
+// defaults from MSDN
 struct D3D12_RASTERIZER_DESC {
-    D3D12_FILL_MODE                       FillMode;
-    D3D12_CULL_MODE                       CullMode;
-    BOOL                                  FrontCounterClockwise;
-    INT                                   DepthBias;
-    FLOAT                                 DepthBiasClamp;
-    FLOAT                                 SlopeScaledDepthBias;
-    BOOL                                  DepthClipEnable;
-    BOOL                                  MultisampleEnable;
-    BOOL                                  AntialiasedLineEnable;
-    UINT                                  ForcedSampleCount;
-    D3D12_CONSERVATIVE_RASTERIZATION_MODE ConservativeRaster;
+    D3D12_FILL_MODE                       FillMode = D3D12_FILL_MODE_SOLID;
+    D3D12_CULL_MODE                       CullMode = D3D12_CULL_MODE_BACK;
+    BOOL                                  FrontCounterClockwise = FALSE;
+    INT                                   DepthBias = 0;
+    FLOAT                                 DepthBiasClamp = 0.0f;
+    FLOAT                                 SlopeScaledDepthBias = 0.0f;
+    BOOL                                  DepthClipEnable = TRUE;
+    BOOL                                  MultisampleEnable = FALSE;
+    BOOL                                  AntialiasedLineEnable = FALSE;
+    UINT                                  ForcedSampleCount = 0;
+    D3D12_CONSERVATIVE_RASTERIZATION_MODE ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
 }
 
 mixin(uuid!(ID3D12Object, "c4fec28f-7966-4e95-9f94-f431cb56c3b8"));
-extern (C++) interface ID3D12Object : IUnknown {
+extern(C++) interface ID3D12Object : IUnknown {
     HRESULT GetPrivateData(REFGUID guid,
                            UINT* pDataSize,
                            void* pData);
@@ -707,13 +708,13 @@ extern (C++) interface ID3D12Object : IUnknown {
 }
 
 mixin(uuid!(ID3D12DeviceChild, "905db94b-a00c-4140-9df5-2b64ca9ea357"));
-extern (C++) interface ID3D12DeviceChild : ID3D12Object {
+extern(C++) interface ID3D12DeviceChild : ID3D12Object {
     HRESULT GetDevice(REFIID riid,
                       void** ppvDevice);
 }
 
 mixin(uuid!(ID3D12RootSignature, "c54a6b66-72df-4ee8-8be5-a946a1429214"));
-extern (C++) interface ID3D12RootSignature : ID3D12DeviceChild {}
+extern(C++) interface ID3D12RootSignature : ID3D12DeviceChild {}
 
 struct D3D12_SHADER_BYTECODE {
     const(void)* pShaderBytecode;
@@ -1048,7 +1049,7 @@ struct D3D12_RESOURCE_DESC {
 }
 
 struct D3D12_DEPTH_STENCIL_VALUE {
-    FLOAT Depth;
+    FLOAT Depth = 0.0f;
     UINT8 Stencil;
 }
 
@@ -1278,7 +1279,7 @@ struct D3D12_BUFFER_SRV {
 struct D3D12_TEX1D_SRV {
     UINT  MostDetailedMip;
     UINT  MipLevels;
-    FLOAT ResourceMinLODClamp;
+    FLOAT ResourceMinLODClamp = 0.0f;
 }
 
 struct D3D12_TEX1D_ARRAY_SRV {
@@ -1286,14 +1287,14 @@ struct D3D12_TEX1D_ARRAY_SRV {
     UINT  MipLevels;
     UINT  FirstArraySlice;
     UINT  ArraySize;
-    FLOAT ResourceMinLODClamp;
+    FLOAT ResourceMinLODClamp = 0.0f;
 }
 
 struct D3D12_TEX2D_SRV {
     UINT  MostDetailedMip;
     UINT  MipLevels;
     UINT  PlaneSlice;
-    FLOAT ResourceMinLODClamp;
+    FLOAT ResourceMinLODClamp = 0.0f;
 }
 
 struct D3D12_TEX2D_ARRAY_SRV {
@@ -1302,19 +1303,19 @@ struct D3D12_TEX2D_ARRAY_SRV {
     UINT  FirstArraySlice;
     UINT  ArraySize;
     UINT  PlaneSlice;
-    FLOAT ResourceMinLODClamp;
+    FLOAT ResourceMinLODClamp = 0.0f;
 }
 
 struct D3D12_TEX3D_SRV {
     UINT  MostDetailedMip;
     UINT  MipLevels;
-    FLOAT ResourceMinLODClamp;
+    FLOAT ResourceMinLODClamp = 0.0f;
 }
 
 struct D3D12_TEXCUBE_SRV {
     UINT  MostDetailedMip;
     UINT  MipLevels;
-    FLOAT ResourceMinLODClamp;
+    FLOAT ResourceMinLODClamp = 0.0f;
 }
 
 struct D3D12_TEXCUBE_ARRAY_SRV {
@@ -1322,7 +1323,7 @@ struct D3D12_TEXCUBE_ARRAY_SRV {
     UINT  MipLevels;
     UINT  First2DArrayFace;
     UINT  NumCubes;
-    FLOAT ResourceMinLODClamp;
+    FLOAT ResourceMinLODClamp = 0.0f;
 }
 
 struct D3D12_TEX2DMS_SRV {
@@ -1508,12 +1509,12 @@ struct D3D12_SAMPLER_DESC {
     D3D12_TEXTURE_ADDRESS_MODE AddressU;
     D3D12_TEXTURE_ADDRESS_MODE AddressV;
     D3D12_TEXTURE_ADDRESS_MODE AddressW;
-    FLOAT                      MipLODBias;
+    FLOAT                      MipLODBias = 0.0f;
     UINT                       MaxAnisotropy;
     D3D12_COMPARISON_FUNC      ComparisonFunc;
-    FLOAT[4]                   BorderColor;
-    FLOAT                      MinLOD;
-    FLOAT                      MaxLOD;
+    FLOAT[4]                   BorderColor = [ 0.0f, 0.0f, 0.0f, 1.0f ];
+    FLOAT                      MinLOD = 0.0f;
+    FLOAT                      MaxLOD = 0.0f;
 }
 
 alias uint D3D12_BUFFER_UAV_FLAGS;
@@ -1835,12 +1836,12 @@ struct D3D12_STATIC_SAMPLER_DESC {
     D3D12_TEXTURE_ADDRESS_MODE AddressU;
     D3D12_TEXTURE_ADDRESS_MODE AddressV;
     D3D12_TEXTURE_ADDRESS_MODE AddressW;
-    FLOAT                      MipLODBias;
+    FLOAT                      MipLODBias = 0.0f;
     UINT                       MaxAnisotropy;
     D3D12_COMPARISON_FUNC      ComparisonFunc;
     D3D12_STATIC_BORDER_COLOR  BorderColor;
-    FLOAT                      MinLOD;
-    FLOAT                      MaxLOD;
+    FLOAT                      MinLOD = 0.0f;
+    FLOAT                      MaxLOD = 0.0f;
     UINT                       ShaderRegister;
     UINT                       RegisterSpace;
     D3D12_SHADER_VISIBILITY    ShaderVisibility;
@@ -1860,30 +1861,38 @@ enum : D3D_ROOT_SIGNATURE_VERSION {
 }
 
 mixin(uuid!(ID3D12RootSignatureDeserializer, "34AB647B-3CC8-46AC-841B-C0965645C046"));
-extern (C++) interface ID3D12RootSignatureDeserializer : IUnknown {
+extern(C++) interface ID3D12RootSignatureDeserializer : IUnknown {
     const(D3D12_ROOT_SIGNATURE_DESC)* GetRootSignatureDesc();
 }
 
-alias PFN_D3D12_SERIALIZE_ROOT_SIGNATURE =
-    HRESULT function(const(D3D12_ROOT_SIGNATURE_DESC)* pRootSignature,
-                     D3D_ROOT_SIGNATURE_VERSION Version,
-                     ID3DBlob* ppBlob,
-                     ID3DBlob* ppErrorBlob);
 
+
+extern(Windows) nothrow
 HRESULT D3D12SerializeRootSignature(const(D3D12_ROOT_SIGNATURE_DESC)* pRootSignature,
                                     D3D_ROOT_SIGNATURE_VERSION Version,
                                     ID3DBlob* ppBlob,
                                     ID3DBlob* ppErrorBlob);
 
-alias PFN_D3D12_CREATE_ROOT_SIGNATURE_DESERIALIZER = HRESULT function(LPCVOID pSrcData,
-                                                                      SIZE_T SrcDataSizeInBytes,
-                                                                      REFIID pRootSignatureDeserializerInterface,
-                                                                      void** ppRootSignatureDeserializer);
+alias PFN_D3D12_SERIALIZE_ROOT_SIGNATURE = extern(Windows) nothrow HRESULT function(
+                     const(D3D12_ROOT_SIGNATURE_DESC)* pRootSignature,
+                     D3D_ROOT_SIGNATURE_VERSION Version,
+                     ID3DBlob* ppBlob,
+                     ID3DBlob* ppErrorBlob);
 
+
+
+extern(Windows) nothrow
 HRESULT D3D12CreateRootSignatureDeserializer(LPCVOID pSrcData,
                                              SIZE_T SrcDataSizeInBytes,
                                              REFIID pRootSignatureDeserializerInterface,
                                              void** ppRootSignatureDeserializer);
+
+alias PFN_D3D12_CREATE_ROOT_SIGNATURE_DESERIALIZER = extern(Windows) nothrow HRESULT function(
+                                                                      LPCVOID pSrcData,
+                                                                      SIZE_T SrcDataSizeInBytes,
+                                                                      REFIID pRootSignatureDeserializerInterface,
+                                                                      void** ppRootSignatureDeserializer);
+
 
 struct D3D12_CPU_DESCRIPTOR_HANDLE {
     SIZE_T ptr;
@@ -2041,15 +2050,15 @@ struct D3D12_COMMAND_SIGNATURE_DESC {
 }
 
 mixin(uuid!(ID3D12Pageable, "63ee58fb-1268-4835-86da-f008ce62f0d6"));
-extern (C++) interface ID3D12Pageable : ID3D12DeviceChild {}
+extern(C++) interface ID3D12Pageable : ID3D12DeviceChild {}
 
 mixin(uuid!(ID3D12Heap, "6b3b2502-6e51-45b3-90ee-9884265e8df3"));
-extern (C++) interface ID3D12Heap : ID3D12Pageable {
+extern(C++) interface ID3D12Heap : ID3D12Pageable {
     D3D12_HEAP_DESC GetDesc();
 }
 
 mixin(uuid!(ID3D12Resource, "696442be-a72e-4059-bc79-5b5c98040fad"));
-extern (C++) interface ID3D12Resource : ID3D12Pageable {
+extern(C++) interface ID3D12Resource : ID3D12Pageable {
     HRESULT Map(UINT Subresource,
                 const(D3D12_RANGE)*pReadRange,
                 void** ppData);
@@ -2078,12 +2087,12 @@ extern (C++) interface ID3D12Resource : ID3D12Pageable {
 }
 
 mixin(uuid!(ID3D12CommandAllocator, "6102dee4-af59-4b09-b999-b44d73f09b24"));
-extern (C++) interface ID3D12CommandAllocator : ID3D12Pageable {
+extern(C++) interface ID3D12CommandAllocator : ID3D12Pageable {
     HRESULT Reset();
 }
 
 mixin(uuid!(ID3D12Fence, "0a753dcf-c4d8-4b91-adf6-be5a60d95a76"));
-extern (C++) interface ID3D12Fence : ID3D12Pageable {
+extern(C++) interface ID3D12Fence : ID3D12Pageable {
     UINT64 GetCompletedValue();
 
     HRESULT SetEventOnCompletion(UINT64 Value, HANDLE hEvent);
@@ -2092,12 +2101,12 @@ extern (C++) interface ID3D12Fence : ID3D12Pageable {
 }
 
 mixin(uuid!(ID3D12PipelineState, "765a30f3-f624-4c6f-a828-ace948622445"));
-extern (C++) interface ID3D12PipelineState : ID3D12Pageable {
+extern(C++) interface ID3D12PipelineState : ID3D12Pageable {
     HRESULT GetCachedBlob(ID3DBlob*ppBlob);
 }
 
 mixin(uuid!(ID3D12DescriptorHeap, "8efb471d-616c-4f49-90f7-127bb763fa51"));
-extern (C++) interface ID3D12DescriptorHeap : ID3D12Pageable {
+extern(C++) interface ID3D12DescriptorHeap : ID3D12Pageable {
     D3D12_DESCRIPTOR_HEAP_DESC GetDesc();
 
     D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandleForHeapStart();
@@ -2106,19 +2115,19 @@ extern (C++) interface ID3D12DescriptorHeap : ID3D12Pageable {
 }
 
 mixin(uuid!(ID3D12QueryHeap, "0d9658ae-ed45-469e-a61d-970ec583cab4"));
-extern (C++) interface ID3D12QueryHeap : ID3D12Pageable {}
+extern(C++) interface ID3D12QueryHeap : ID3D12Pageable {}
 
 mixin(uuid!(ID3D12CommandSignature, "c36a797c-ec80-4f0a-8985-a7b2475082d1"));
-extern (C++) interface ID3D12CommandSignature : ID3D12Pageable {}
+extern(C++) interface ID3D12CommandSignature : ID3D12Pageable {}
 
 mixin(uuid!(ID3D12CommandList, "7116d91c-e7e4-47ce-b8c6-ec8168f437e5"));
-extern (C++) interface ID3D12CommandList : ID3D12DeviceChild {
+extern(C++) interface ID3D12CommandList : ID3D12DeviceChild {
 
     D3D12_COMMAND_LIST_TYPE GetType();
 }
 
 mixin(uuid!(ID3D12GraphicsCommandList, "5b160d0f-ac1b-4185-8ba8-b3ae42a5a455"));
-extern (C++) interface ID3D12GraphicsCommandList : ID3D12CommandList {
+extern(C++) interface ID3D12GraphicsCommandList : ID3D12CommandList {
     HRESULT Close();
 
     HRESULT Reset(ID3D12CommandAllocator pAllocator,
@@ -2367,7 +2376,7 @@ extern (C++) interface ID3D12GraphicsCommandList : ID3D12CommandList {
 }
 
 mixin(uuid!(ID3D12CommandQueue, "0ec870a6-5d7e-4c22-8cfc-5baae07616ed"));
-extern (C++) interface ID3D12CommandQueue : ID3D12Pageable {
+extern(C++) interface ID3D12CommandQueue : ID3D12Pageable {
     void UpdateTileMappings(
         ID3D12Resource pResource,
         UINT NumResourceRegions,
@@ -2423,7 +2432,7 @@ extern (C++) interface ID3D12CommandQueue : ID3D12Pageable {
 }
 
 mixin(uuid!(ID3D12Device, "189819f1-1db6-4b57-be54-1821339b85f7"));
-extern (C++) interface ID3D12Device : ID3D12Object {
+extern(C++) interface ID3D12Device : ID3D12Object {
     UINT GetNodeCount();
 
     HRESULT CreateCommandQueue(
@@ -2660,17 +2669,25 @@ struct D3D12_MEMCPY_DEST {
 //
 ///////////////////////////////////////////////////////////////////////////
 
-// TODO: if this crashes make plain function 
-__gshared PFN_D3D12_CREATE_DEVICE       D3D12CreateDevice;
-__gshared PFN_D3D12_GET_DEBUG_INTERFACE D3D12GetDebugInterface;
 
-extern (Windows) {
-    alias PFN_D3D12_CREATE_DEVICE =
-        HRESULT function(IUnknown          pAdapter,
+extern(Windows) nothrow HRESULT D3D12CreateDevice(
+                         IUnknown          pAdapter,
                          D3D_FEATURE_LEVEL MinimumFeatureLevel,
                          REFIID            riid, // Expected: ID3D12Device
                          ID3D12Device     *ppDevice);
 
-    alias PFN_D3D12_GET_DEBUG_INTERFACE = HRESULT function(REFIID riid,
-                                                           void** ppvDebug);
-}
+extern(Windows) nothrow HRESULT D3D12GetDebugInterface(
+                         REFIID riid,
+                         void** ppvDebug);
+
+
+alias PFN_D3D12_CREATE_DEVICE = extern(Windows) nothrow HRESULT function(
+                         IUnknown          pAdapter,
+                         D3D_FEATURE_LEVEL MinimumFeatureLevel,
+                         REFIID            riid, // Expected: ID3D12Device
+                         ID3D12Device     *ppDevice);
+
+alias PFN_D3D12_GET_DEBUG_INTERFACE = extern(Windows) nothrow HRESULT function(
+                         REFIID riid,
+                         void** ppvDebug);
+
