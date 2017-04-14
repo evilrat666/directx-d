@@ -219,8 +219,7 @@ private:
 
 			m_pRenderTarget.Clear(&D2D1.ColorF(D2D1.ColorF.White).color); // ugh...
 
-			// FIXME: crash
-			auto rtSize = m_pRenderTarget.GetSize();
+			D2D1_SIZE_F rtSize = m_pRenderTarget.GetSize();
 			
 
 			// Draw a grid background.

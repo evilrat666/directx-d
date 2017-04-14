@@ -1258,18 +1258,21 @@ interface ID2D1Bitmap : ID2D1Image
     //
     // Returns the size of the bitmap in resolution independent units.
     //
+	// BUG: got crash? see ID2D1RenderTarget.GetSize() 
     ref D2D1_SIZE_F GetSize() const;
     
     
     //
     // Returns the size of the bitmap in resolution dependent units, (pixels).
     //
+	// BUG: got crash? see ID2D1RenderTarget.GetSize() 
 	ref D2D1_SIZE_U GetPixelSize() const;
     
     
     //
     // Retrieve the format of the bitmap.
     //
+	// BUG: got crash? see ID2D1RenderTarget.GetSize() 
 	ref D2D1_PIXEL_FORMAT GetPixelFormat() const;
     
     
@@ -1445,6 +1448,7 @@ interface ID2D1SolidColorBrush : ID2D1Brush
     
     void SetColor( const(D2D1_COLOR_F)* color );
     
+	// BUG: got crash? see ID2D1RenderTarget.GetSize() 
     ref D2D1_COLOR_F GetColor() const;
     
 	/*
@@ -1481,8 +1485,10 @@ interface ID2D1LinearGradientBrush : ID2D1Brush
     //
     void SetEndPoint( D2D1_POINT_2F endPoint );
     
+	// BUG: got crash? see ID2D1RenderTarget.GetSize() 
     ref D2D1_POINT_2F GetStartPoint() const;
     
+	// BUG: got crash? see ID2D1RenderTarget.GetSize() 
     ref D2D1_POINT_2F GetEndPoint() const;
     
     void GetGradientStopCollection(
@@ -1519,8 +1525,10 @@ interface ID2D1RadialGradientBrush : ID2D1Brush
     
     void SetRadiusY( FLOAT radiusY );
     
+	// BUG: got crash? see ID2D1RenderTarget.GetSize() 
     ref D2D1_POINT_2F GetCenter() const;
     
+	// BUG: got crash? see ID2D1RenderTarget.GetSize() 
     ref D2D1_POINT_2F GetGradientOriginOffset() const;
     
     FLOAT GetRadiusX() const;
@@ -2596,7 +2604,10 @@ mixin( uuid!(ID2D1Layer, "2cd9069b-12e2-11dc-9fed-001143a055f9") );
 interface ID2D1Layer : ID2D1Resource
 {
     extern(Windows):
+
+	// BUG: got crash? see ID2D1RenderTarget.GetSize() 
     ref D2D1_SIZE_F GetSize() const;
+
 } // interface ID2D1Layer
 
 
@@ -3092,7 +3103,10 @@ interface ID2D1RenderTarget : ID2D1Resource
         /*out*/ D2D1_TAG *tag2 = null 
         );
     
-    ref D2D1_PIXEL_FORMAT GetPixelFormat() const;
+version(CORRECT_ABI)
+	D2D1_PIXEL_FORMAT GetPixelFormat() const;
+else
+    void GetPixelFormat(D2D1_PIXEL_FORMAT* outPixelFormat) const; // <-- NOTE: ABI bug workaround, see D2D1_PIXEL_FORMAT GetPixelFormat() below
     
     
     //
@@ -3119,13 +3133,19 @@ interface ID2D1RenderTarget : ID2D1Resource
     //
     // Returns the size of the render target in DIPs.
     //
-    ref D2D1_SIZE_F GetSize() const;
+version(CORRECT_ABI)
+	D2D1_SIZE_F GetSize() const;
+else
+    void GetSize(D2D1_SIZE_F* outSize) const; // <-- NOTE: ABI bug workaround, see D2D1_SIZE_F GetSize() below
     
     
     //
     // Returns the size of the render target in pixels.
     //
-    ref D2D1_SIZE_U GetPixelSize() const;
+version(CORRECT_ABI)
+	D2D1_SIZE_U GetPixelSize() const;
+else
+    void GetPixelSize(D2D1_SIZE_U* outSize) const; // <-- NOTE: ABI bug workaround, see D2D1_SIZE_U GetPixelSize() below
     
     
     //
@@ -3572,6 +3592,37 @@ interface ID2D1RenderTarget : ID2D1Resource
         return IsSupported(&renderTargetProperties);
     }
 	*/
+
+	// =================================================================
+	//    HELPER METHODS
+
+version(CORRECT_ABI) {}
+else:
+
+	// ABI bug workaround for ID2D1RenderTarget.GetPixelFormat() related to return struct by value
+	public final D2D1_PIXEL_FORMAT GetPixelFormat() const
+	{
+		D2D1_PIXEL_FORMAT pFormat;
+		this.GetPixelFormat(&pFormat);
+		return pFormat;
+	}
+
+	// ABI bug workaround for ID2D1RenderTarget.GetSize() related to return struct by value
+	public final D2D1_SIZE_F GetSize() const
+	{
+		D2D1_SIZE_F rtSize;
+		this.GetSize(&rtSize);
+		return rtSize;
+	}
+
+	// ABI bug workaround for ID2D1RenderTarget.GetPixelSize() related to return struct by value
+	public final D2D1_SIZE_U GetPixelSize() const
+	{
+		D2D1_SIZE_U pSize;
+		this.GetPixelSize(&pSize);
+		return pSize;
+	}
+
 } // interface ID2D1RenderTarget
 
 
