@@ -575,7 +575,7 @@ mixin(uuid!(ID2D1GdiMetafileSink, "82237326-8111-4f7c-bcf4-b5c1175564fe"));
 /// </summary>
 interface ID2D1GdiMetafileSink : IUnknown
 {
-    
+	extern(Windows):
     /// <summary>
     /// Callback for examining a metafile record.
     /// </summary>
@@ -593,7 +593,7 @@ mixin(uuid!(ID2D1GdiMetafile, "2f543dc3-cfc1-4211-864f-cfd91c6f3395"));
 /// </summary>
 interface ID2D1GdiMetafile : ID2D1Resource
 {
-    
+	extern(Windows):
     /// <summary>
     /// Play the metafile into a caller-supplied sink interface.
     /// </summary>
@@ -613,6 +613,7 @@ mixin(uuid!(ID2D1CommandSink, "54d7898a-a061-40a7-bec7-e465bcba2c4f"));
 /// </summary>
 interface ID2D1CommandSink : IUnknown
 {
+	extern(Windows):
     HRESULT BeginDraw();
     HRESULT EndDraw();
     HRESULT SetAntialiasMode(D2D1_ANTIALIAS_MODE antialiasMode);
@@ -706,6 +707,7 @@ mixin(uuid!(ID2D1CommandList, "b4f34a19-2383-4d76-94f6-ec343657c3dc"));
 /// </summary>
 interface ID2D1CommandList : ID2D1Image
 {
+	extern(Windows):
     /// <summary>
     /// Play the command list into a caller-supplied sink interface.
     /// </summary>
@@ -724,6 +726,7 @@ mixin(uuid!(ID2D1PrintControl, "2c1d867d-c290-41c8-ae7e-34a98702e9a5"));
 /// </summary>
 interface ID2D1PrintControl : IUnknown
 {
+	extern(Windows):
     HRESULT AddPage(
         ID2D1CommandList commandList,
         D2D_SIZE_F pageSize,
@@ -743,6 +746,7 @@ mixin(uuid!(ID2D1ImageBrush, "fe9e984d-3f95-407c-b5db-cb94d4e8f87c"));
 /// </summary>
 interface ID2D1ImageBrush : ID2D1Brush
 {
+	extern(Windows):
     void SetImage(ID2D1Image image);
     void SetExtendModeX(D2D1_EXTEND_MODE extendModeX);
     void SetExtendModeY(D2D1_EXTEND_MODE extendModeY);
@@ -763,7 +767,7 @@ mixin(uuid!(ID2D1BitmapBrush1, "41343a53-e41a-49a2-91cd-21793bbb62e5"));
 /// </summary>
 interface ID2D1BitmapBrush1 : ID2D1BitmapBrush
 {
-    
+	extern(Windows):
     /// <summary>
     /// Sets the interpolation mode used when this brush is used.
     /// </summary>
@@ -779,6 +783,7 @@ mixin(uuid!(ID2D1StrokeStyle1, "10a72a66-e91c-43f4-993f-ddf4b82b0b4a"));
 /// </summary>
 interface ID2D1StrokeStyle1 : ID2D1StrokeStyle
 {
+	extern(Windows):
     D2D1_STROKE_TRANSFORM_TYPE GetStrokeTransformType() const;
 } // interface ID2D1StrokeStyle1
 
@@ -791,6 +796,7 @@ mixin(uuid!(ID2D1PathGeometry1, "62baa2d2-ab54-41b7-b872-787e0106a421"));
 /// </summary>
 interface ID2D1PathGeometry1 : ID2D1PathGeometry
 {
+	extern(Windows):
     HRESULT ComputePointAndSegmentAtLength(
         FLOAT length,
         UINT32 startSegment,
@@ -845,6 +851,7 @@ mixin(uuid!(ID2D1Properties, "483473d7-cd46-4f9d-9d3a-3112aa80159d"));
 /// </summary>
 interface ID2D1Properties : IUnknown
 {
+	extern(Windows):
     /// <summary>
     /// Returns the total number of custom properties in this interface.
     /// </summary>
@@ -1072,7 +1079,7 @@ mixin(uuid!(ID2D1Effect, "28211a43-7d89-476f-8181-2d6159b220ad"));
 /// </summary>
 interface ID2D1Effect : ID2D1Properties
 {
-    
+	extern(Windows):
     /// <summary>
     /// Sets the input to the given effect. The input can be a concrete bitmap or the
     /// output of another effect.
@@ -1126,7 +1133,7 @@ mixin(uuid!(ID2D1Bitmap, "28211a43-7d89-476f-8181-2d6159b220ad"));
 /// </summary>
 interface ID2D1Bitmap1 : ID2D1Bitmap
 {
-    
+	extern(Windows):
     /// <summary>
     /// Retrieves the color context information associated with the bitmap.
     /// </summary>
@@ -1162,7 +1169,7 @@ mixin(uuid!(ID2D1ColorContext, "1c4820bb-5771-4518-a581-2fe4dd0ec657"));
 /// </summary>
 interface ID2D1ColorContext : ID2D1Resource
 {
-    
+	extern(Windows):
     /// <summary>
     /// Retrieves the color space of the color context.
     /// </summary>
@@ -1187,7 +1194,7 @@ mixin(uuid!(ID2D1GradientStopCollection1, "ae1572f4-5dd0-4777-998b-9279472ae63b"
 /// </summary>
 interface ID2D1GradientStopCollection1 : ID2D1GradientStopCollection
 {
-    
+	extern(Windows):
     /// <summary>
     /// Copies the gradient stops from the collection into the caller's memory. If this
     /// object was created using ID2D1DeviceContext::CreateGradientStopCollection, this
@@ -1233,7 +1240,7 @@ mixin(uuid!(ID2D1DrawingStateBlock1, "689f1f85-c72e-4e33-8f19-85754efd5ace"));
 /// </summary>
 interface ID2D1DrawingStateBlock1 : ID2D1DrawingStateBlock
 {
-    
+	extern(Windows):
     /// <summary>
     /// Retrieves the state currently contained within this state block resource.
     /// </summary>
@@ -1259,7 +1266,7 @@ mixin(uuid!(ID2D1DeviceContext, "e8f7fe7a-191c-466d-ad95-975678bda998"));
 /// </summary>
 interface ID2D1DeviceContext : ID2D1RenderTarget
 {
-    
+	extern(Windows):
     /// <summary>
     /// Creates a bitmap with extended bitmap properties, potentially from a block of
     /// memory.
@@ -1936,7 +1943,7 @@ mixin(uuid!(ID2D1Device, "47dd575d-ac05-4cdd-8049-9b02cd16f44c"));
 /// </summary>
 interface ID2D1Device : ID2D1Resource
 {
-    
+	extern(Windows):
     /// <summary>
     /// Creates a new device context with no initially assigned target.
     /// </summary>
@@ -1991,7 +1998,7 @@ mixin(uuid!(ID2D1Factory1, "bb12d362-daee-4b9a-aa1d-14ba401cfa1f"));
 /// </summary>
 interface ID2D1Factory1 : ID2D1Factory
 {
-    
+	extern(Windows):
     /// <summary>
     /// This creates a new Direct2D device from the given IDXGIDevice.
     /// </summary>
@@ -2159,7 +2166,7 @@ mixin(uuid!(ID2D1Multithread, "31e6e7bc-e0ff-4d46-8c64-a0a8c41c15d3"));
 /// </summary>
 interface ID2D1Multithread : IUnknown
 {
-    
+	extern(Windows):
     /// <summary>
     /// Returns whether the D2D factory was created with
     /// D2D1_FACTORY_TYPE_MULTI_THREADED.
