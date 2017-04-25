@@ -57,25 +57,18 @@ struct Matrix4x3F // : D2D1_MATRIX_4X3_F
         _43 = m43;
     }
 
-    this()
+    // this()
+    /// Use this instead of default constructor
+    static @property nothrow Identity()
     {
-        _11 = 1;
-        _12 = 0;
-        _13 = 0;
-
-        _21 = 0;
-        _22 = 1;
-        _23 = 0;
-
-        _31 = 0;
-        _32 = 0;
-        _33 = 1;
-
-        _41 = 0;
-        _42 = 0;
-        _43 = 0;
+        return Matrix4x3F(
+            1, 0, 0,
+            0, 1, 0,
+            0, 0, 1,
+            0, 0, 0
+        );
     }
-};
+}
 
 struct Matrix4x4F // : public D2D1_MATRIX_4X4_F
 {
@@ -111,27 +104,16 @@ struct Matrix4x4F // : public D2D1_MATRIX_4X4_F
         _44 = m44;
     }
 
-    this()
+    // this()
+    /// Use this instead of default constructor
+    static nothrow @property Identity()
     {
-        _11 = 1;
-        _12 = 0;
-        _13 = 0;
-        _14 = 0;
-
-        _21 = 0;
-        _22 = 1;
-        _23 = 0;
-        _24 = 0;
-
-        _31 = 0;
-        _32 = 0;
-        _33 = 1;
-        _34 = 0;
-
-        _41 = 0;
-        _42 = 0;
-        _43 = 0;
-        _44 = 1;
+        return Matrix4x4F(
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        );
     }
 
     bool opEquals(
@@ -439,32 +421,17 @@ struct Matrix5x4F // : D2D1_MATRIX_5X4_F
         _54 = m54;
     }
 
-    this()
+    // this()
+    /// Use this instead of default constructor
+    static nothrow @property Identity()
     {
-        _11 = 1;
-        _12 = 0;
-        _13 = 0;
-        _14 = 0;
-
-        _21 = 0;
-        _22 = 1;
-        _23 = 0;
-        _24 = 0;
-
-        _31 = 0;
-        _32 = 0;
-        _33 = 1;
-        _34 = 0;
-
-        _41 = 0;
-        _42 = 0;
-        _43 = 0;
-        _44 = 1;
-
-        _51 = 0;
-        _52 = 0;
-        _53 = 0;
-        _54 = 0;
+        return Matrix5x4F(
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1,
+            0, 0, 0, 0
+        );
     }
 }
 
