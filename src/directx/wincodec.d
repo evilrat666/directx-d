@@ -3,6 +3,10 @@ module directx.wincodec;
 public import directx.dxgiformat, directx.dxgitype;
 public import directx.dcommon, directx.com;
 
+import directx.d2d1 : ID2D1Image;
+import directx.d2d1_1 : ID2D1Device;
+import core.sys.windows.ocidl, core.sys.windows.oaidl, core.sys.windows.objidl;
+
 enum WINCODEC_SDK_VERSION1 = 0x0236;
 enum WINCODEC_SDK_VERSION2 = 0x0237;
 // const GUID CLSID_WICImagingFactory  = { 0xcacaf262, 0x9370, 0x4615, [0xa1, 0x3b, 0x9f, 0x55, 0x39, 0xda, 0x4c, 0xa] };
@@ -925,7 +929,7 @@ extern(Windows):
     HRESULT Skip( 
         /* [in] */ ULONG celt);
     
-    HRESULT Reset( void);
+    HRESULT Reset();
     
     HRESULT Clone( 
         /* [out] */ IWICEnumMetadataItem *ppIEnumMetadataItem);
@@ -997,7 +1001,7 @@ extern(Windows):
         /* [out] */ IWICBitmapFrameEncode *ppIFrameEncode,
         /* [unique][out][in] */ IPropertyBag2 *ppIEncoderOptions);
     
-    HRESULT Commit( void);
+    HRESULT Commit();
     
     HRESULT GetMetadataQueryWriter( 
         /* [out] */ IWICMetadataQueryWriter *ppIMetadataQueryWriter);
@@ -1042,7 +1046,7 @@ extern(Windows):
         /* [in] */ IWICBitmapSource pIBitmapSource,
         /* [unique][in] */ WICRect* prc);
     
-    HRESULT Commit( void);
+    HRESULT Commit();
     
     HRESULT GetMetadataQueryWriter( 
         /* [out] */ IWICMetadataQueryWriter* ppIMetadataQueryWriter);
@@ -1239,21 +1243,6 @@ extern(Windows):
         /* [in] */ DWORD dwProgressFlags);
     
 }
-    
-extern(Windows)
-{
-/* [call_as] */ HRESULT IWICBitmapCodecProgressNotification_Remote_RegisterProgressNotification_Proxy( 
-    IWICBitmapCodecProgressNotification This,
-    /* [unique][in] */ IWICProgressCallback pICallback,
-    /* [in] */ DWORD dwProgressFlags);
-
-
-void IWICBitmapCodecProgressNotification_Remote_RegisterProgressNotification_Stub(
-    IRpcStubBuffer This,
-    IRpcChannelBuffer _pRpcChannelBuffer,
-    PRPC_MESSAGE _pRpcMessage,
-    DWORD *_pdwStubPhase);
-}
 
 mixin(uuid!(IWICComponentInfo, "23BC3F0A-698B-4357-886B-F24D50671334"));
 interface IWICComponentInfo : IUnknown
@@ -1392,21 +1381,7 @@ extern(Windows):
         /* [out] */ IWICBitmapDecoder* ppIBitmapDecoder);
     
 }
-    
-extern(Windows)
-{
-/* [call_as] */ HRESULT IWICBitmapDecoderInfo_Remote_GetPatterns_Proxy( 
-    IWICBitmapDecoderInfo This,
-    /* [size_is][size_is][out] */ WICBitmapPattern** ppPatterns,
-    /* [out] */ UINT* pcPatterns);
 
-
-void IWICBitmapDecoderInfo_Remote_GetPatterns_Stub(
-    IRpcStubBuffer This,
-    IRpcChannelBuffer _pRpcChannelBuffer,
-    PRPC_MESSAGE _pRpcMessage,
-    DWORD *_pdwStubPhase);
-}
 
 mixin(uuid!(IWICPixelFormatInfo, "E8EDA601-3D48-431a-AB44-69059BE88BBE"));
 interface IWICPixelFormatInfo : IWICComponentInfo
@@ -1625,8 +1600,8 @@ extern(Windows)
 }
 enum FACILITY_WINCODEC_ERR = 0x898;
 enum WINCODEC_ERR_BASE = 0x2000;
-pure MAKE_WINCODECHR(short sev, short code) { return MAKE_HRESULT(sev, FACILITY_WINCODEC_ERR, (WINCODEC_ERR_BASE + code)); }
-pure MAKE_WINCODECHR_ERR(short code) { return MAKE_WINCODECHR(1, code); }
+pure MAKE_WINCODECHR(bool sev, uint code) { return MAKE_HRESULT(sev, FACILITY_WINCODEC_ERR, (WINCODEC_ERR_BASE + code)); }
+pure MAKE_WINCODECHR_ERR(uint code) { return MAKE_WINCODECHR(true, code); }
 enum WINCODEC_ERR_GENERIC_ERROR                    = E_FAIL;
 enum WINCODEC_ERR_INVALIDPARAMETER                 = E_INVALIDARG;
 enum WINCODEC_ERR_OUTOFMEMORY                      = E_OUTOFMEMORY;
@@ -1898,46 +1873,6 @@ extern(Windows):
     
 }
 
-extern(Windows)
-{
-/* [call_as] */ HRESULT IWICDevelopRaw_Remote_QueryRawCapabilitiesInfo_Proxy( 
-    IWICDevelopRaw This,
-    /* [out][in] */ WICRawCapabilitiesInfo* pInfo);
-
-
-void IWICDevelopRaw_Remote_QueryRawCapabilitiesInfo_Stub(
-    IRpcStubBuffer This,
-    IRpcChannelBuffer _pRpcChannelBuffer,
-    PRPC_MESSAGE _pRpcMessage,
-    DWORD* _pdwStubPhase);
-
-
-/* [call_as] */ HRESULT IWICDevelopRaw_Remote_SetToneCurve_Proxy( 
-    IWICDevelopRaw This,
-    /* [in] */ UINT cPoints,
-    /* [size_is][in] */ const(WICRawToneCurvePoint)* aPoints);
-
-
-void IWICDevelopRaw_Remote_SetToneCurve_Stub(
-    IRpcStubBuffer This,
-    IRpcChannelBuffer _pRpcChannelBuffer,
-    PRPC_MESSAGE _pRpcMessage,
-    DWORD* _pdwStubPhase);
-
-
-/* [call_as] */ HRESULT IWICDevelopRaw_Remote_GetToneCurve_Proxy( 
-    IWICDevelopRaw This,
-    /* [out] */ UINT* pcPoints,
-    /* [size_is][size_is][out] */ WICRawToneCurvePoint** paPoints);
-
-
-void IWICDevelopRaw_Remote_GetToneCurve_Stub(
-    IRpcStubBuffer This,
-    IRpcChannelBuffer _pRpcChannelBuffer,
-    PRPC_MESSAGE _pRpcMessage,
-    DWORD* _pdwStubPhase);
-}
-
 
 /* interface __MIDL_itf_wincodec_0000_0038 */
 /* [local] */ 
@@ -2046,7 +1981,7 @@ extern(Windows):
         WICJpegIndexingOptions options,
         UINT horizontalIntervalSize);
     
-    HRESULT ClearIndexing( void);
+    HRESULT ClearIndexing();
     
     HRESULT GetAcHuffmanTable( 
         UINT scanIndex,

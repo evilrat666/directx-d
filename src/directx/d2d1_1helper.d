@@ -31,9 +31,8 @@ struct Matrix4x3F // : D2D1_MATRIX_4X3_F
     D2D1_MATRIX_4X3_F matrix;
     alias matrix this;
 
-    this(D2D1_MATRIX_4X3_F m) { matrix = m; }
-
-    this(
+    nothrow this(D2D1_MATRIX_4X3_F m) { matrix = m; }
+    nothrow this(
         FLOAT m11, FLOAT m12, FLOAT m13,
         FLOAT m21, FLOAT m22, FLOAT m23,
         FLOAT m31, FLOAT m32, FLOAT m33,
@@ -75,8 +74,8 @@ struct Matrix4x4F // : public D2D1_MATRIX_4X4_F
     D2D1_MATRIX_4X4_F matrix;
     alias matrix this;
 
-    this(D2D1_MATRIX_4X4_F m) { matrix = m; }
-    this(
+    nothrow this(D2D1_MATRIX_4X4_F m) { matrix = m; }
+    nothrow this(
         FLOAT m11, FLOAT m12, FLOAT m13, FLOAT m14,
         FLOAT m21, FLOAT m22, FLOAT m23, FLOAT m24,
         FLOAT m31, FLOAT m32, FLOAT m33, FLOAT m34,
@@ -317,7 +316,7 @@ struct Matrix4x4F // : public D2D1_MATRIX_4X4_F
     Matrix4x4F*
     ReinterpretBaseType(D2D1_MATRIX_4X4_F *pMatrix)
     {
-        return cast(Matrix4x4*)(pMatrix);
+        return cast(Matrix4x4F*)(pMatrix);
     }
 
     nothrow
@@ -336,10 +335,10 @@ struct Matrix4x4F // : public D2D1_MATRIX_4X4_F
     bool
     IsIdentity() const
     {
-        return _11 == 1.f && _12 == 0.f && _13 == 0.f && _14 == 0.f
-            && _21 == 0.f && _22 == 1.f && _23 == 0.f && _24 == 0.f
-            && _31 == 0.f && _32 == 0.f && _33 == 1.f && _34 == 0.f
-            && _41 == 0.f && _42 == 0.f && _43 == 0.f && _44 == 1.f;
+        return _11 == 1.0f && _12 == 0.0f && _13 == 0.0f && _14 == 0.0f
+            && _21 == 0.0f && _22 == 1.0f && _23 == 0.0f && _24 == 0.0f
+            && _31 == 0.0f && _32 == 0.0f && _33 == 1.0f && _34 == 0.0f
+            && _41 == 0.0f && _42 == 0.0f && _43 == 0.0f && _44 == 1.0f;
     }
 
     nothrow
@@ -385,9 +384,8 @@ struct Matrix5x4F // : D2D1_MATRIX_5X4_F
     D2D1_MATRIX_5X4_F matrix;
     alias matrix this;
 
-    this(D2D1_MATRIX_5X4_F m) { matrix = m; }
-
-    this(
+    nothrow this(D2D1_MATRIX_5X4_F m) { matrix = m; }
+    nothrow this(
         FLOAT m11, FLOAT m12, FLOAT m13, FLOAT m14,
         FLOAT m21, FLOAT m22, FLOAT m23, FLOAT m24,
         FLOAT m31, FLOAT m32, FLOAT m33, FLOAT m34,
@@ -435,7 +433,6 @@ struct Matrix5x4F // : D2D1_MATRIX_5X4_F
     }
 }
 
-nothrow
 D2D1_COLOR_F
 ConvertColorSpace(
     D2D1_COLOR_SPACE sourceColorSpace,
@@ -450,7 +447,6 @@ ConvertColorSpace(
         );
 }
 
-nothrow
 D2D1_DRAWING_STATE_DESCRIPTION1
 DrawingStateDescription1(
     D2D1_ANTIALIAS_MODE antialiasMode = D2D1_ANTIALIAS_MODE_PER_PRIMITIVE,
@@ -475,7 +471,6 @@ DrawingStateDescription1(
     return drawingStateDescription1;
 }
 
-nothrow
 D2D1_DRAWING_STATE_DESCRIPTION1
 DrawingStateDescription1(
     const D2D1_DRAWING_STATE_DESCRIPTION desc,
@@ -496,7 +491,6 @@ DrawingStateDescription1(
     return drawingStateDescription1;
 }
 
-nothrow
 D2D1_BITMAP_PROPERTIES1
 BitmapProperties1(
     D2D1_BITMAP_OPTIONS bitmapOptions = D2D1_BITMAP_OPTIONS_NONE,
@@ -517,7 +511,6 @@ BitmapProperties1(
     return bitmapProperties;
 }    
 
-nothrow
 D2D1_LAYER_PARAMETERS1
 LayerParameters1(
     const D2D1_RECT_F contentBounds = D2D1.InfiniteRect(),
@@ -529,7 +522,7 @@ LayerParameters1(
     D2D1_LAYER_OPTIONS1 layerOptions = D2D1_LAYER_OPTIONS1_NONE
     )
 {
-    D2D1_LAYER_PARAMETERS1 layerParameters = { 0 };
+    D2D1_LAYER_PARAMETERS1 layerParameters;
 
     layerParameters.contentBounds = contentBounds;
     layerParameters.geometricMask = geometricMask;
@@ -542,7 +535,6 @@ LayerParameters1(
     return layerParameters;
 }
 
-nothrow
 D2D1_STROKE_STYLE_PROPERTIES1
 StrokeStyleProperties1(
     D2D1_CAP_STYLE startCap = D2D1_CAP_STYLE_FLAT,
@@ -569,7 +561,6 @@ StrokeStyleProperties1(
     return strokeStyleProperties;
 }
 
-nothrow
 D2D1_IMAGE_BRUSH_PROPERTIES
 ImageBrushProperties(
     D2D1_RECT_F sourceRectangle,
@@ -588,7 +579,6 @@ ImageBrushProperties(
     return imageBrushProperties;
 }
 
-nothrow
 D2D1_BITMAP_BRUSH_PROPERTIES1
 BitmapBrushProperties1(
     D2D1_EXTEND_MODE extendModeX = D2D1_EXTEND_MODE_CLAMP,
@@ -605,7 +595,6 @@ BitmapBrushProperties1(
     return bitmapBrush1Properties;
 }
 
-nothrow
 D2D1_PRINT_CONTROL_PROPERTIES
 PrintControlProperties(
     D2D1_PRINT_FONT_SUBSET_MODE fontSubsetMode = D2D1_PRINT_FONT_SUBSET_MODE_DEFAULT,
@@ -622,7 +611,6 @@ PrintControlProperties(
     return printControlProps;
 }
 
-nothrow
 D2D1_RENDERING_CONTROLS
 RenderingControls(
     D2D1_BUFFER_PRECISION bufferPrecision,
@@ -637,7 +625,6 @@ RenderingControls(
     return renderingControls;
 }
 
-nothrow
 D2D1_EFFECT_INPUT_DESCRIPTION
 EffectInputDescription(
     ID2D1Effect effect,
@@ -654,7 +641,6 @@ EffectInputDescription(
     return description;
 }
 
-nothrow
 D2D1_CREATION_PROPERTIES
 CreationProperties(
     D2D1_THREADING_MODE threadingMode,
@@ -671,7 +657,6 @@ CreationProperties(
     return creationProperties;
 }
 
-nothrow
 D2D1_VECTOR_2F
 Vector2F(
     FLOAT x = 0.0f,
@@ -682,7 +667,6 @@ Vector2F(
     return vec2;
 }
 
-nothrow
 D2D1_VECTOR_3F
 Vector3F(
     FLOAT x = 0.0f,
@@ -694,7 +678,6 @@ Vector3F(
     return vec3;
 }
 
-nothrow
 D2D1_VECTOR_4F
 Vector4F(
     FLOAT x = 0.0f,
@@ -707,17 +690,15 @@ Vector4F(
     return vec4;
 }
 
-nothrow
 D2D1_POINT_2L
 Point2L(
     INT32 x = 0,
     INT32 y = 0
     )
 {
-    return Point2!INT32(x, y);
+    return D2D1_POINT_2L(x, y);
 }
 
-nothrow
 D2D1_RECT_L
 RectL(
     INT32 left = 0,
@@ -726,14 +707,13 @@ RectL(
     INT32 bottom = 0
     )
 {
-    return Rect!INT32(left, top, right, bottom);
+    return D2D1_RECT_L(left, top, right, bottom);
 }
 
-//
-// Sets a bitmap as an effect input, while inserting a DPI compensation effect
-// to preserve visual appearance as the device context's DPI changes.
-// 
-nothrow
+///
+/// Sets a bitmap as an effect input, while inserting a DPI compensation effect
+/// to preserve visual appearance as the device context's DPI changes.
+/// 
 HRESULT
 SetDpiCompensatedEffectInput(
     ID2D1DeviceContext deviceContext,
@@ -753,7 +733,7 @@ SetDpiCompensatedEffectInput(
         return hr;
     }
 
-    hr = deviceContext.CreateEffect(CLSID_D2D1DpiCompensation, &dpiCompensationEffect);
+    hr = deviceContext.CreateEffect(&CLSID_D2D1DpiCompensation, &dpiCompensationEffect);
 
     if (SUCCEEDED(hr))
     {
@@ -762,7 +742,7 @@ SetDpiCompensatedEffectInput(
                 dpiCompensationEffect.SetInput(0, inputBitmap);
 
                 D2D1_POINT_2F bitmapDpi;
-                inputBitmap.GetDpi(&bitmapDpi.x, &bitmapDpi.y);
+                inputBitmap.GetDpi(bitmapDpi.x, bitmapDpi.y);
                 hr = dpiCompensationEffect.SetValue(D2D1_DPICOMPENSATION_PROP_INPUT_DPI, bitmapDpi);
             }
 

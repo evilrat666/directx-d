@@ -13,6 +13,9 @@ public import directx.d2d1effects;
 public import directx.dxgi;
 public import directx.dwrite, directx.wincodec;
 
+import directx.d2d1effectauthor;
+import core.sys.windows.objidl;
+
 /// <summary>
 /// Function pointer to construct a new effect once registered.
 /// </summary>
@@ -805,20 +808,20 @@ interface ID2D1PathGeometry1 : ID2D1PathGeometry
         D2D1_POINT_DESCRIPTION* pointDescription 
         ) const;
     
-    final nothrow
+    final
     HRESULT
     ComputePointAndSegmentAtLength(
         FLOAT length,
         UINT32 startSegment,
-        const(D2D1_MATRIX_3X2_F) worldTransform,
+        const D2D1_MATRIX_3X2_F worldTransform,
         FLOAT flatteningTolerance,
         D2D1_POINT_DESCRIPTION pointDescription 
         ) const  
     {
-        return ComputePointAndSegmentAtLength(length, startSegment, &worldTransform, flatteningTolerance, pointDescription);
+        return ComputePointAndSegmentAtLength(length, startSegment, &worldTransform, flatteningTolerance, &pointDescription);
     }
     
-    final nothrow
+    final
     HRESULT
     ComputePointAndSegmentAtLength(
         FLOAT length,
@@ -830,7 +833,7 @@ interface ID2D1PathGeometry1 : ID2D1PathGeometry
         return ComputePointAndSegmentAtLength(length, startSegment, worldTransform, D2D1_DEFAULT_FLATTENING_TOLERANCE, pointDescription);
     }
     
-    final nothrow
+    final
     HRESULT
     ComputePointAndSegmentAtLength(
         FLOAT length,
@@ -935,7 +938,7 @@ interface ID2D1Properties : IUnknown
         ID2D1Properties *subProperties 
         ) const;
     
-    final nothrow
+    final
     HRESULT
     SetValueByName(
         PCWSTR name,
@@ -946,7 +949,7 @@ interface ID2D1Properties : IUnknown
         return SetValueByName(name, D2D1_PROPERTY_TYPE_UNKNOWN, data, dataSize);
     }
     
-    final nothrow
+    final
     HRESULT
     SetValue(
         UINT32 index,
@@ -957,7 +960,7 @@ interface ID2D1Properties : IUnknown
         return SetValue(index, D2D1_PROPERTY_TYPE_UNKNOWN, data, dataSize);
     }
     
-    final nothrow
+    final
     HRESULT
     GetValueByName(
         PCWSTR name,
@@ -968,7 +971,7 @@ interface ID2D1Properties : IUnknown
         return GetValueByName(name, D2D1_PROPERTY_TYPE_UNKNOWN, data, dataSize);
     }
     
-    final nothrow
+    final
     HRESULT
     GetValue(
         UINT32 index,
@@ -1086,7 +1089,7 @@ interface ID2D1Effect : ID2D1Properties
     /// </summary>
     void SetInput(
         UINT32 index,
-        ID2D1Image *input,
+        ID2D1Image input,
         BOOL invalidate = TRUE 
         );
     
@@ -1113,14 +1116,14 @@ interface ID2D1Effect : ID2D1Properties
     /// </summary>
     void GetOutput(ID2D1Image *outputImage) const;
     
-    final nothrow
+    final
     void
     SetInputEffect(UINT32 index, ID2D1Effect inputEffect, BOOL invalidate = TRUE)  
     {
         
         ID2D1Image output = null;
-        if (inputEffect != null) inputEffect.GetOutput(&output);
-        scope(exit) if(output != null) output.Release();
+        if (inputEffect !is null) inputEffect.GetOutput(&output);
+        scope(exit) if(output !is null) output.Release();
         SetInput(index, output, invalidate);
     }
 } // interface ID2D1Effect
@@ -1333,7 +1336,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
     HRESULT CreateBitmapFromDxgiSurface(
         IDXGISurface surface,
         const(D2D1_BITMAP_PROPERTIES1)* bitmapProperties,
-        ID2D1Bitmap1 **bitmap 
+        ID2D1Bitmap1* bitmap 
         );
     
     /// <summary>
@@ -1638,7 +1641,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         const(D2D1_RECT_F)* sourceRectangle = null 
         );
     
-    final nothrow
+    final
     HRESULT
     CreateBitmap(
         D2D1_SIZE_U size,
@@ -1654,7 +1657,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
     /// <summary>
     /// Create a D2D bitmap by copying a WIC bitmap.
     /// </summary>
-    final nothrow
+    final
     HRESULT
     CreateBitmapFromWicBitmap(
         IWICBitmapSource wicBitmapSource,
@@ -1668,7 +1671,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
     /// <summary>
     /// Create a D2D bitmap by copying a WIC bitmap.
     /// </summary>
-    final nothrow
+    final
     HRESULT
     CreateBitmapFromWicBitmap(
         IWICBitmapSource wicBitmapSource,
@@ -1678,7 +1681,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         return CreateBitmapFromWicBitmap(wicBitmapSource, null, &bitmap);
     }
     
-    final nothrow
+    final
     HRESULT
     CreateBitmapFromDxgiSurface(
         IDXGISurface surface,
@@ -1689,7 +1692,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         return CreateBitmapFromDxgiSurface(surface, &bitmapProperties, &bitmap);
     }
     
-    final nothrow
+    final
     HRESULT
     CreateImageBrush(
         ID2D1Image image,
@@ -1701,7 +1704,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         return CreateImageBrush(image, &imageBrushProperties, &brushProperties, &imageBrush);
     }
     
-    final nothrow
+    final
     HRESULT
     CreateImageBrush(
         ID2D1Image image,
@@ -1712,7 +1715,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         return CreateImageBrush(image,&imageBrushProperties, null, &imageBrush);
     }
     
-    final nothrow
+    final
     HRESULT
     CreateBitmapBrush(
         ID2D1Bitmap bitmap,
@@ -1722,7 +1725,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         return CreateBitmapBrush(bitmap, null, null, &bitmapBrush);
     }
     
-    final nothrow
+    final
     HRESULT
     CreateBitmapBrush(
         ID2D1Bitmap bitmap,
@@ -1733,7 +1736,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         return CreateBitmapBrush(bitmap, &bitmapBrushProperties, null, &bitmapBrush);
     }
     
-    final nothrow
+    final
     HRESULT
     CreateBitmapBrush(
         ID2D1Bitmap bitmap,
@@ -1748,7 +1751,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
     /// <summary>
     /// Draws the output of the effect as an image.
     /// </summary>
-    final nothrow
+    final
     void
     DrawImage(
         ID2D1Effect effect,
@@ -1764,7 +1767,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         DrawImage(output, targetOffset, imageRectangle, interpolationMode, compositeMode);
     }
     
-    final nothrow
+    final
     void
     DrawImage(
         ID2D1Image image,
@@ -1775,7 +1778,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         DrawImage(image, null, null, interpolationMode, compositeMode);
     }
     
-    final nothrow
+    final
     void
     DrawImage(
         ID2D1Effect effect,
@@ -1786,7 +1789,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         DrawImage(effect, null, null, interpolationMode, compositeMode);
     }
     
-    final nothrow
+    final
     void
     DrawImage(
         ID2D1Image image,
@@ -1798,7 +1801,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         DrawImage(image, &targetOffset, null, interpolationMode, compositeMode);
     }
     
-    final nothrow
+    final
     void
     DrawImage(
         ID2D1Effect effect,
@@ -1809,8 +1812,8 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
     {
         DrawImage(effect, &targetOffset, null, interpolationMode, compositeMode);
     }
-    
-    final nothrow
+
+    final
     void
     DrawImage(
         ID2D1Image image,
@@ -1823,7 +1826,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         DrawImage(image, &targetOffset, &imageRectangle, interpolationMode, compositeMode);
     }
     
-    final nothrow
+    final
     void
     DrawImage(
         ID2D1Effect effect,
@@ -1836,7 +1839,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         DrawImage(effect, &targetOffset, &imageRectangle, interpolationMode, compositeMode);
     }
     
-    final nothrow
+    final
     void
     PushLayer(
         const D2D1_LAYER_PARAMETERS1 layerParameters,
@@ -1846,7 +1849,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         PushLayer(&layerParameters, layer);
     }
     
-    final nothrow
+    final
     void
     DrawGdiMetafile(
         ID2D1GdiMetafile gdiMetafile,
@@ -1856,7 +1859,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         DrawGdiMetafile(gdiMetafile, &targetOffset);
     }
     
-    final nothrow
+    final
     void
     DrawBitmap(
         ID2D1Bitmap bitmap,
@@ -1870,7 +1873,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         DrawBitmap(bitmap, &destinationRectangle, opacity, interpolationMode, sourceRectangle, perspectiveTransform);
     }
     
-    final nothrow
+    final
     void
     DrawBitmap(
         ID2D1Bitmap bitmap,
@@ -1884,7 +1887,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         DrawBitmap(bitmap, &destinationRectangle, opacity, interpolationMode, &sourceRectangle, perspectiveTransform);
     }
     
-    final nothrow
+    final
     void
     DrawBitmap(
         ID2D1Bitmap bitmap,
@@ -1898,7 +1901,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         DrawBitmap(bitmap, &destinationRectangle, opacity, interpolationMode, &sourceRectangle, &perspectiveTransform);
     }
     
-    final nothrow
+    final
     void
     FillOpacityMask(
         ID2D1Bitmap opacityMask,
@@ -1910,7 +1913,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
         FillOpacityMask(opacityMask, brush, &destinationRectangle, sourceRectangle);
     }
     
-    final nothrow
+    final
     void
     FillOpacityMask(
         ID2D1Bitmap opacityMask,
@@ -1925,7 +1928,7 @@ interface ID2D1DeviceContext : ID2D1RenderTarget
     /// <summary>
     /// Sets tuning parameters for internal rendering inside the device context.
     /// </summary>
-    final nothrow
+    final
     void
     SetRenderingControls(
         const D2D1_RENDERING_CONTROLS renderingControls 
@@ -1978,7 +1981,7 @@ interface ID2D1Device : ID2D1Resource
     /// </summary>
     void ClearResources(UINT32 millisecondsSinceUse = 0);
     
-    final nothrow
+    final
     HRESULT
     CreatePrintControl(
         IWICImagingFactory wicFactory,
@@ -2117,7 +2120,7 @@ interface ID2D1Factory1 : ID2D1Factory
         ID2D1Properties *properties 
         ) const;
     
-    final nothrow
+    final
     HRESULT
     CreateStrokeStyle(
         const D2D1_STROKE_STYLE_PROPERTIES1 strokeStyleProperties,
@@ -2129,7 +2132,7 @@ interface ID2D1Factory1 : ID2D1Factory
         return CreateStrokeStyle(&strokeStyleProperties, dashes, dashesCount, &strokeStyle);
     }
     // D-style impl
-    final nothrow
+    final
     HRESULT
     CreateStrokeStyle(
         const D2D1_STROKE_STYLE_PROPERTIES1 strokeStyleProperties,
@@ -2140,7 +2143,7 @@ interface ID2D1Factory1 : ID2D1Factory
         return CreateStrokeStyle(&strokeStyleProperties, &dashes[0], dashes.length, &strokeStyle);
     }
     
-    final nothrow
+    final
     HRESULT
     CreateDrawingStateBlock(
         const D2D1_DRAWING_STATE_DESCRIPTION1 drawingStateDescription,
@@ -2150,7 +2153,7 @@ interface ID2D1Factory1 : ID2D1Factory
         return CreateDrawingStateBlock(&drawingStateDescription, null, &drawingStateBlock);
     }
     
-    final nothrow
+    final
     HRESULT
     CreateDrawingStateBlock(out ID2D1DrawingStateBlock1 drawingStateBlock)  
     {
