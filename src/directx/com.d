@@ -19,5 +19,20 @@ template uuid(T, const char[] g) {
 // from intsafe.h
 enum INTSAFE_E_ARITHMETIC_OVERFLOW   = cast(HRESULT)0x80070216L;  // 0x216 = 534 = ERROR_ARITHMETIC_OVERFLOW
 
-// Unknown Interfaces
-interface IPrintDocumentPackageTarget : IUnknown {}
+// Interface from DocumentTarget.h
+mixin(uuid!(IPrintDocumentPackageTarget, "1b8efec4-3019-4c27-964e-367202156906"));
+interface IPrintDocumentPackageTarget : IUnknown
+{
+extern(Windows):
+    /* [helpstring] */ HRESULT GetPackageTargetTypes( 
+        /* [out] */ UINT32* targetCount,
+        /* [size_is][size_is][out] */ GUID** targetTypes);
+    
+    /* [helpstring] */ HRESULT GetPackageTarget( 
+        /* [in] */ REFGUID guidTargetType,
+        /* [in] */ REFIID riid,
+        /* [iid_is][out] */ void** ppvTarget);
+    
+    HRESULT Cancel();
+    
+}
