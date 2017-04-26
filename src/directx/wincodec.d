@@ -5,6 +5,7 @@ public import directx.dcommon, directx.com;
 
 import directx.d2d1 : ID2D1Image;
 import directx.d2d1_1 : ID2D1Device;
+import core.sys.windows.wtypes;
 import core.sys.windows.ocidl, core.sys.windows.oaidl, core.sys.windows.objidl;
 
 enum WINCODEC_SDK_VERSION1 = 0x0236;
