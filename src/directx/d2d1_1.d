@@ -2228,7 +2228,7 @@ extern(Windows)
       );
 }
 
-public import directx.d2d1_1helper;
+// public import D2D1 = directx.d2d1_1helper; TODO: Resolve namespace translation
 
 HRESULT 
 D2D1CreateDevice(
