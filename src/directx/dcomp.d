@@ -63,7 +63,7 @@ extern(Windows)
 mixin(uuid!(IDCompositionDevice, "C37EA93A-E7AA-450D-B16F-9746CB0407F3"));
 /// Serves as the root factory for all other DirectComposition objects and
 /// controls transactional composition.
-extern(C++) interface IDCompositionDevice : IUnknown
+interface IDCompositionDevice : IUnknown
 {
 	extern(Windows):
     /// Commits all DirectComposition commands pending on this device.
@@ -148,17 +148,17 @@ mixin(uuid!(IDCompositionTarget, "eacdd04c-117e-4e17-88f4-d1b12b0e3d89"));
 /// An IDCompositionTarget interface represents a binding between a
 /// DirectComposition visual tree and a destination on top of which the
 /// visual tree should be composed.
-extern(C++) interface IDCompositionTarget : IUnknown
+interface IDCompositionTarget : IUnknown
 {
 	extern(Windows):
     /// Sets the root visual
-	HRESULT SetRoot(IDCompositionVisual* visual);
+	HRESULT SetRoot(IDCompositionVisual visual);
 }
 
 mixin(uuid!(IDCompositionVisual, "4d93059d-097b-4651-9a60-f0f25116e2f3"));
 /// An IDCompositionVisual interface represents a visual that participates in
 /// a visual tree.
-extern(C++) interface IDCompositionVisual : IUnknown
+interface IDCompositionVisual : IUnknown
 {
 	extern(Windows):
     /// Changes the value of OffsetX property
@@ -206,18 +206,18 @@ extern(C++) interface IDCompositionVisual : IUnknown
 
 mixin(uuid!(IDCompositionEffect, "EC81B08F-BFCB-4e8d-B193-A915587999E8"));
 /// An IDCompositionEffect interface represents an effect
-extern(C++) interface IDCompositionEffect : IUnknown {}
+interface IDCompositionEffect : IUnknown {}
 mixin(uuid!(IDCompositionTransform3D, "71185722-246B-41f2-AAD1-0443F7F4BFC2"));
 /// An IDCompositionTransform3D interface represents a 3D transformation.
-extern(C++) interface IDCompositionTransform3D : IDCompositionEffect {}
+interface IDCompositionTransform3D : IDCompositionEffect {}
 mixin(uuid!(IDCompositionTransform, "FD55FAA7-37E0-4c20-95D2-9BE45BC33F55"));
 /// An IDCompositionTransform interface represents a 2D transformation that
 /// can be used to modify the coordinate space of a visual subtree.
-extern(C++) interface IDCompositionTransform : IDCompositionTransform3D {}
+interface IDCompositionTransform : IDCompositionTransform3D {}
 mixin(uuid!(IDCompositionTranslateTransform, "06791122-C6F0-417d-8323-269E987F5954"));
 /// An IDCompositionTranslateTransform interface represents a 2D transformation
 /// that affects only the offset of a visual along the x and y axes.
-extern(C++) interface IDCompositionTranslateTransform : IDCompositionTransform
+interface IDCompositionTranslateTransform : IDCompositionTransform
 {
 	extern(Windows):
     /// Changes the value of the OffsetX property.
@@ -234,7 +234,7 @@ mixin(uuid!(IDCompositionScaleTransform, "71FDE914-40EF-45ef-BD51-68B037C339F9")
 /// An IDCompositionScaleTransform interface represents a 2D transformation that
 /// affects the scale of a visual along the x and y axes. The coordinate system
 /// is scaled from the specified center point.
-extern(C++) interface IDCompositionScaleTransform : IDCompositionTransform
+interface IDCompositionScaleTransform : IDCompositionTransform
 {
 	extern(Windows):
     /// Changes the value of the ScaleX property.
@@ -259,7 +259,7 @@ mixin(uuid!(IDCompositionRotateTransform, "641ED83C-AE96-46c5-90DC-32774CC5C6D5"
 /// An IDCompositionRotateTransform interface represents a 2D transformation
 /// that affects the rotation of a visual along the z axis. The coordinate system
 /// is rotated around the specified center point.
-extern(C++) interface IDCompositionRotateTransform : IDCompositionTransform
+interface IDCompositionRotateTransform : IDCompositionTransform
 {
 	extern(Windows):
     /// Changes the value of the Angle property.
@@ -280,7 +280,7 @@ mixin(uuid!(IDCompositionSkewTransform, "E57AA735-DCDB-4c72-9C61-0591F58889EE"))
 /// An IDCompositionSkewTransform interface represents a 2D transformation that
 /// affects the skew of a visual along the x and y axes. The coordinate system
 /// is skewed around the specified center point.
-extern(C++) interface IDCompositionSkewTransform : IDCompositionTransform
+interface IDCompositionSkewTransform : IDCompositionTransform
 {
 	extern(Windows):
     /// Changes the value of the AngleX property.
@@ -304,7 +304,7 @@ extern(C++) interface IDCompositionSkewTransform : IDCompositionTransform
 mixin(uuid!(IDCompositionMatrixTransform, "16CDFF07-C503-419c-83F2-0965C7AF1FA6"));
 /// An IDCompositionMatrixTransform interface represents an arbitrary affine
 /// 2D transformation defined by a 3x2 matrix.
-extern(C++) interface IDCompositionMatrixTransform : IDCompositionTransform
+interface IDCompositionMatrixTransform : IDCompositionTransform
 {
 	extern(Windows):
     /// Changes all values of the matrix of this transform.
@@ -318,7 +318,7 @@ extern(C++) interface IDCompositionMatrixTransform : IDCompositionTransform
 mixin(uuid!(IDCompositionEffectGroup, "A7929A74-E6B2-4bd6-8B95-4040119CA34D"));
 /// An IDCompositionEffectGroup holds effects, inluding 3D transforms that can
 /// be applied to a visual.
-extern(C++) interface IDCompositionEffectGroup : IDCompositionEffect
+interface IDCompositionEffectGroup : IDCompositionEffect
 {
 	extern(Windows):
     /// Changes the opacity property.
@@ -332,7 +332,7 @@ extern(C++) interface IDCompositionEffectGroup : IDCompositionEffect
 mixin(uuid!(IDCompositionTranslateTransform3D, "91636D4B-9BA1-4532-AAF7-E3344994D788"));
 /// An IDCompositionTranslateTransform3D interface represents a 3D transformation
 /// that affects the offset of a visual along the x,y and z axes.
-extern(C++) interface IDCompositionTranslateTransform3D : IDCompositionTransform3D
+interface IDCompositionTranslateTransform3D : IDCompositionTransform3D
 {
 	extern(Windows):
     /// Changes the value of the OffsetX property.
@@ -353,7 +353,7 @@ mixin(uuid!(IDCompositionScaleTransform3D, "2A9E9EAD-364B-4b15-A7C4-A1997F78B389
 /// An IDCompositionScaleTransform3D interface represents a 3D transformation that
 /// affects the scale of a visual along the x, y and z axes. The coordinate system
 /// is scaled from the specified center point.
-extern(C++) interface IDCompositionScaleTransform3D : IDCompositionTransform3D
+interface IDCompositionScaleTransform3D : IDCompositionTransform3D
 {
 	extern(Windows):
     /// Changes the value of the ScaleX property.
@@ -386,7 +386,7 @@ mixin(uuid!(IDCompositionRotateTransform3D, "D8F5B23F-D429-4a91-B55A-D2F45FD75B1
 /// An IDCompositionRotateTransform3D interface represents a 3D transformation
 /// that affects the rotation of a visual along the specified axis at the
 /// specified center point.
-extern(C++) interface IDCompositionRotateTransform3D : IDCompositionTransform3D
+interface IDCompositionRotateTransform3D : IDCompositionTransform3D
 {
 	extern(Windows):
     /// Changes the value of the Angle property.
@@ -422,7 +422,7 @@ extern(C++) interface IDCompositionRotateTransform3D : IDCompositionTransform3D
 mixin(uuid!(IDCompositionMatrixTransform3D, "4B3363F0-643B-41b7-B6E0-CCF22D34467C"));
 /// An IDCompositionMatrixTransform3D interface represents an arbitrary
 /// 3D transformation defined by a 4x4 matrix.
-extern(C++) interface IDCompositionMatrixTransform3D : IDCompositionTransform3D
+interface IDCompositionMatrixTransform3D : IDCompositionTransform3D
 {
 	extern(Windows):
     /// Changes all values of the matrix of this transform.
@@ -435,11 +435,11 @@ extern(C++) interface IDCompositionMatrixTransform3D : IDCompositionTransform3D
 mixin(uuid!(IDCompositionClip, "64AC3703-9D3F-45ec-A109-7CAC0E7A13A7"));
 /// An IDCompositionClip interface represents a rectangle that restricts the
 /// rasterization of a visual subtree.
-extern(C++) interface IDCompositionClip : IUnknown {}
+interface IDCompositionClip : IUnknown {}
 mixin(uuid!(IDCompositionRectangleClip, "9842AD7D-D9CF-4908-AED7-48B51DA5E7C2"));
 /// An IDCompositionRectangleClip interface represents a rectangle that restricts
 /// the rasterization of a visual subtree.
-extern(C++) interface IDCompositionRectangleClip : IDCompositionClip
+interface IDCompositionRectangleClip : IDCompositionClip
 {
 	extern(Windows):
     /// Changes the value of the Left property.
@@ -511,7 +511,7 @@ extern(C++) interface IDCompositionRectangleClip : IDCompositionClip
 mixin(uuid!(IDCompositionSurface, "BB8A4953-2C99-4F5A-96F5-4819027FA3AC"));
 /// An IDCompositionSurface interface represents a wrapper around a DirectX
 /// object, or a sub-rectangle of one of those objects.
-extern(C++) interface IDCompositionSurface : IUnknown
+interface IDCompositionSurface : IUnknown
 {
 	extern(Windows):
 	HRESULT BeginDraw(const(RECT)* updateRect, REFIID iid, void** updateObject, POINT* updateOffset);
@@ -527,7 +527,7 @@ extern(C++) interface IDCompositionSurface : IUnknown
 mixin(uuid!(IDCompositionVirtualSurface, "AE471C51-5F53-4A24-8D3E-D0C39C30B3F0"));
 /// An IDCompositionVirtualSurface interface represents a sparsely
 /// allocated surface.
-extern(C++) interface IDCompositionVirtualSurface : IDCompositionSurface
+interface IDCompositionVirtualSurface : IDCompositionSurface
 {
 	extern(Windows):
 	HRESULT Resize(UINT width, UINT height);
@@ -537,7 +537,7 @@ extern(C++) interface IDCompositionVirtualSurface : IDCompositionSurface
 mixin(uuid!(IDCompositionDevice2, "75F6468D-1B8E-447C-9BC6-75FEA80B5B25"));
 /// Serves as the root factory for all other DirectComposition2 objects and
 /// controls transactional composition.
-extern(C++) interface IDCompositionDevice2 : IUnknown
+interface IDCompositionDevice2 : IUnknown
 {
 	extern(Windows):
     /// Commits all DirectComposition commands pending on this device.
@@ -601,7 +601,7 @@ extern(C++) interface IDCompositionDevice2 : IUnknown
 mixin(uuid!(IDCompositionDesktopDevice, "5F4633FE-1E08-4CB8-8C75-CE24333F5602"));
 /// Serves as the root factory for all other desktop DirectComposition
 /// objects.
-extern(C++) interface IDCompositionDesktopDevice : IDCompositionDevice2
+interface IDCompositionDesktopDevice : IDCompositionDevice2
 {
 	extern(Windows):
 	HRESULT CreateTargetForHwnd(HWND hwnd, BOOL topmost, IDCompositionTarget* target);
@@ -613,7 +613,7 @@ extern(C++) interface IDCompositionDesktopDevice : IDCompositionDevice2
 
 mixin(uuid!(IDCompositionDeviceDebug, "A1A3C64A-224F-4A81-9773-4F03A89D3C6C"));
 /// IDCompositionDeviceDebug serves as a debug interface
-extern(C++) interface IDCompositionDeviceDebug : IUnknown
+interface IDCompositionDeviceDebug : IUnknown
 {
 	extern(Windows):
     /// Enables debug counters
@@ -625,7 +625,7 @@ extern(C++) interface IDCompositionDeviceDebug : IUnknown
 mixin(uuid!(IDCompositionSurfaceFactory, "E334BC12-3937-4E02-85EB-FCF4EB30D2C8"));
 /// An IDCompositionSurfaceFactory interface represents an object that can
 /// create surfaces suitable for composition.
-extern(C++) interface IDCompositionSurfaceFactory : IUnknown
+interface IDCompositionSurfaceFactory : IUnknown
 {
 	extern(Windows):
     /// Creates a DirectComposition surface object
@@ -647,7 +647,7 @@ extern(C++) interface IDCompositionSurfaceFactory : IUnknown
 mixin(uuid!(IDCompositionVisual2, "E8DE1639-4331-4B26-BC5F-6A321D347A85"));
 /// An IDCompositionVisual2 interface represents a visual that participates in
 /// a visual tree.
-extern(C++) interface IDCompositionVisual2 : IDCompositionVisual
+interface IDCompositionVisual2 : IDCompositionVisual
 {
 	extern(Windows):
     /// Changes the interpretation of the opacity property of an effect group
@@ -659,7 +659,7 @@ extern(C++) interface IDCompositionVisual2 : IDCompositionVisual
 
 mixin(uuid!(IDCompositionVisualDebug, "FED2B808-5EB4-43A0-AEA3-35F65280F91B"));
 /// An IDCompositionVisualDebug interface represents a debug visual
-extern(C++) interface IDCompositionVisualDebug : IDCompositionVisual2
+interface IDCompositionVisualDebug : IDCompositionVisual2
 {
 	extern(Windows):
     /// Enable heat map
@@ -675,7 +675,7 @@ extern(C++) interface IDCompositionVisualDebug : IDCompositionVisual2
 mixin(uuid!(IDCompositionVisual3, "2775F462-B6C1-4015-B0BE-B3E7D6A4976D"));
 /// An IDCompositionVisual3 interface represents a visual that participates in
 /// a visual tree.
-extern(C++) interface IDCompositionVisual3 : IDCompositionVisualDebug
+interface IDCompositionVisual3 : IDCompositionVisualDebug
 {
 	extern(Windows):
     /// Sets depth mode property associated with this visual
@@ -699,7 +699,7 @@ extern(C++) interface IDCompositionVisual3 : IDCompositionVisualDebug
 mixin(uuid!(IDCompositionDevice3, "0987CB06-F916-48BF-8D35-CE7641781BD9"));
 /// Serves as the root factory for all other DirectComposition3 objects and
 /// controls transactional composition.
-extern(C++) interface IDCompositionDevice3 : IDCompositionDevice2
+interface IDCompositionDevice3 : IDCompositionDevice2
 {
 	extern(Windows):
     /// Effect creation calls, each creates an interface around a D2D1Effect
@@ -720,7 +720,7 @@ extern(C++) interface IDCompositionDevice3 : IDCompositionDevice2
 
 mixin(uuid!(IDCompositionFilterEffect, "30C421D5-8CB2-4E9F-B133-37BE270D4AC2"));
 /// An IDCompositionFilterEffect interface represents a filter effect
-extern(C++) interface IDCompositionFilterEffect : IDCompositionEffect
+interface IDCompositionFilterEffect : IDCompositionEffect
 {
 	extern(Windows):
     /// Sets the input at the given index to the filterEffect (NULL will use source visual, unless flagged otherwise)
@@ -729,7 +729,7 @@ extern(C++) interface IDCompositionFilterEffect : IDCompositionEffect
 
 mixin(uuid!(IDCompositionGaussianBlurEffect, "45D4D0B7-1BD4-454E-8894-2BFA68443033"));
 /// An IDCompositionGaussianBlurEffect interface represents a gaussian blur filter effect
-extern(C++) interface IDCompositionGaussianBlurEffect : IDCompositionFilterEffect
+interface IDCompositionGaussianBlurEffect : IDCompositionFilterEffect
 {
 	extern(Windows):
     /// Changes the amount of blur to be applied.
@@ -741,7 +741,7 @@ extern(C++) interface IDCompositionGaussianBlurEffect : IDCompositionFilterEffec
 
 mixin(uuid!(IDCompositionBrightnessEffect, "6027496E-CB3A-49AB-934F-D798DA4F7DA6"));
 /// An IDCompositionBrightnessEffect interface represents a brightness filter effect
-extern(C++) interface IDCompositionBrightnessEffect : IDCompositionFilterEffect
+interface IDCompositionBrightnessEffect : IDCompositionFilterEffect
 {
 	extern(Windows):
     /// Changes the value of white point property.
@@ -764,7 +764,7 @@ extern(C++) interface IDCompositionBrightnessEffect : IDCompositionFilterEffect
 
 mixin(uuid!(IDCompositionColorMatrixEffect, "C1170A22-3CE2-4966-90D4-55408BFC84C4"));
 /// An IDCompositionColorMatrixEffect interface represents a color matrix filter effect
-extern(C++) interface IDCompositionColorMatrixEffect : IDCompositionFilterEffect
+interface IDCompositionColorMatrixEffect : IDCompositionFilterEffect
 {
 	extern(Windows):
     /// Changes all values of the matrix for a color transform
@@ -781,7 +781,7 @@ extern(C++) interface IDCompositionColorMatrixEffect : IDCompositionFilterEffect
 
 mixin(uuid!(IDCompositionShadowEffect, "4AD18AC0-CFD2-4C2F-BB62-96E54FDB6879"));
 /// An IDCompositionShadowEffect interface represents a shadow filter effect
-extern(C++) interface IDCompositionShadowEffect : IDCompositionFilterEffect
+interface IDCompositionShadowEffect : IDCompositionFilterEffect
 {
 	extern(Windows):
     /// Changes the amount of blur to be applied.
@@ -801,7 +801,7 @@ extern(C++) interface IDCompositionShadowEffect : IDCompositionFilterEffect
 
 mixin(uuid!(IDCompositionHueRotationEffect, "6DB9F920-0770-4781-B0C6-381912F9D167"));
 /// An IDCompositionHueRotationEffect interface represents a hue rotation filter effect
-extern(C++) interface IDCompositionHueRotationEffect : IDCompositionFilterEffect
+interface IDCompositionHueRotationEffect : IDCompositionFilterEffect
 {
 	extern(Windows):
     /// Changes the angle of rotation
@@ -811,7 +811,7 @@ extern(C++) interface IDCompositionHueRotationEffect : IDCompositionFilterEffect
 
 mixin(uuid!(IDCompositionSaturationEffect, "A08DEBDA-3258-4FA4-9F16-9174D3FE93B1"));
 /// An IDCompositionSaturationEffect interface represents a saturation filter effect
-extern(C++) interface IDCompositionSaturationEffect : IDCompositionFilterEffect
+interface IDCompositionSaturationEffect : IDCompositionFilterEffect
 {
 	extern(Windows):
     /// Changes the amount of saturation to be applied.
@@ -821,7 +821,7 @@ extern(C++) interface IDCompositionSaturationEffect : IDCompositionFilterEffect
 
 mixin(uuid!(IDCompositionTurbulenceEffect, "A6A55BDA-C09C-49F3-9193-A41922C89715"));
 /// An IDCompositionTurbulenceEffect interface represents a turbulence filter effect
-extern(C++) interface IDCompositionTurbulenceEffect : IDCompositionFilterEffect
+interface IDCompositionTurbulenceEffect : IDCompositionFilterEffect
 {
 	extern(Windows):
     /// Changes the starting offset of the turbulence
@@ -842,7 +842,7 @@ extern(C++) interface IDCompositionTurbulenceEffect : IDCompositionFilterEffect
 
 mixin(uuid!(IDCompositionLinearTransferEffect, "4305EE5B-C4A0-4C88-9385-67124E017683"));
 /// An IDCompositionLinearTransferEffect interface represents a linear transfer filter effect
-extern(C++) interface IDCompositionLinearTransferEffect : IDCompositionFilterEffect
+interface IDCompositionLinearTransferEffect : IDCompositionFilterEffect
 {
 	extern(Windows):
     HRESULT SetRedYIntercept(float redYIntercept);
@@ -870,7 +870,7 @@ extern(C++) interface IDCompositionLinearTransferEffect : IDCompositionFilterEff
 
 mixin(uuid!(IDCompositionTableTransferEffect, "9B7E82E2-69C5-4EB4-A5F5-A7033F5132CD"));
 /// An IDCompositionTableTransferEffect interface represents a Table transfer filter effect
-extern(C++) interface IDCompositionTableTransferEffect : IDCompositionFilterEffect
+interface IDCompositionTableTransferEffect : IDCompositionFilterEffect
 {
 	extern(Windows):
     HRESULT SetRedTable(const(float)* tableValues, UINT count);
@@ -896,7 +896,7 @@ extern(C++) interface IDCompositionTableTransferEffect : IDCompositionFilterEffe
 
 mixin(uuid!(IDCompositionCompositeEffect, "576616C0-A231-494D-A38D-00FD5EC4DB46"));
 /// An IDCompositionCompositeEffect interface represents a composite filter effect
-extern(C++) interface IDCompositionCompositeEffect : IDCompositionFilterEffect
+interface IDCompositionCompositeEffect : IDCompositionFilterEffect
 {
 	extern(Windows):
     /// Changes the composite mode.
@@ -905,7 +905,7 @@ extern(C++) interface IDCompositionCompositeEffect : IDCompositionFilterEffect
 
 mixin(uuid!(IDCompositionBlendEffect, "33ECDC0A-578A-4A11-9C14-0CB90517F9C5"));
 /// An IDCompositionBlendEffect interface represents a blend filter effect
-extern(C++) interface IDCompositionBlendEffect : IDCompositionFilterEffect
+interface IDCompositionBlendEffect : IDCompositionFilterEffect
 {
 	extern(Windows):
     HRESULT SetMode(D2D1_BLEND_MODE mode);
@@ -913,7 +913,7 @@ extern(C++) interface IDCompositionBlendEffect : IDCompositionFilterEffect
 
 mixin(uuid!(IDCompositionArithmeticCompositeEffect, "3B67DFA8-E3DD-4E61-B640-46C2F3D739DC"));
 /// An IDCompositionArithmeticCompositeEffect interface represents an arithmetic composite filter effect
-extern(C++) interface IDCompositionArithmeticCompositeEffect : IDCompositionFilterEffect
+interface IDCompositionArithmeticCompositeEffect : IDCompositionFilterEffect
 {
 	extern(Windows):
     HRESULT SetCoefficients(const(D2D1_VECTOR_4F)* coefficients);
@@ -930,7 +930,7 @@ extern(C++) interface IDCompositionArithmeticCompositeEffect : IDCompositionFilt
 
 mixin(uuid!(IDCompositionAffineTransform2DEffect, "0B74B9E8-CDD6-492F-BBBC-5ED32157026D"));
 /// An IDCompositionAffineTransform2DEffect interface represents a affine transform 2D filter effect
-extern(C++) interface IDCompositionAffineTransform2DEffect : IDCompositionFilterEffect
+interface IDCompositionAffineTransform2DEffect : IDCompositionFilterEffect
 {
 	extern(Windows):
     HRESULT SetInterpolationMode(D2D1_2DAFFINETRANSFORM_INTERPOLATION_MODE interpolationMode);
