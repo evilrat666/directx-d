@@ -2140,7 +2140,7 @@ interface ID2D1Factory1 : ID2D1Factory
         out ID2D1StrokeStyle1 strokeStyle 
         )  
     {
-        return CreateStrokeStyle(&strokeStyleProperties, &dashes[0], dashes.length, &strokeStyle);
+        return CreateStrokeStyle(&strokeStyleProperties, &dashes[0], cast(UINT32)dashes.length, &strokeStyle);
     }
     
     final
