@@ -23,6 +23,10 @@ class D3D12Hello
 		this.width = width;
 		this.height = height;
 
+		viewport.MinDepth = 0.0f;
+		viewport.MaxDepth = 1.0f;
+		OnResize(width, height);
+
 		LoadPipeline();
 		LoadAssets();
 	}
@@ -149,7 +153,6 @@ class D3D12Hello
 					throw new D3D12Exception("failed to create frame resource N=" ~ to!string(n));
 				}
 
-				// FIXME: Specified CPU descriptor handle does not refer to a location in a descriptor heap, blah blah blah
 				device.CreateRenderTargetView(renderTargets[n], null, rtvHandle);
 				rtvHandle.ptr += cast(size_t)(1 * rtvDescriptorSize);
 			}
@@ -225,6 +228,7 @@ class D3D12Hello
 			psoDesc.NumRenderTargets = 1;
 			psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
 			psoDesc.SampleDesc.Count = 1;
+
 			if (FAILED(device.CreateGraphicsPipelineState(&psoDesc, &IID_ID3D12PipelineState, &pipelineState)))
 			{
 				throw new D3D12Exception("unable to create pipeline state");
@@ -259,7 +263,7 @@ class D3D12Hello
 				{ [ -0.25f, -0.25f * aspectRatio, 0.0f ], [ 0.0f, 0.0f, 1.0f, 1.0f ] }
 			];
 
-			const UINT vertexBufferSize = cast(UINT)triangleVertices.length;
+			const UINT vertexBufferSize = cast(UINT)triangleVertices.length * Vertex.sizeof;
 
 			auto heapProperties = D3D12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD, D3D12_CPU_PAGE_PROPERTY_UNKNOWN, D3D12_MEMORY_POOL_UNKNOWN, 1, 1);
 			auto resourceDesc = D3D12_RESOURCE_DESC(D3D12_RESOURCE_DIMENSION_BUFFER, 0, vertexBufferSize, 1, 1, 1,DXGI_FORMAT_UNKNOWN, DXGI_SAMPLE_DESC(1,0), D3D12_TEXTURE_LAYOUT_ROW_MAJOR, D3D12_RESOURCE_FLAG_NONE);
@@ -286,7 +290,8 @@ class D3D12Hello
 			{
 				throw new D3D12Exception("failed to map vertex buffer");
 			}
-			memcpy(pVertexDataBegin, triangleVertices.ptr, triangleVertices.sizeof);
+
+			memcpy(pVertexDataBegin, triangleVertices.ptr, vertexBufferSize);
 			vertexBuffer.Unmap(0, null);
 
 			// Initialize the vertex buffer view.
@@ -390,7 +395,7 @@ class D3D12Hello
 
 		// Record commands.
 		const float[4] clearColor = [ 0.0f, 0.2f, 0.4f, 1.0f ];
-		commandList.ClearRenderTargetView(rtvHandle, clearColor, 0, null);
+		commandList.ClearRenderTargetView(rtvHandle, clearColor.ptr, 0, null);
 		commandList.IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		commandList.IASetVertexBuffers(0, 1, &vertexBufferView);
 		commandList.DrawInstanced(3, 1, 0, 0);
@@ -411,9 +416,20 @@ class D3D12Hello
 	}
 
 
+	final void OnResize(int w, int h)
+	{
+		viewport.Width = w;
+		viewport.Height = h;
+
+		scissorRect.left = 0;
+		scissorRect.top = 0;
+		scissorRect.right = w;
+		scissorRect.bottom = h;
+	}
+
 	void OnUpdate(float deltaSec) 
 	{
-
+		OnRender();
 	}
 
 
@@ -442,6 +458,32 @@ class D3D12Hello
 		WaitForPreviousFrame();
 
 		CloseHandle(fenceEvent);
+
+		commandList.Release();
+		commandQueue.Release();
+		commandAllocator.Release();
+		vertexBuffer.Release();
+		foreach( rt; renderTargets) 
+			rt.Release();
+		rtvHeap.Release();
+		pipelineState.Release();
+		swapChain.Release();
+		fence.Release();
+
+		debug
+		{
+			ID3D12DebugDevice deb;
+			device.QueryInterface(&IID_ID3D12DebugDevice, cast(void**)&deb);
+			if (deb)
+			{
+				deb.ReportLiveDeviceObjects(D3D12_RLDO_DETAIL);
+			}
+		}
+
+		// TODO: clean up missing ID3D12RootSignature and ID3D12PipelineState
+
+		rootSignature.Release();
+		device.Release();
 	}
 
 	private struct Vertex
@@ -495,7 +537,6 @@ private:
 private void GetHardwareAdapter(IDXGIFactory2 pFactory, ref IDXGIAdapter1 ppAdapter)
 {
 	IDXGIAdapter1 adapter;
-	//scope(exit) if (adapter) adapter.Release();
 	ppAdapter = null;
 
 	for (UINT adapterIndex = 0; DXGI_ERROR_NOT_FOUND != pFactory.EnumAdapters1(adapterIndex, &adapter); ++adapterIndex)

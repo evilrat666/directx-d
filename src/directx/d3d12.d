@@ -2054,7 +2054,28 @@ extern(C++) interface ID3D12Pageable : ID3D12DeviceChild {}
 
 mixin(uuid!(ID3D12Heap, "6b3b2502-6e51-45b3-90ee-9884265e8df3"));
 extern(C++) interface ID3D12Heap : ID3D12Pageable {
+
+	version(CORRECT_ABI)
+	{
     D3D12_HEAP_DESC GetDesc();
+	}
+	else
+	{
+	void GetDesc(D3D12_HEAP_DESC* outDesc);
+	}
+
+	version(CORRECT_ABI){}
+	else
+	{
+	final D3D12_HEAP_DESC GetDesc()
+	{
+		D3D12_HEAP_DESC temp;
+		GetDesc(&temp);
+		return temp;
+	}
+	}
+
+
 }
 
 mixin(uuid!(ID3D12Resource, "696442be-a72e-4059-bc79-5b5c98040fad"));
@@ -2066,7 +2087,14 @@ extern(C++) interface ID3D12Resource : ID3D12Pageable {
     void Unmap(UINT Subresource,
                const(D3D12_RANGE)* pWrittenRange);
 
+	version(CORRECT_ABI)
+	{
     D3D12_RESOURCE_DESC GetDesc();
+	}
+	else
+	{
+	void GetDesc(D3D12_RESOURCE_DESC* outDesc);
+	}
 
     D3D12_GPU_VIRTUAL_ADDRESS GetGPUVirtualAddress();
 
@@ -2084,6 +2112,19 @@ extern(C++) interface ID3D12Resource : ID3D12Pageable {
 
     HRESULT GetHeapProperties(D3D12_HEAP_PROPERTIES* pHeapProperties,
                               D3D12_HEAP_FLAGS* pHeapFlags);
+
+
+
+	version(CORRECT_ABI){}
+	else
+	{
+	final D3D12_RESOURCE_DESC GetDesc()
+	{
+		D3D12_RESOURCE_DESC temp;
+		GetDesc(&temp);
+		return temp;
+	}
+	}
 }
 
 mixin(uuid!(ID3D12CommandAllocator, "6102dee4-af59-4b09-b999-b44d73f09b24"));
@@ -2107,11 +2148,51 @@ extern(C++) interface ID3D12PipelineState : ID3D12Pageable {
 
 mixin(uuid!(ID3D12DescriptorHeap, "8efb471d-616c-4f49-90f7-127bb763fa51"));
 extern(C++) interface ID3D12DescriptorHeap : ID3D12Pageable {
+
+	version(CORRECT_ABI)
+	{
     D3D12_DESCRIPTOR_HEAP_DESC GetDesc();
 
     D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandleForHeapStart();
 
     D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandleForHeapStart();
+	}
+	else
+	{
+	void GetDesc(D3D12_DESCRIPTOR_HEAP_DESC* outDesc);
+
+	void GetCPUDescriptorHandleForHeapStart(D3D12_CPU_DESCRIPTOR_HANDLE* outHandle);
+
+	void GetGPUDescriptorHandleForHeapStart(D3D12_GPU_DESCRIPTOR_HANDLE* outHandle);
+	}
+
+	// ==============================================================================
+	// Helpers for incorrect ABI below
+
+	version(CORRECT_ABI){}
+	else
+	{
+	final D3D12_DESCRIPTOR_HEAP_DESC GetDesc()
+	{
+		D3D12_DESCRIPTOR_HEAP_DESC temp;
+		GetDesc(&temp);
+		return temp;
+	}
+
+	final D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandleForHeapStart()
+	{
+		D3D12_CPU_DESCRIPTOR_HANDLE temp;
+		GetCPUDescriptorHandleForHeapStart(&temp);
+		return temp;
+	}
+
+	final D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandleForHeapStart()
+	{
+		D3D12_GPU_DESCRIPTOR_HANDLE temp;
+		GetGPUDescriptorHandleForHeapStart(&temp);
+		return temp;
+	}
+	} // version(CORRECT_ABI) else
 }
 
 mixin(uuid!(ID3D12QueryHeap, "0d9658ae-ed45-469e-a61d-970ec583cab4"));
@@ -2307,7 +2388,7 @@ extern(C++) interface ID3D12GraphicsCommandList : ID3D12CommandList {
 
     void ClearRenderTargetView(
         D3D12_CPU_DESCRIPTOR_HANDLE RenderTargetView,
-        const(FLOAT)[4] ColorRGBA,
+        const(FLOAT)* ColorRGBA,
         UINT NumRects,
         const(D3D12_RECT)* pRects);
 
@@ -2315,7 +2396,7 @@ extern(C++) interface ID3D12GraphicsCommandList : ID3D12CommandList {
         D3D12_GPU_DESCRIPTOR_HANDLE ViewGPUHandleInCurrentHeap,
         D3D12_CPU_DESCRIPTOR_HANDLE ViewCPUHandle,
         ID3D12Resource pResource,
-        const(UINT)[4] Values,
+        const(UINT)* Values,
         UINT NumRects,
         const(D3D12_RECT)* pRects);
 
@@ -2323,7 +2404,7 @@ extern(C++) interface ID3D12GraphicsCommandList : ID3D12CommandList {
         D3D12_GPU_DESCRIPTOR_HANDLE ViewGPUHandleInCurrentHeap,
         D3D12_CPU_DESCRIPTOR_HANDLE ViewCPUHandle,
         ID3D12Resource pResource,
-        const(FLOAT)[4] Values,
+        const(FLOAT)* Values,
         UINT NumRects,
         const(D3D12_RECT)* pRects);
 
@@ -2428,7 +2509,26 @@ extern(C++) interface ID3D12CommandQueue : ID3D12Pageable {
         UINT64* pGpuTimestamp,
         UINT64* pCpuTimestamp);
 
+	version(CORRECT_ABI)
+	{
     D3D12_COMMAND_QUEUE_DESC GetDesc();
+	}
+	else
+	{
+	void GetDesc(D3D12_COMMAND_QUEUE_DESC* outDesc);
+	}
+
+	version(CORRECT_ABI){}
+	else
+	{
+	final D3D12_COMMAND_QUEUE_DESC GetDesc()
+	{
+		D3D12_COMMAND_QUEUE_DESC temp;
+		GetDesc(&temp);
+		return temp;
+	}
+	}
+
 }
 
 mixin(uuid!(ID3D12Device, "189819f1-1db6-4b57-be54-1821339b85f7"));
@@ -2527,6 +2627,8 @@ extern(C++) interface ID3D12Device : ID3D12Object {
         D3D12_CPU_DESCRIPTOR_HANDLE SrcDescriptorRangeStart,
         D3D12_DESCRIPTOR_HEAP_TYPE DescriptorHeapsType);
 
+	version(CORRECT_ABI)
+	{
     D3D12_RESOURCE_ALLOCATION_INFO GetResourceAllocationInfo(
         UINT visibleMask,
         UINT numResourceDescs,
@@ -2535,6 +2637,19 @@ extern(C++) interface ID3D12Device : ID3D12Object {
     D3D12_HEAP_PROPERTIES GetCustomHeapProperties(
         UINT nodeMask,
         D3D12_HEAP_TYPE heapType);
+	}
+	else
+	{
+		void GetResourceAllocationInfo(D3D12_RESOURCE_ALLOCATION_INFO* outDesc,
+									   UINT visibleMask,
+									   UINT numResourceDescs,
+									   const(D3D12_RESOURCE_DESC)* pResourceDescs);
+
+		void GetCustomHeapProperties(D3D12_HEAP_PROPERTIES* outDesc,
+									 UINT nodeMask,
+									 D3D12_HEAP_TYPE heapType);
+	}
+
 
     HRESULT CreateCommittedResource(
         const(D3D12_HEAP_PROPERTIES)* pHeapProperties,
@@ -2633,6 +2748,30 @@ extern(C++) interface ID3D12Device : ID3D12Object {
         D3D12_SUBRESOURCE_TILING* pSubresourceTilingsForNonPackedMips);
 
     LUID GetAdapterLuid();
+
+
+	version(CORRECT_ABI){}
+	else
+	{
+		final D3D12_RESOURCE_ALLOCATION_INFO GetResourceAllocationInfo(
+																 UINT visibleMask,
+																 UINT numResourceDescs,
+																 const(D3D12_RESOURCE_DESC)* pResourceDescs)
+		{
+			D3D12_RESOURCE_ALLOCATION_INFO temp;
+			GetResourceAllocationInfo(&temp, visibleMask, numResourceDescs, pResourceDescs);
+			return temp;
+		}
+
+		final D3D12_HEAP_PROPERTIES GetCustomHeapProperties(
+													  UINT nodeMask,
+													  D3D12_HEAP_TYPE heapType)
+		{
+			D3D12_HEAP_PROPERTIES temp;
+			GetCustomHeapProperties(nodeMask, heapType);
+			return temp;
+		}
+	}
 }
 
 struct D3D12_SUBRESOURCE_DATA {

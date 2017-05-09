@@ -8,12 +8,7 @@ import std.datetime;
 
 import d3d12_hello;
 
-
-alias OnResize = void delegate(int width, int height);
-alias OnUpdate = void delegate();
-
 alias RefWindow = RefCounted!Window;
-
 
 static SysTime startTime;
 
@@ -58,37 +53,28 @@ struct Window
 	// redraw or do other things
 	package void onUpdate_() nothrow
 	{
-		try
-		{
-			if (onUpdate !is null)
-				onUpdate();
-		}
-		catch(Exception e)
-		{
-			//TODO: printf 
-		}
 	}
 
 	package void onResize_(int width, int height) nothrow
 	{
 		try
 		{
-			if (onResize !is null)
-				onResize(width,height);
+			demoInstance.OnResize(width, height);
 		}
 		catch(Exception e)
 		{
-			//TODO: printf 
+			//TODO: show message 
 		}
 	}
 
 	HWND hWnd;
-	
-	OnUpdate onUpdate = null; // paint event, need to rename
-	OnResize onResize = null;
+
+	// running sample instance associated with window
+	D3D12Hello demoInstance;
 
 	// associates hwnd and window object for later use
 	package static RefWindow[HWND] windowMap;
+
 } // struct Window
 
 
@@ -163,6 +149,7 @@ int myWinMain()
 
 	auto window = Window.Create();
 	auto example = new D3D12Hello(600,400,window.hWnd);
+	window.demoInstance = example;
 
 	MSG msg;
 	while(true)
