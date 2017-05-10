@@ -8,13 +8,19 @@ and simply type :
 
 __`dub run --arch=x86_64`__
 
+or since dub v1.2 for MS-COFF linker 'arch'
+
+__`dub run --arch=x86_mscoff`__
+
 or for x86
 
-__`dub run`__
+__`dub run`__ 
+
+
 
 &nbsp;
 
-Some samples requires using Windows8 config if you are on Windows 8 or Windows 10, if you see linker errors just specify that config in build:
+Some samples may require using Windows8 config if you are on Windows 8 or Windows 10, if you see related linker errors just specify that config in build:
 
 __`dub run --arch=x86_64 --config=Windows8`__
 
@@ -22,17 +28,6 @@ __`dub run --arch=x86_64 --config=Windows8`__
 
 &nbsp;
 
-
-Since DMD 2.067 it is now possible to use COFF .lib files for x86 builds, to do so add dflags -m32mscoff to your dub package
-
-__`"dflags" : ["-m32mscoff"]`__
-
-however at this moment something broken so one may need to call dub with `--combined` flag
-
-__`dub build --combined`__
-
-
-&nbsp;
 
 
 ___
