@@ -104,6 +104,7 @@ enum : D2D1_ALPHA_MODE
 //------------------------------------------------------------------------------
 struct D2D1_PIXEL_FORMAT
 {
+    this(this) {}
     DXGI_FORMAT format;
     D2D1_ALPHA_MODE alphaMode;
 }

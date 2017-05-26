@@ -18,6 +18,7 @@ public import directx.d3dcommon;
 //------------------------------------------------------------------------------
  struct D2D_POINT_2U
 {
+    this(this) {}
     UINT32 x;
     UINT32 y;
 }
@@ -31,6 +32,7 @@ public import directx.d3dcommon;
 //------------------------------------------------------------------------------
 struct D2D_POINT_2F
 {
+    this(this) {}
     FLOAT x;
     FLOAT y;
 }
@@ -45,6 +47,7 @@ alias D2D_POINT_2L = POINT;
 //------------------------------------------------------------------------------
 struct D2D_VECTOR_2F
 {
+    this(this) {}
     FLOAT x;
     FLOAT y;
 }
@@ -58,6 +61,7 @@ struct D2D_VECTOR_2F
 //------------------------------------------------------------------------------
 struct D2D_VECTOR_3F
 {
+    this(this) {}
     FLOAT x;
     FLOAT y;
     FLOAT z;
@@ -72,6 +76,7 @@ struct D2D_VECTOR_3F
 //------------------------------------------------------------------------------
 struct D2D_VECTOR_4F
 {
+    this(this) {}
     FLOAT x;
     FLOAT y;
     FLOAT z;
@@ -87,6 +92,7 @@ struct D2D_VECTOR_4F
 //------------------------------------------------------------------------------
 struct D2D_RECT_F
 {
+    this(this) {}
     FLOAT left;
     FLOAT top;
     FLOAT right;
@@ -102,6 +108,7 @@ struct D2D_RECT_F
 //------------------------------------------------------------------------------
 struct D2D_RECT_U
 {
+    this(this) {}
     UINT32 left;
     UINT32 top;
     UINT32 right;
@@ -119,6 +126,7 @@ alias D2D_RECT_L = RECT;
 //------------------------------------------------------------------------------
 struct D2D_SIZE_F
 {
+    this(this) {}
     FLOAT width;
     FLOAT height;
 }
@@ -132,6 +140,7 @@ struct D2D_SIZE_F
 //------------------------------------------------------------------------------
 struct D2D_SIZE_U
 {
+    this(this) {}
     UINT32 width;
     UINT32 height;
 }
