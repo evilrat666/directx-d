@@ -2263,7 +2263,7 @@ interface ID3D11DeviceContext : ID3D11DeviceChild
 				UINT* pOffsets);
 
 	void IAGetIndexBuffer( 
-				ID3D11Buffer pIndexBuffer,
+				ID3D11Buffer* pIndexBuffer,
 				DXGI_FORMAT* Format,
 				UINT* Offset);
 
