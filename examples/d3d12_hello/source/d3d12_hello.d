@@ -263,7 +263,7 @@ class D3D12Hello
 				{ [ -0.25f, -0.25f * aspectRatio, 0.0f ], [ 0.0f, 0.0f, 1.0f, 1.0f ] }
 			];
 
-			const UINT vertexBufferSize = cast(UINT)triangleVertices.length * Vertex.sizeof;
+			const UINT vertexBufferSize = cast(UINT)(triangleVertices.length * Vertex.sizeof);
 
 			auto heapProperties = D3D12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD, D3D12_CPU_PAGE_PROPERTY_UNKNOWN, D3D12_MEMORY_POOL_UNKNOWN, 1, 1);
 			auto resourceDesc = D3D12_RESOURCE_DESC(D3D12_RESOURCE_DIMENSION_BUFFER, 0, vertexBufferSize, 1, 1, 1,DXGI_FORMAT_UNKNOWN, DXGI_SAMPLE_DESC(1,0), D3D12_TEXTURE_LAYOUT_ROW_MAJOR, D3D12_RESOURCE_FLAG_NONE);
