@@ -2231,7 +2231,7 @@ extern(Windows)
 // public import D2D1 = directx.d2d1_1helper; TODO: Resolve namespace translation
 
 HRESULT 
-D2D1CreateDevice(
+D2D1CreateDevice(T=void)(
     IDXGIDevice dxgiDevice,
     const D2D1_CREATION_PROPERTIES creationProperties,
     out ID2D1Device d2dDevice
@@ -2246,7 +2246,7 @@ D2D1CreateDevice(
 } 
     
 HRESULT 
-D2D1CreateDeviceContext(
+D2D1CreateDeviceContext(T=void)(
     IDXGISurface dxgiSurface,
     const D2D1_CREATION_PROPERTIES creationProperties,
     out ID2D1DeviceContext d2dDeviceContext
