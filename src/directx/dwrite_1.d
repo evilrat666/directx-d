@@ -8,6 +8,8 @@ module directx.dwrite_1;
 //
 //----------------------------------------------------------------------------
 
+version(Windows):
+
 public import directx.dwrite;
 
 /// <summary>

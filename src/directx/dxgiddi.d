@@ -7,6 +7,8 @@ module directx.dxgiddi;
 *
 ***************************************************************************/
 
+version(Windows):
+
 public import directx.dxgitype;
 
 import std.bitmanip : bitfields;

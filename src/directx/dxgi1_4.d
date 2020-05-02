@@ -1,5 +1,7 @@
 module directx.dxgi1_4;
 
+version(Windows):
+
 public import directx.dxgi1_3;
 
 alias DWORD DXGI_SWAP_CHAIN_COLOR_SPACE_SUPPORT_FLAG;

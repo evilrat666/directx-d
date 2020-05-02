@@ -1,5 +1,7 @@
 module directx.dxgidebug;
 
+version(Windows):
+
 public import directx.dxgi;
 
 alias DXGI_DEBUG_RLO_FLAGS = DWORD;

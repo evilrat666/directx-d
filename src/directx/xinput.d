@@ -8,6 +8,8 @@ module directx.xinput;
  *                                                                          *
  ***************************************************************************/
 
+version(Windows):
+
 import directx.win32;
 
 // note: 9.1.0 is reduced multi-platform(winxp-win8, +xbox?) subset of XInput

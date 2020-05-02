@@ -5,6 +5,8 @@ module directx.d3d11sdklayers;
  *
  *-------------------------------------------------------------------------------------*/
 
+version(Windows):
+
 public import directx.d3d11;
 
 enum D3D11_SDK_LAYERS_VERSION       = ( 1 );

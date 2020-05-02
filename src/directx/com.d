@@ -1,5 +1,7 @@
 module directx.com;
 
+version(Windows):
+
 public import directx.win32;
 public import core.sys.windows.com;
 

@@ -8,6 +8,8 @@ module directx.d3d11shader;
 //
 //////////////////////////////////////////////////////////////////////////////
 
+version(Windows):
+
 public import directx.d3dcommon;
 
 alias D3D11_SHADER_VERSION_TYPE = int;

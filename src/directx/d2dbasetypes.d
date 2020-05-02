@@ -7,6 +7,8 @@ module directx.d2dbasetypes;
 // File name: D2DBaseTypes.h
 //---------------------------------------------------------------------------
 
+version(Windows):
+
 public import directx.dxgitype;
 public import directx.d3dcommon;
 

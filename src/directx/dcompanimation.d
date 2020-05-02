@@ -4,6 +4,8 @@ module directx.dcompanimation;
 //
 //---------------------------------------------------------------------------
 
+version(Windows):
+
 public import directx.com, directx.dcommon;
 
 mixin(uuid!(IDCompositionAnimation, "CBFD91D9-51B2-45e4-B3DE-D19CCFB863C5"));

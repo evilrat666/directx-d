@@ -3,6 +3,8 @@ module directx.dxgitype;
 //    Copyright (C) Microsoft.  All rights reserved.
 //
 
+version(Windows):
+
 public import directx.dxgiformat;
 
 import directx.d3dcommon;

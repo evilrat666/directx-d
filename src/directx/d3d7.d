@@ -1,5 +1,7 @@
 module directx.d3d7;
 
+version(Windows):
+
 import directx.win32;
 import directx.com;
 import directx.d3dcommon;

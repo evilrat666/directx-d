@@ -8,6 +8,8 @@ module directx.d3dcompiler;
 //
 //////////////////////////////////////////////////////////////////////////////
 
+version(Windows):
+
 public import directx.d3d11shader;
 public import directx.d3d12shader;
 

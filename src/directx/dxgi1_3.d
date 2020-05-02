@@ -1,5 +1,7 @@
 module directx.dxgi1_3;
 
+version(Windows):
+
 public import directx.dxgi1_2;
 
 enum DXGI_CREATE_FACTORY_DEBUG = 0x1;

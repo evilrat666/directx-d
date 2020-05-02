@@ -8,6 +8,8 @@ module directx.d3dx11;
 //
 //////////////////////////////////////////////////////////////////////////////
 
+version(Windows):
+
 enum D3DX11_DEFAULT            = (cast(UINT) -1);
 enum D3DX11_FROM_FILE          = (cast(UINT) -3);
 enum DXGI_FORMAT_FROM_FILE     = (cast(DXGI_FORMAT) -3);

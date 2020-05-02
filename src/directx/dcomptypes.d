@@ -3,6 +3,8 @@ module directx.dcomptypes;
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //---------------------------------------------------------------------------
 
+version(Windows):
+
 public import directx.dxgitype, directx.dxgi1_5;
 
 //

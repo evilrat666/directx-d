@@ -7,6 +7,8 @@ module directx.d2d1_3;
 // File name: D2D1_3.h
 //---------------------------------------------------------------------------
 
+version(Windows):
+
 public import directx.d2d1_2;
 public import directx.d2d1effects_2;
 

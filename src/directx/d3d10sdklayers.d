@@ -5,6 +5,8 @@ module directx.d3d10sdklayers;
  *
  *-------------------------------------------------------------------------------------*/
 
+version(Windows):
+
 public import directx.dxgi;
 
 enum D3D10_SDK_LAYERS_VERSION       = ( 11 );

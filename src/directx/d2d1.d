@@ -7,6 +7,8 @@ module directx.d2d1;
 // File name: D2D1.h
 //---------------------------------------------------------------------------
 
+version(Windows):
+
 public import directx.dcommon;
 public import directx.d2derr;
 public import directx.d2dbasetypes;

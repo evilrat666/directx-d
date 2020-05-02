@@ -3,6 +3,8 @@ module directx.dcomp;
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 //---------------------------------------------------------------------------
 
+version(Windows):
+
 public import directx.com, directx.dcommon;
 public import directx.dcompanimation;
 public import directx.d2dbasetypes, directx.d3d9;

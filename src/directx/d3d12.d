@@ -5,6 +5,8 @@ module directx.d3d12;
  *
  *-------------------------------------------------------------------------------------*/
 
+version(Windows):
+
 public import directx.dxgi;
 public import directx.d3dcommon;
 

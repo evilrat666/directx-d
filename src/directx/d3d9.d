@@ -8,6 +8,8 @@ module directx.d3d9;
  *
  ****************************************************************************/
 
+version(Windows):
+
 import directx.win32;
 import directx.d3dcommon;
 

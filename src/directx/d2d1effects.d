@@ -7,6 +7,8 @@ module directx.d2d1effects;
 // File name: D2D1Effects.h
 //---------------------------------------------------------------------------
 
+version(Windows):
+
 import core.sys.windows.com;
 
 // Built in effect CLSIDs

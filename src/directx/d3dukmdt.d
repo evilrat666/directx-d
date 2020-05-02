@@ -9,6 +9,8 @@ module directx.d3dukmdt;
  * Copyright (c) 2003 Microsoft Corporation.  All rights reserved.
 \*******************************************************************************/
 
+version(Windows):
+
 import std.bitmanip : bitfields;
 
 public import directx.win32;

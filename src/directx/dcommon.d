@@ -8,6 +8,8 @@ module directx.dcommon;
 //
 //----------------------------------------------------------------------------
 
+version(Windows):
+
 public import directx.dxgiformat;
 
 import directx.dxgi : IDXGISurface;

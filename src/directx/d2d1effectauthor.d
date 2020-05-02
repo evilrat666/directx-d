@@ -7,6 +7,8 @@ module directx.d2d1effectauthor;
 // File name: D2D1EffectAuthor.h
 //---------------------------------------------------------------------------
 
+version(Windows):
+
 public import directx.d2d1_1;
 
 public import directx.com;

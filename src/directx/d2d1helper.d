@@ -11,6 +11,8 @@ module directx.d2d1helper;
 
 \*=========================================================================*/
 
+version(Windows):
+
 public import directx.d2d1;
 
 struct D2D1

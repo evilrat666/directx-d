@@ -5,6 +5,8 @@ module directx.d3d12sdklayers;
  *
  *-------------------------------------------------------------------------------------*/
 
+version(Windows):
+
 import directx.d3d12;
 
 mixin(uuid!(ID3D12Debug, "344488b7-6846-474b-b989-f027448245e0"));

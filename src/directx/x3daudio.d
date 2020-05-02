@@ -1,5 +1,7 @@
 module directx.x3daudio;
 
+version(Windows):
+
 import directx.win32;
 
 // test if type defined

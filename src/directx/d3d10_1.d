@@ -5,6 +5,8 @@ module directx.d3d10_1;
  *
  *-------------------------------------------------------------------------------------*/
 
+version(Windows):
+
 public import directx.d3d10;
 public import directx.d3d10misc;
 public import directx.d3d10_1shader;

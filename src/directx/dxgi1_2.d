@@ -1,5 +1,7 @@
 module directx.dxgi1_2;
 
+version(Windows):
+
 public import directx.dxgi;
 	
 mixin( uuid!(IDXGIDisplayControl, "ea9dbf1a-c88e-4486-854a-98aa0138f30c") );

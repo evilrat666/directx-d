@@ -8,6 +8,8 @@ module directx.d3dx11tex;
 //
 //////////////////////////////////////////////////////////////////////////////
 
+version(Windows):
+
 import directx.com;
 import directx.win32;
 import directx.d3dx11;

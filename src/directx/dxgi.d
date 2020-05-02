@@ -1,5 +1,7 @@
 module directx.dxgi;
 
+version(Windows):
+
 public import directx.com;
 public import directx.dxgitype;
 

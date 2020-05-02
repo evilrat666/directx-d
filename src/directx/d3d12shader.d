@@ -8,6 +8,8 @@ module directx.d3d12shader;
 //
 //////////////////////////////////////////////////////////////////////////////
 
+version(Windows):
+
 public import directx.d3dcommon;
 
 alias DWORD D3D12_SHADER_VERSION_TYPE;

@@ -11,6 +11,8 @@ module directx.d2d1_2helper;
 
 \*=========================================================================*/
 
+version(Windows):
+
 public import directx.d2d1_2;
 
 // TODO:

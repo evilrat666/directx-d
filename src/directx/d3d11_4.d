@@ -5,6 +5,8 @@ module directx.d3d11_4;
 *
 *-------------------------------------------------------------------------------------*/
 
+version(Windows):
+
 public import directx.dxgi1_5;
 public import directx.d3d11_3;
 

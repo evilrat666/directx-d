@@ -8,6 +8,8 @@ module directx.d3d10misc;
 //
 //////////////////////////////////////////////////////////////////////////////
 
+version(Windows):
+
 public import directx.d3d10;
 
 alias DWORD D3D10_DRIVER_TYPE;

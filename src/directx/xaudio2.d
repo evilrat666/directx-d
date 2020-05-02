@@ -14,6 +14,8 @@ module directx.xaudio2;
  *
  **************************************************************************/
 
+version(Windows):
+
 import std.math;
 
 import directx.com;

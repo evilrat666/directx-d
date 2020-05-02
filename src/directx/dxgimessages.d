@@ -6,6 +6,8 @@ module directx.dxgimessages;
 *  Content: DXGI Debug Message Enumeration
 */
 
+version(Windows):
+
 alias uint DXGI_Message_Id;
 enum : DXGI_Message_Id
 {

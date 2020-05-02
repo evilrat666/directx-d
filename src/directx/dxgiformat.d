@@ -1,5 +1,7 @@
 module directx.dxgiformat;
 
+version(Windows):
+
 alias DXGI_FORMAT = uint;
 enum : DXGI_FORMAT
 {

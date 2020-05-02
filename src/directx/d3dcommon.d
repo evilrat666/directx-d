@@ -1,5 +1,7 @@
 module directx.d3dcommon;
 
+version(Windows):
+
 public import directx.com;
 
 alias D3DCOLOR = DWORD;
