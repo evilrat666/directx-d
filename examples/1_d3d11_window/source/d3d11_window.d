@@ -1,7 +1,7 @@
 import core.sys.windows.windows;
 import core.stdc.stdio;
 import core.stdc.string;
-import std.stdio;
+import std.format;
 import std.string;
 import std.utf;
 
@@ -90,7 +90,6 @@ int myWinMain()
   
     // init our pipeline
     InitD3D(hWnd);
-    
     // our main loop
     MSG msg;
     while(true)
@@ -160,6 +159,7 @@ void InitD3D(HWND hWnd)
     viewport.TopLeftY = 0;
     viewport.Width = 800;
     viewport.Height = 600;
+    
 
     context.RSSetViewports(1, &viewport);
 }
