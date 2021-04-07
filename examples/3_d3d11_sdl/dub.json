@@ -1,0 +1,31 @@
+{
+	"authors": [
+		"hipreme",
+		"evilrat666"
+	],
+	"dependencies": {
+		"bindbc-sdl": "~>0.20.0",
+		"directx-d": {
+			"path": "../../",
+			"version": ">=0.0.0"
+		}
+	},
+	"description": "DirectX D D3D11 window example",
+	"dflags": [
+		"-m32mscoff"
+	],
+	"libs": [
+		"ole32",
+		"user32",
+		"d3dcompiler",
+		"d3d11",
+		"dxgi"
+	],
+	"versions": [
+		"SDL_208"
+	],
+	"mainSourceFile": "source/d3d11_sdl.d",
+	"name": "d3d11-sdl",
+	"targetType": "executable",
+	"workingDirectory": "../resources"
+}
