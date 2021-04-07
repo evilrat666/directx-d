@@ -1,5 +1,11 @@
 # DirectX bindings for D language.
 
+## UPDATE
+
+This project although being started by [evilrat666](https://github.com/evilrat666/directx-d), now, I plan to keep doing some revisions/tests.
+Currently, I'm focusing at D3D11, feel free to do any request.
+
+
 ___
 ## Running samples:
 
