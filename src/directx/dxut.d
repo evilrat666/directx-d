@@ -11,6 +11,9 @@ module directx.dxut;
 
 
 //static if(!debug)
+enum USE_DIRECT3D11_3 = false;
+enum USE_DIRECT3D11_4 = false;
+
 import directx.dxgidebug;
 import directx.d3d11;
 import directx.d3d11_1;
@@ -53,7 +56,8 @@ bool                g_bThreadSafe = true;
 //--------------------------------------------------------------------------------------
 struct DXUTLock
 {
-    this() 
+    //Use opCall instead of constructor as D does not support default constructor
+    static DXUTLock opCall() 
     {
         if( g_bThreadSafe )
             EnterCriticalSection( &g_cs ); 
@@ -108,12 +112,12 @@ enum DXUTERR_DEVICEREMOVED           = MAKE_HRESULT(SEVERITY_ERROR, FACILITY_ITF
 mixin template SET_ACCESSOR( x, string y )
 {
     // inline void Set##y( x t )   { DXUTLock l; m_state.m_##y = t; };
-    mixin("void Set"~y~"("~x.stringof~" t){DXUTLock l; m_state.m_"~y~" = t;};");
+    mixin("void Set"~y~"("~x.stringof~" t){DXUTLock l = DXUTLock(); m_state.m_"~y~" = t;};");
 }       
 mixin template GET_ACCESSOR( x, string y )
 {
     // inline x Get##y()           { DXUTLock l; return m_state.m_##y; };
-    mixin(x.stringof ~" Get"~y~ "{DXUTLock l; return m_state.m_"~y~";}");
+    mixin(x.stringof ~" Get"~y~ "(){DXUTLock l = DXUTLock(); return m_state.m_"~y~";}");
 }       
 mixin template GET_SET_ACCESSOR( x, string y )
 {
@@ -124,12 +128,12 @@ mixin template GET_SET_ACCESSOR( x, string y )
 mixin template SETP_ACCESSOR( x, string y )
 {
     // inline void Set##y( x* t )  { DXUTLock l; m_state.m_##y = *t; };
-    mixin("void Set"~y~"("~x.stringof~"* t){DXUTLock l; m_state.m_"~y~" = *t;}");
+    mixin("void Set"~y~"("~x.stringof~"* t){DXUTLock l = DXUTLock(); m_state.m_"~y~" = *t;}");
 }      
 mixin template GETP_ACCESSOR( x, string y )
 {
     // inline x* Get##y()          { DXUTLock l; return &m_state.m_##y; };
-    mixin(x.stringof~"* Get"~y~"(){DXUTLock l; return &m_state.m_"~y~";}");
+    mixin(x.stringof~"* Get"~y~"(){DXUTLock l = DXUTLock(); return &m_state.m_"~y~";}");
 }      
 mixin template GETP_SETP_ACCESSOR( x, string y )
 {
@@ -177,7 +181,7 @@ struct DXUT_TIMER
 //--------------------------------------------------------------------------------------
 // Stores DXUT state and data access is done with thread safety (if g_bThreadSafe==true)
 //--------------------------------------------------------------------------------------
-class DXUTState
+struct DXUTState
 {
     struct STATE
     {
@@ -364,9 +368,12 @@ class DXUTState
 
     STATE m_state;
 
-    this()
+    static DXUTState* newDXUTState()
     {
-        Create();
+        STATE s;
+        DXUTState* state = new DXUTState(s);
+        state.Create();
+        return state;
     }
 
     ~this()
@@ -572,7 +579,7 @@ class DXUTState
     mixin GET_SET_ACCESSOR!( void*, "D3D11SwapChainReleasingFuncUserContext" );
     mixin GET_SET_ACCESSOR!( void*, "D3D11FrameRenderFuncUserContext" );
 
-    mixin GET_SET_ACCESSOR!(DXUT_TIMER[]*, TimerList );
+    mixin GET_SET_ACCESSOR!(DXUT_TIMER[]*, "TimerList" );
     mixin GET_ACCESSOR!( bool*, "Keys" );
     mixin GET_ACCESSOR!( bool*, "LastKeys" );
     mixin GET_ACCESSOR!( bool*, "MouseButtons" );
@@ -594,7 +601,7 @@ HRESULT DXUTCreateState()
     if( !g_pDXUTState )
     {
         // g_pDXUTState = new (std::nothrow) DXUTState;
-        g_pDXUTState = DXUTState();
+        g_pDXUTState = DXUTState.newDXUTState();
         if( !g_pDXUTState )
             return E_OUTOFMEMORY;
     }
@@ -608,15 +615,15 @@ void DXUTDestroyState()
 
 struct DXUTMemoryHelper
 {
-    this() { DXUTCreateState(); }
+    static DXUTMemoryHelper opCall() { DXUTCreateState(); }
     ~this() { DXUTDestroyState(); }
-};
+}
 
 ref DXUTState GetDXUTState()
 {
     // This class will auto create the memory when its first accessed and delete it after the program exits WinMain.
     // However the application can also call DXUTCreateState() & DXUTDestroyState() independantly if its wants 
-    static DXUTMemoryHelper memory;
+    static DXUTMemoryHelper memory = DXUTMemoryHelper();
     assert( g_pDXUTState );
     // _Analysis_assume_( g_pDXUTState );
     return *g_pDXUTState;
@@ -3126,6 +3133,7 @@ void DXUTCleanup3DEnvironment(bool bReleaseSettings )
         SAFE_RELEASE( ppOutputArray[o] );
         
         // delete[] ppOutputArray;
+        destroy(ppOutputArray);
         ppOutputArray = null;
         GetDXUTState().SetDXGIOutputArray( null );
         GetDXUTState().SetDXGIOutputArraySize( 0 );
