@@ -18,7 +18,31 @@ import directx.dxgidebug;
 import directx.d3d11;
 import directx.d3d11_1;
 import directx.d3d11_2;
+import directx.dxutmisc;
+import core.stdc.string;
 import core.stdcpp.vector;
+
+
+static if(!is(typeof(ZeroMemory)))
+{
+    void ZeroMemory(void* dest, size_t length)
+    {
+        import core.stdc.string:memset;
+        memset(dest, 0, length);
+    }
+}
+static if(!is(typeof(SAFE_DELETE)))
+{
+    void SAFE_DELETE(T)(auto ref T* pointer)
+    {
+        if(pointer != null)
+        {
+            import core.stdc.stdlib:free;
+            free(pointer);
+        }
+        pointer = null;
+    }
+}
 
 enum DXUT_MIN_WINDOW_SIZE_X  = 200;
 enum DXUT_MIN_WINDOW_SIZE_Y  = 200;
@@ -43,7 +67,6 @@ string V(alias x)()
     return "hr = "~x.stringof~";";
 }
 
-
 //--------------------------------------------------------------------------------------
 // Thread safety
 //--------------------------------------------------------------------------------------
@@ -59,8 +82,10 @@ struct DXUTLock
     //Use opCall instead of constructor as D does not support default constructor
     static DXUTLock opCall() 
     {
+        DXUTLock l;
         if( g_bThreadSafe )
             EnterCriticalSection( &g_cs ); 
+        return l;
     }
     ~this() 
     {
@@ -386,7 +411,7 @@ struct DXUTState
         g_bThreadSafe = true;
         InitializeCriticalSectionAndSpinCount( &g_cs, 1000 );
 
-        ZeroMemory( &m_state, sizeof( STATE ) );
+        ZeroMemory( &m_state,  STATE.sizeof );
         m_state.m_OverrideStartX = -1;
         m_state.m_OverrideStartY = -1;
         m_state.m_OverrideForceFeatureLevel = cast(D3D_FEATURE_LEVEL)0;
@@ -411,8 +436,12 @@ struct DXUTState
 
     void Destroy()
     {
-        SAFE_DELETE( m_state.m_TimerList );
-        DXUTShutdown();
+        if(m_state.m_TimerList != null)
+        {
+            destroy(m_state.m_TimerList );
+            m_state.m_TimerList = null;
+        }
+        DXUTShutdown(0);
         DeleteCriticalSection( &g_cs );
     }
 
@@ -615,7 +644,12 @@ void DXUTDestroyState()
 
 struct DXUTMemoryHelper
 {
-    static DXUTMemoryHelper opCall() { DXUTCreateState(); }
+    static DXUTMemoryHelper opCall() 
+    {
+        DXUTMemoryHelper ret;
+        DXUTCreateState();
+        return ret; 
+    }
     ~this() { DXUTDestroyState(); }
 }
 
@@ -773,19 +807,19 @@ HRESULT DXUTInit( bool bParseCommandLine,
     InitCommonControls();
 
     // Save the current sticky/toggle/filter key settings so DXUT can restore them later
-    STICKYKEYS sk = {sizeof(STICKYKEYS), 0};
-    if ( !SystemParametersInfo(SPI_GETSTICKYKEYS, sizeof(STICKYKEYS), &sk, 0) )
-        memset( &sk, 0, sizeof(sk) );
+    STICKYKEYS sk = {STICKYKEYS.sizeof, 0};
+    if ( !SystemParametersInfo(SPI_GETSTICKYKEYS, STICKYKEYS.sizeof, &sk, 0) )
+        memset( &sk, 0, sk.sizeof );
     GetDXUTState().SetStartupStickyKeys( sk );
 
-    TOGGLEKEYS tk = {sizeof(TOGGLEKEYS), 0};
-   if ( !SystemParametersInfo(SPI_GETTOGGLEKEYS, sizeof(TOGGLEKEYS), &tk, 0) )
-        memset( &tk, 0, sizeof(tk) );
+    TOGGLEKEYS tk = {TOGGLEKEYS.sizeof, 0};
+   if ( !SystemParametersInfo(SPI_GETTOGGLEKEYS, TOGGLEKEYS.sizeof, &tk, 0) )
+        memset( &tk, 0, tk.sizeof );
     GetDXUTState().SetStartupToggleKeys( tk );
 
-    FILTERKEYS fk = {sizeof(FILTERKEYS), 0};
-    if ( !SystemParametersInfo(SPI_GETFILTERKEYS, sizeof(FILTERKEYS), &fk, 0) )
-        memset( &fk, 0, sizeof(fk) );
+    FILTERKEYS fk = {FILTERKEYS.sizeof, 0};
+    if ( !SystemParametersInfo(SPI_GETFILTERKEYS, FILTERKEYS.sizeof, &fk, 0) )
+        memset( &fk, 0, fk.sizeof );
     GetDXUTState().SetStartupFilterKeys( fk );
 
     GetDXUTState().SetShowMsgBoxOnError( bShowMsgBoxOnError );
@@ -808,7 +842,7 @@ HRESULT DXUTInit( bool bParseCommandLine,
 // Parses the command line for parameters.  See DXUTInit() for list 
 //--------------------------------------------------------------------------------------
 void DXUTParseCommandLine(WCHAR* strCommandLine, 
-                          bool bIgnoreFirstCommand  )
+                          bool bIgnoreFirstCommand = true)
 {
     WCHAR* strCmdLine;
     WCHAR[MAX_PATH] strFlag;
@@ -829,7 +863,7 @@ void DXUTParseCommandLine(WCHAR* strCommandLine,
 
             if( DXUTIsNextArg( strCmdLine, "forcefeaturelevel" ) )
             {
-                if( DXUTGetCmdParam( strCmdLine, strFlag, MAX_PATH ) )
+                if( DXUTGetCmdParam( strCmdLine, strFlag.ptr, MAX_PATH ) )
                 {
                     static if(USE_DIRECT3D11_3 || USE_DIRECT3D11_4)
                     {
@@ -840,6 +874,7 @@ void DXUTParseCommandLine(WCHAR* strCommandLine,
                             GetDXUTState().SetOverrideForceFeatureLevel(D3D_FEATURE_LEVEL_12_0);
                         }
                     }
+
                         
                     if (_wcsnicmp( strFlag, "D3D_FEATURE_LEVEL_11_1", MAX_PATH) == 0 ) {
                         GetDXUTState().SetOverrideForceFeatureLevel(D3D_FEATURE_LEVEL_11_1);

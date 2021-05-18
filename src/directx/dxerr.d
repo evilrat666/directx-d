@@ -12,6 +12,7 @@ module directx.dxerr;
 // This version only supports UNICODE.
 
 import core.stdc.stdio;
+import core.stdc.wchar_;
 import directx.dxut;
 import directx.d3d10_1;
 import directx.d3d11;
@@ -1067,6 +1068,59 @@ enum
 	CERTSRV_E_PENDING_CLIENT_RESPONSE = 0x80094820,
 }
 
+enum DWRITE_E_FILEFORMAT = 0x88985000;
+enum DWRITE_E_UNEXPECTED = 0x88985001;
+enum DWRITE_E_NOFONT = 0x88985002;
+enum DWRITE_E_FILENOTFOUND = 0x88985003;
+enum DWRITE_E_FILEACCESS = 0x88985004;
+enum DWRITE_E_FONTCOLLECTIONOBSOLETE = 0x88985005;
+enum DWRITE_E_ALREADYREGISTERED = 0x88985006;
+
+enum
+{
+        WINCODEC_ERR_WRONGSTATE = 0x88982F04,
+        WINCODEC_ERR_VALUEOUTOFRANGE,
+        WINCODEC_ERR_UNKNOWNIMAGEFORMAT,
+        WINCODEC_ERR_UNSUPPORTEDVERSION,
+        WINCODEC_ERR_NOTINITIALIZED,
+        WINCODEC_ERR_ALREADYLOCKED,
+        WINCODEC_ERR_PROPERTYNOTFOUND,
+        WINCODEC_ERR_PROPERTYNOTSUPPORTED,
+        WINCODEC_ERR_PROPERTYSIZE,
+        WINCODEC_ERR_CODECPRESENT,
+        WINCODEC_ERR_CODECNOTHUMBNAIL,
+        WINCODEC_ERR_PALETTEUNAVAILABLE,
+        WINCODEC_ERR_CODECTOOMANYSCANLINES,
+        WINCODEC_ERR_INTERNALERROR,
+        WINCODEC_ERR_SOURCERECTDOESNOTMATCHDIMENSIONS,
+        WINCODEC_ERR_COMPONENTNOTFOUND,
+        WINCODEC_ERR_IMAGESIZEOUTOFRANGE,
+        WINCODEC_ERR_TOOMUCHMETADATA,
+        WINCODEC_ERR_BADIMAGE,
+        WINCODEC_ERR_BADHEADER,
+        WINCODEC_ERR_FRAMEMISSING,
+        WINCODEC_ERR_BADMETADATAHEADER,
+        WINCODEC_ERR_BADSTREAMDATA,
+        WINCODEC_ERR_STREAMWRITE,
+        WINCODEC_ERR_STREAMREAD,
+        WINCODEC_ERR_STREAMNOTAVAILABLE,
+        WINCODEC_ERR_UNSUPPORTEDPIXELFORMAT,
+        WINCODEC_ERR_UNSUPPORTEDOPERATION,
+        WINCODEC_ERR_INVALIDREGISTRATION,
+        WINCODEC_ERR_COMPONENTINITIALIZEFAILURE,
+        WINCODEC_ERR_INSUFFICIENTBUFFER,
+        WINCODEC_ERR_DUPLICATEMETADATAPRESENT,
+        WINCODEC_ERR_PROPERTYUNEXPECTEDTYPE,
+        WINCODEC_ERR_UNEXPECTEDSIZE,
+        WINCODEC_ERR_INVALIDQUERYREQUEST,
+        WINCODEC_ERR_UNEXPECTEDMETADATATYPE,
+        WINCODEC_ERR_REQUESTONLYVALIDATMETADATAROOT,
+        WINCODEC_ERR_INVALIDQUERYCHARACTER,
+        WINCODEC_ERR_WIN32ERROR,
+        WINCODEC_ERR_INVALIDPROGRESSIVELEVEL,
+}
+
+
 enum XAUDIO2_E_INVALID_CALL =          0x88960001;
 enum XAUDIO2_E_XMA_DECODER_ERROR =     0x88960002;
 enum XAUDIO2_E_XAPO_CREATION_FAILED =  0x88960003;
@@ -1089,7 +1143,7 @@ enum DXUTERR_DEVICEREMOVED =           directx.win32.MAKE_HRESULT(SEVERITY_ERROR
 //-----------------------------------------------------------------------------
 enum BUFFER_SIZE = 3000;
 
-enum CHK_ERRA(wstring strOut){return strOut;}
+wchar* CHK_ERRA(wstring strOut){return cast(wchar*)strOut.ptr;}
 
 //--------------------------------------------------------------------------------------
 enum CHK_ERR(wstring strOut)
@@ -1101,9 +1155,9 @@ enum HRESULT_FROM_WIN32b(size_t x)
         return (cast(HRESULT)(x) <= 0 ? (cast(HRESULT)(x)) : (cast(HRESULT) (((x) & 0x0000FFFF) | (FACILITY_WIN32 << 16) | 0x80000000)));
 }
 
-enum CHK_ERR_WIN32A(string hrchk)
+wchar* CHK_ERR_WIN32A(wstring hrchk)
 {
-        return hrchk;
+        return cast(wchar*)hrchk.ptr;
 }
 
 // #define  CHK_ERR_WIN32_ONLY(hrchk, strOut) \
@@ -4324,12 +4378,13 @@ WCHAR* DXGetErrorStringW(HRESULT hr )
                         return CHK_ERR_WIN32A(c);
         }
         case HRESULT_FROM_WIN32b(ERROR_INVALID_FUNCTION):
-                return CHK_ERR("ERROR_INVALID_FUNCTION");
+                return cast(wchar*)(CHK_ERR("ERROR_INVALID_FUNCTION").ptr);
 
         default: 
-                return "Unknown error.";
+                return cast(wchar*)to!wstring("Unknown error.").ptr;
     }
 }
+
 
 //--------------------------------------------------------------------------------------
 
@@ -4342,14 +4397,15 @@ void DXGetErrorDescriptionW(HRESULT hr, WCHAR* desc,size_t count )
     *desc = 0;
 
     // First try to see if FormatMessage knows this hr
-    LPWSTR errorText = nullptr;
+    LPWSTR errorText = null;
 
-    DWORD result = FormatMessageW( FORMAT_MESSAGE_FROM_SYSTEM |FORMAT_MESSAGE_ALLOCATE_BUFFER, nullptr, hr, 
-                                   MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), cast(LPWSTR)&errorText, 0, nullptr );
+    DWORD result = FormatMessageW( FORMAT_MESSAGE_FROM_SYSTEM |FORMAT_MESSAGE_ALLOCATE_BUFFER, null, hr, 
+                                   MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), cast(LPWSTR)&errorText, 0, null );
 
     if (result > 0 && errorText)
     {
-        wcscpy_s( desc, count, errorText );
+        // wcscpy_s( desc, count, errorText );
+        wcscpy( desc, errorText );
 
         if ( errorText )
             LocalFree( errorText );
@@ -4358,7 +4414,8 @@ void DXGetErrorDescriptionW(HRESULT hr, WCHAR* desc,size_t count )
     }
 
     enum CHK_ERR(wstring strOut) {
-            wcscpy_s(desc, count, strOut);
+        //     wcscpy_s(desc, count, strOut);
+            wcscpy(desc, strOut.ptr);
     }
 
     enum errArr = [
@@ -4475,8 +4532,8 @@ void DXGetErrorDescriptionW(HRESULT hr, WCHAR* desc,size_t count )
         "DDERR_NOMONITORINFORMATION", "The monitor does not have EDID data.",
         "DDERR_NODRIVERSUPPORT", "The driver does not enumerate display mode refresh rates.",
         "DDERR_DEVICEDOESNTOWNSURFACE", "Surfaces created by one direct draw device cannot be used directly by another direct draw device.",
-        "D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS", "There are too many unique state objects.",
-        "D3D10_ERROR_FILE_NOT_FOUND", "File not found",
+        // "D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS", "There are too many unique state objects.",
+        // "D3D10_ERROR_FILE_NOT_FOUND", "File not found",
         "DXGI_STATUS_OCCLUDED", "The target window or output has been occluded. The application should suspend rendering operations if possible.",
         "DXGI_STATUS_CLIPPED", "Target window is clipped.",
         "DXGI_STATUS_NO_REDIRECTION", "",
@@ -4595,14 +4652,18 @@ void DXGetErrorDescriptionW(HRESULT hr, WCHAR* desc,size_t count )
     {
         static foreach(i, c; errArr)
         {
-                if(i % 2 != 0) //If odd, continue
-                        continue;
-                case mixin(c):
-                        CHK_ERR(errArr[i+1]);
+                // if(i % 2 != 0) //If odd, continue
+                        // continue;
+                static if(i%2 == 0)
+                {
+                        case mixin(c):
+                                CHK_ERR(errArr[i+1]);
+                }
 
         }
         default: 
-                wcscpy_s( desc, count, "Unknown error." ); 
+                // wcscpy_s( desc, count, "Unknown error." ); 
+                wcscpy_s( desc, "Unknown error." ); 
                 break;
     }
 }
@@ -4617,40 +4678,42 @@ HRESULT DXTraceW( const WCHAR* strFile, DWORD dwLine, HRESULT hr,
     WCHAR[1024] strBufferMsg;
     WCHAR[BUFFER_SIZE] strBuffer;
 
-    swprintf_s( strBufferLine, 128, "%lu", dwLine );
+    swprintf( strBufferLine.ptr, 128, "%lu", dwLine );
+//     swprintf_s( strBufferLine, 128, "%lu", dwLine );
     if( strFile )
     {
-       swprintf_s( strBuffer, BUFFER_SIZE, "%ls(%ls): ", strFile, strBufferLine );
-       OutputDebugStringW( strBuffer );
+       swprintf( strBuffer.ptr, BUFFER_SIZE, "%ls(%ls): ", strFile, strBufferLine.ptr );
+//        swprintf_s( strBuffer, BUFFER_SIZE, "%ls(%ls): ", strFile, strBufferLine );
+       OutputDebugStringW( strBuffer.ptr );
     }
 
-    size_t nMsgLen = (strMsg) ? wcsnlen_s( strMsg, 1024 ) : 0;
+    size_t nMsgLen = (strMsg) ? wcslen( strMsg ) : 0;
     if( nMsgLen > 0 )
     {
         OutputDebugStringW( strMsg );
         OutputDebugStringW( " " );
     }
 
-    swprintf_s( strBufferError, 256, "%ls (0x%0.8x)", DXGetErrorStringW(hr), hr );
-    swprintf_s( strBuffer, BUFFER_SIZE, "hr=%ls", strBufferError );
-    OutputDebugStringW( strBuffer );
+    swprintf( strBufferError.ptr, 256, "%ls (0x%0.8x)", DXGetErrorStringW(hr), hr );
+    swprintf( strBuffer.ptr, BUFFER_SIZE, "hr=%ls", strBufferError.ptr );
+    OutputDebugStringW( strBuffer.ptr );
 
     OutputDebugStringW( "\n" );
 
     if( bPopMsgBox )
     {
-        wcscpy_s( strBufferFile, MAX_PATH, "" );
+        wcscpy( strBufferFile.ptr, "" );
         if( strFile )
-            wcscpy_s( strBufferFile, MAX_PATH, strFile );
+            wcscpy( strBufferFile.ptr, strFile );
 
-        wcscpy_s( strBufferMsg, 1024,"" );
+        wcscpy( strBufferMsg.ptr,"" );
         if( nMsgLen > 0 )
-            swprintf_s( strBufferMsg, 1024, "Calling: %ls\n", strMsg );
+            swprintf( strBufferMsg.ptr, 1024, "Calling: %ls\n", strMsg );
 
-        swprintf_s( strBuffer, BUFFER_SIZE, "File: %ls\nLine: %ls\nError Code: %ls\n%lsDo you want to debug the application?",
-                    strBufferFile, strBufferLine, strBufferError, strBufferMsg );
+        swprintf( strBuffer.ptr, BUFFER_SIZE, "File: %ls\nLine: %ls\nError Code: %ls\n%lsDo you want to debug the application?",
+                    strBufferFile.ptr, strBufferLine.ptr, strBufferError.ptr, strBufferMsg.ptr );
 
-        int nResult = MessageBoxW( GetForegroundWindow(), strBuffer, "Unexpected error encountered", MB_YESNO | MB_ICONERROR );
+        int nResult = MessageBoxW( GetForegroundWindow(), strBuffer.ptr, "Unexpected error encountered", MB_YESNO | MB_ICONERROR );
         if( nResult == IDYES )
             DebugBreak();
     }
@@ -4663,17 +4726,17 @@ alias DXGetErrorString = DXGetErrorStringW;
 alias DXGetErrorDescription = DXGetErrorDescriptionW;
 alias DXTrace = DXTraceW;
 debug{
-enum DXTRACE_MSG(string str, wstring file = to!wstring(__FILE__), ulong line = __LINE__) 
+enum DXTRACE_MSG(string str, wstring file = to!wstring(__FILE__), uint line = __LINE__) 
 {
-        return DXTrace( file, line, 0, str, false );
+        return DXTrace( cast(wchar*)file.ptr, line, 0, cast(wchar*)(to!wstring(str)).ptr, false );
 }
-enum DXTRACE_ERR(string str, HRESULT hr, wstring file = to!wstring(__FILE__), ulong line = __LINE__)
+enum DXTRACE_ERR(string str, HRESULT hr, wstring file = to!wstring(__FILE__), uint line = __LINE__)
 {
-        return DXTrace(file, line, hr, str, false );
+        return DXTrace(cast(wchar*)file.ptr, line, hr, cast(wchar*)(to!wstring(str)).ptr, false );
 }
-enum DXTRACE_ERR_MSGBOX(string str, HRESULT hr, wstring file = to!wstring(__FILE__), ulong line = __LINE__)
+enum DXTRACE_ERR_MSGBOX(string str, HRESULT hr, wstring file = to!wstring(__FILE__), uint line = __LINE__)
 {
-        return DXTrace( file, line, hr, str, true );
+        return DXTrace( cast(wchar*)file.ptr, line, hr, cast(wchar*)(to!wstring(str)).ptr, true );
 }
 }
 else

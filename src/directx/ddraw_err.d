@@ -23,164 +23,164 @@ HRESULT MAKE_DDHRESULT(HRESULT code)
  * Uses arithmetic operations to stretch and shrink surfaces during blt
  * rather than pixel doubling techniques.  Along the Y axis.
  */
-enum DDFXCAPS_BLTARITHSTRETCHY = 0x00000020L;
+enum DDFXCAPS_BLTARITHSTRETCHY = 0x00000020;
 
 /*
  * Uses arithmetic operations to stretch during blt
  * rather than pixel doubling techniques.  Along the Y axis. Only
  * works for x1, x2, etc.
  */
-enum DDFXCAPS_BLTARITHSTRETCHYN = 0x00000010L;
+enum DDFXCAPS_BLTARITHSTRETCHYN = 0x00000010;
 
 /*
  * Supports mirroring left to right in blt.
  */
-enum DDFXCAPS_BLTMIRRORLEFTRIGHT = 0x00000040L;
+enum DDFXCAPS_BLTMIRRORLEFTRIGHT = 0x00000040;
 
 /*
  * Supports mirroring top to bottom in blt.
  */
-enum DDFXCAPS_BLTMIRRORUPDOWN = 0x00000080L;
+enum DDFXCAPS_BLTMIRRORUPDOWN = 0x00000080;
 
 /*
  * Supports arbitrary rotation for blts.
  */
-enum DDFXCAPS_BLTROTATION = 0x00000100L;
+enum DDFXCAPS_BLTROTATION = 0x00000100;
 
 /*
  * Supports 90 degree rotations for blts.
  */
-enum DDFXCAPS_BLTROTATION90 = 0x00000200L;
+enum DDFXCAPS_BLTROTATION90 = 0x00000200;
 
 /*
  * DirectDraw supports arbitrary shrinking of a surface along the
  * x axis (horizontal direction) for blts.
  */
-enum DDFXCAPS_BLTSHRINKX = 0x00000400L;
+enum DDFXCAPS_BLTSHRINKX = 0x00000400;
 
 /*
  * DirectDraw supports integer shrinking (1x,2x,) of a surface
  * along the x axis (horizontal direction) for blts.
  */
-enum DDFXCAPS_BLTSHRINKXN = 0x00000800L;
+enum DDFXCAPS_BLTSHRINKXN = 0x00000800;
 
 /*
  * DirectDraw supports arbitrary shrinking of a surface along the
  * y axis (horizontal direction) for blts.
  */
-enum DDFXCAPS_BLTSHRINKY = 0x00001000L;
+enum DDFXCAPS_BLTSHRINKY = 0x00001000;
 
 /*
  * DirectDraw supports integer shrinking (1x,2x,) of a surface
  * along the y axis (vertical direction) for blts.
  */
-enum DDFXCAPS_BLTSHRINKYN = 0x00002000L;
+enum DDFXCAPS_BLTSHRINKYN = 0x00002000;
 
 /*
  * DirectDraw supports arbitrary stretching of a surface along the
  * x axis (horizontal direction) for blts.
  */
-enum DDFXCAPS_BLTSTRETCHX = 0x00004000L;
+enum DDFXCAPS_BLTSTRETCHX = 0x00004000;
 
 /*
  * DirectDraw supports integer stretching (1x,2x,) of a surface
  * along the x axis (horizontal direction) for blts.
  */
-enum DDFXCAPS_BLTSTRETCHXN = 0x00008000L;
+enum DDFXCAPS_BLTSTRETCHXN = 0x00008000;
 
 /*
  * DirectDraw supports arbitrary stretching of a surface along the
  * y axis (horizontal direction) for blts.
  */
-enum DDFXCAPS_BLTSTRETCHY = 0x00010000L;
+enum DDFXCAPS_BLTSTRETCHY = 0x00010000;
 
 /*
  * DirectDraw supports integer stretching (1x,2x,) of a surface
  * along the y axis (vertical direction) for blts.
  */
-enum DDFXCAPS_BLTSTRETCHYN = 0x00020000L;
+enum DDFXCAPS_BLTSTRETCHYN = 0x00020000;
 
 /*
  * Uses arithmetic operations to stretch and shrink surfaces during
  * overlay rather than pixel doubling techniques.  Along the Y axis
  * for overlays.
  */
-enum DDFXCAPS_OVERLAYARITHSTRETCHY = 0x00040000L;
+enum DDFXCAPS_OVERLAYARITHSTRETCHY = 0x00040000;
 
 /*
  * Uses arithmetic operations to stretch surfaces during
  * overlay rather than pixel doubling techniques.  Along the Y axis
  * for overlays. Only works for x1, x2, etc.
  */
-enum DDFXCAPS_OVERLAYARITHSTRETCHYN = 0x00000008L;
+enum DDFXCAPS_OVERLAYARITHSTRETCHYN = 0x00000008;
 
 /*
  * DirectDraw supports arbitrary shrinking of a surface along the
  * x axis (horizontal direction) for overlays.
  */
-enum DDFXCAPS_OVERLAYSHRINKX = 0x00080000L;
+enum DDFXCAPS_OVERLAYSHRINKX = 0x00080000;
 
 /*
  * DirectDraw supports integer shrinking (1x,2x,) of a surface
  * along the x axis (horizontal direction) for overlays.
  */
-enum DDFXCAPS_OVERLAYSHRINKXN = 0x00100000L;
+enum DDFXCAPS_OVERLAYSHRINKXN = 0x00100000;
 
 /*
  * DirectDraw supports arbitrary shrinking of a surface along the
  * y axis (horizontal direction) for overlays.
  */
-enum DDFXCAPS_OVERLAYSHRINKY = 0x00200000L;
+enum DDFXCAPS_OVERLAYSHRINKY = 0x00200000;
 
 /*
  * DirectDraw supports integer shrinking (1x,2x,) of a surface
  * along the y axis (vertical direction) for overlays.
  */
-enum DDFXCAPS_OVERLAYSHRINKYN = 0x00400000L;
+enum DDFXCAPS_OVERLAYSHRINKYN = 0x00400000;
 
 /*
  * DirectDraw supports arbitrary stretching of a surface along the
  * x axis (horizontal direction) for overlays.
  */
-enum DDFXCAPS_OVERLAYSTRETCHX = 0x00800000L;
+enum DDFXCAPS_OVERLAYSTRETCHX = 0x00800000;
 
 /*
  * DirectDraw supports integer stretching (1x,2x,) of a surface
  * along the x axis (horizontal direction) for overlays.
  */
-enum DDFXCAPS_OVERLAYSTRETCHXN = 0x01000000L;
+enum DDFXCAPS_OVERLAYSTRETCHXN = 0x01000000;
 
 /*
  * DirectDraw supports arbitrary stretching of a surface along the
  * y axis (horizontal direction) for overlays.
  */
-enum DDFXCAPS_OVERLAYSTRETCHY = 0x02000000L;
+enum DDFXCAPS_OVERLAYSTRETCHY = 0x02000000;
 
 /*
  * DirectDraw supports integer stretching (1x,2x,) of a surface
  * along the y axis (vertical direction) for overlays.
  */
-enum DDFXCAPS_OVERLAYSTRETCHYN = 0x04000000L;
+enum DDFXCAPS_OVERLAYSTRETCHYN = 0x04000000;
 
 /*
  * DirectDraw supports mirroring of overlays across the vertical axis
  */
-enum DDFXCAPS_OVERLAYMIRRORLEFTRIGHT = 0x08000000L;
+enum DDFXCAPS_OVERLAYMIRRORLEFTRIGHT = 0x08000000;
 
 /*
  * DirectDraw supports mirroring of overlays across the horizontal axis
  */
-enum DDFXCAPS_OVERLAYMIRRORUPDOWN = 0x10000000L;
+enum DDFXCAPS_OVERLAYMIRRORUPDOWN = 0x10000000;
 
 /*
  * DirectDraw supports deinterlacing of overlay surfaces
  */
-enum DDFXCAPS_OVERLAYDEINTERLACE = 0x20000000L;
+enum DDFXCAPS_OVERLAYDEINTERLACE = 0x20000000;
 
 /*
  * Driver can do alpha blending for blits.
  */
-enum DDFXCAPS_BLTALPHA = 0x00000001L;
+enum DDFXCAPS_BLTALPHA = 0x00000001;
 
 
 /*
@@ -191,7 +191,7 @@ enum DDFXCAPS_BLTFILTER = DDFXCAPS_BLTARITHSTRETCHY;
 /*
  * Driver can do alpha blending for overlays.
  */
-enum DDFXCAPS_OVERLAYALPHA = 0x00000004L;
+enum DDFXCAPS_OVERLAYALPHA = 0x00000004;
 
 
 /*
@@ -209,28 +209,28 @@ enum DDFXCAPS_OVERLAYFILTER = DDFXCAPS_OVERLAYARITHSTRETCHY;
  * This flag used to be DDSVCAPS_ENIGMA, which is now obsolete
  */
 
-enum DDSVCAPS_RESERVED1 = 0x00000001L;
+enum DDSVCAPS_RESERVED1 = 0x00000001;
 
 /*
  * This flag used to be DDSVCAPS_FLICKER, which is now obsolete
  */
-enum DDSVCAPS_RESERVED2 = 0x00000002L;
+enum DDSVCAPS_RESERVED2 = 0x00000002;
 
 /*
  * This flag used to be DDSVCAPS_REDBLUE, which is now obsolete
  */
-enum DDSVCAPS_RESERVED3 = 0x00000004L;
+enum DDSVCAPS_RESERVED3 = 0x00000004;
 
 /*
  * This flag used to be DDSVCAPS_SPLIT, which is now obsolete
  */
-enum DDSVCAPS_RESERVED4 = 0x00000008L;
+enum DDSVCAPS_RESERVED4 = 0x00000008;
 
 /*
  * The stereo view is accomplished with switching technology
  */
 
-enum DDSVCAPS_STEREOSEQUENTIAL = 0x00000010L;
+enum DDSVCAPS_STEREOSEQUENTIAL = 0x00000010;
 
 
 
@@ -243,7 +243,7 @@ enum DDSVCAPS_STEREOSEQUENTIAL = 0x00000010L;
 /*
  * Index is 4 bits.  There are sixteen color entries in the palette table.
  */
-enum DDPCAPS_4BIT = 0x00000001L;
+enum DDPCAPS_4BIT = 0x00000001;
 
 /*
  * Index is onto a 8 bit color index.  This field is only valid with the
@@ -251,12 +251,12 @@ enum DDPCAPS_4BIT = 0x00000001L;
  * surface is in 8bpp. Each color entry is one byte long and is an index
  * into destination surface's 8bpp palette.
  */
-enum DDPCAPS_8BITENTRIES = 0x00000002L;
+enum DDPCAPS_8BITENTRIES = 0x00000002;
 
 /*
  * Index is 8 bits.  There are 256 color entries in the palette table.
  */
-enum DDPCAPS_8BIT = 0x00000004L;
+enum DDPCAPS_8BIT = 0x00000004;
 
 /*
  * Indicates that this DIRECTDRAWPALETTE should use the palette color array
@@ -266,47 +266,47 @@ enum DDPCAPS_8BIT = 0x00000004L;
  * the lpDDColorArray parameter. The definition remains for source-level
  * compatibility.
  */
-enum DDPCAPS_INITIALIZE = 0x00000000L;
+enum DDPCAPS_INITIALIZE = 0x00000000;
 
 /*
  * This palette is the one attached to the primary surface.  Changing this
  * table has immediate effect on the display unless DDPSETPAL_VSYNC is specified
  * and supported.
  */
-enum DDPCAPS_PRIMARYSURFACE = 0x00000010L;
+enum DDPCAPS_PRIMARYSURFACE = 0x00000010;
 
 /*
  * This palette is the one attached to the primary surface left.  Changing
  * this table has immediate effect on the display for the left eye unless
  * DDPSETPAL_VSYNC is specified and supported.
  */
-enum DDPCAPS_PRIMARYSURFACELEFT = 0x00000020L;
+enum DDPCAPS_PRIMARYSURFACELEFT = 0x00000020;
 
 /*
  * This palette can have all 256 entries defined
  */
-enum DDPCAPS_ALLOW256 = 0x00000040L;
+enum DDPCAPS_ALLOW256 = 0x00000040;
 
 /*
  * This palette can have modifications to it synced with the monitors
  * refresh rate.
  */
-enum DDPCAPS_VSYNC = 0x00000080L;
+enum DDPCAPS_VSYNC = 0x00000080;
 
 /*
  * Index is 1 bit.  There are two color entries in the palette table.
  */
-enum DDPCAPS_1BIT = 0x00000100L;
+enum DDPCAPS_1BIT = 0x00000100;
 
 /*
  * Index is 2 bit.  There are four color entries in the palette table.
  */
-enum DDPCAPS_2BIT = 0x00000200L;
+enum DDPCAPS_2BIT = 0x00000200;
 
 /*
  * The peFlags member of PALETTEENTRY denotes an 8 bit alpha value
  */
-enum DDPCAPS_ALPHA = 0x00000400L;
+enum DDPCAPS_ALPHA = 0x00000400;
 
 
 /****************************************************************************
@@ -336,13 +336,13 @@ enum DDPCAPS_ALPHA = 0x00000400L;
  * pointer and Release when the private data is destroyed. This includes when
  * the surface or palette is destroyed before such priovate data is destroyed.
  */
-enum DDSPD_IUNKNOWNPOINTER = 0x00000001L;
+enum DDSPD_IUNKNOWNPOINTER = 0x00000001;
 
 /*
  * Private data is only valid for the current state of the object,
  * as determined by the uniqueness value.
  */
-enum DDSPD_VOLATILE = 0x00000002L;
+enum DDSPD_VOLATILE = 0x00000002;
 
 
 /****************************************************************************
@@ -366,37 +366,37 @@ enum DDSPD_VOLATILE = 0x00000002L;
 /*
  * 1 bit per pixel.
  */
-enum DDBD_1 = 0x00004000L;
+enum DDBD_1 = 0x00004000;
 
 /*
  * 2 bits per pixel.
  */
-enum DDBD_2 = 0x00002000L;
+enum DDBD_2 = 0x00002000;
 
 /*
  * 4 bits per pixel.
  */
-enum DDBD_4 = 0x00001000L;
+enum DDBD_4 = 0x00001000;
 
 /*
  * 8 bits per pixel.
  */
-enum DDBD_8 = 0x00000800L;
+enum DDBD_8 = 0x00000800;
 
 /*
  * 16 bits per pixel.
  */
-enum DDBD_16 = 0x00000400L;
+enum DDBD_16 = 0x00000400;
 
 /*
  * 24 bits per pixel.
  */
-enum DDBD_24 = 0X00000200L;
+enum DDBD_24 = 0X00000200;
 
 /*
  * 32 bits per pixel.
  */
-enum DDBD_32 = 0x00000100L;
+enum DDBD_32 = 0x00000100;
 
 /****************************************************************************
  *
@@ -408,31 +408,31 @@ enum DDBD_32 = 0x00000100L;
  * Set if the structure contains a color space.  Not set if the structure
  * contains a single color key.
  */
-enum DDCKEY_COLORSPACE = 0x00000001L;
+enum DDCKEY_COLORSPACE = 0x00000001;
 
 /*
  * Set if the structure specifies a color key or color space which is to be
  * used as a destination color key for blt operations.
  */
-enum DDCKEY_DESTBLT = 0x00000002L;
+enum DDCKEY_DESTBLT = 0x00000002;
 
 /*
  * Set if the structure specifies a color key or color space which is to be
  * used as a destination color key for overlay operations.
  */
-enum DDCKEY_DESTOVERLAY = 0x00000004L;
+enum DDCKEY_DESTOVERLAY = 0x00000004;
 
 /*
  * Set if the structure specifies a color key or color space which is to be
  * used as a source color key for blt operations.
  */
-enum DDCKEY_SRCBLT = 0x00000008L;
+enum DDCKEY_SRCBLT = 0x00000008;
 
 /*
  * Set if the structure specifies a color key or color space which is to be
  * used as a source color key for overlay operations.
  */
-enum DDCKEY_SRCOVERLAY = 0x00000010L;
+enum DDCKEY_SRCOVERLAY = 0x00000010;
 
 
 /****************************************************************************
@@ -445,112 +445,112 @@ enum DDCKEY_SRCOVERLAY = 0x00000010L;
  * Supports transparent blting using a color key to identify the replaceable
  * bits of the destination surface for RGB colors.
  */
-enum DDCKEYCAPS_DESTBLT = 0x00000001L;
+enum DDCKEYCAPS_DESTBLT = 0x00000001;
 
 /*
  * Supports transparent blting using a color space to identify the replaceable
  * bits of the destination surface for RGB colors.
  */
-enum DDCKEYCAPS_DESTBLTCLRSPACE = 0x00000002L;
+enum DDCKEYCAPS_DESTBLTCLRSPACE = 0x00000002;
 
 /*
  * Supports transparent blting using a color space to identify the replaceable
  * bits of the destination surface for YUV colors.
  */
-enum DDCKEYCAPS_DESTBLTCLRSPACEYUV = 0x00000004L;
+enum DDCKEYCAPS_DESTBLTCLRSPACEYUV = 0x00000004;
 
 /*
  * Supports transparent blting using a color key to identify the replaceable
  * bits of the destination surface for YUV colors.
  */
-enum DDCKEYCAPS_DESTBLTYUV = 0x00000008L;
+enum DDCKEYCAPS_DESTBLTYUV = 0x00000008;
 
 /*
  * Supports overlaying using colorkeying of the replaceable bits of the surface
  * being overlayed for RGB colors.
  */
-enum DDCKEYCAPS_DESTOVERLAY = 0x00000010L;
+enum DDCKEYCAPS_DESTOVERLAY = 0x00000010;
 
 /*
  * Supports a color space as the color key for the destination for RGB colors.
  */
-enum DDCKEYCAPS_DESTOVERLAYCLRSPACE = 0x00000020L;
+enum DDCKEYCAPS_DESTOVERLAYCLRSPACE = 0x00000020;
 
 /*
  * Supports a color space as the color key for the destination for YUV colors.
  */
-enum DDCKEYCAPS_DESTOVERLAYCLRSPACEYUV = 0x00000040L;
+enum DDCKEYCAPS_DESTOVERLAYCLRSPACEYUV = 0x00000040;
 
 /*
  * Supports only one active destination color key value for visible overlay
  * surfaces.
  */
-enum DDCKEYCAPS_DESTOVERLAYONEACTIVE = 0x00000080L;
+enum DDCKEYCAPS_DESTOVERLAYONEACTIVE = 0x00000080;
 
 /*
  * Supports overlaying using colorkeying of the replaceable bits of the
  * surface being overlayed for YUV colors.
  */
-enum DDCKEYCAPS_DESTOVERLAYYUV = 0x00000100L;
+enum DDCKEYCAPS_DESTOVERLAYYUV = 0x00000100;
 
 /*
  * Supports transparent blting using the color key for the source with
  * this surface for RGB colors.
  */
-enum DDCKEYCAPS_SRCBLT = 0x00000200L;
+enum DDCKEYCAPS_SRCBLT = 0x00000200;
 
 /*
  * Supports transparent blting using a color space for the source with
  * this surface for RGB colors.
  */
-enum DDCKEYCAPS_SRCBLTCLRSPACE = 0x00000400L;
+enum DDCKEYCAPS_SRCBLTCLRSPACE = 0x00000400;
 
 /*
  * Supports transparent blting using a color space for the source with
  * this surface for YUV colors.
  */
-enum DDCKEYCAPS_SRCBLTCLRSPACEYUV = 0x00000800L;
+enum DDCKEYCAPS_SRCBLTCLRSPACEYUV = 0x00000800;
 
 /*
  * Supports transparent blting using the color key for the source with
  * this surface for YUV colors.
  */
-enum DDCKEYCAPS_SRCBLTYUV = 0x00001000L;
+enum DDCKEYCAPS_SRCBLTYUV = 0x00001000;
 
 /*
  * Supports overlays using the color key for the source with this
  * overlay surface for RGB colors.
  */
-enum DDCKEYCAPS_SRCOVERLAY = 0x00002000L;
+enum DDCKEYCAPS_SRCOVERLAY = 0x00002000;
 
 /*
  * Supports overlays using a color space as the source color key for
  * the overlay surface for RGB colors.
  */
-enum DDCKEYCAPS_SRCOVERLAYCLRSPACE = 0x00004000L;
+enum DDCKEYCAPS_SRCOVERLAYCLRSPACE = 0x00004000;
 
 /*
  * Supports overlays using a color space as the source color key for
  * the overlay surface for YUV colors.
  */
-enum DDCKEYCAPS_SRCOVERLAYCLRSPACEYUV = 0x00008000L;
+enum DDCKEYCAPS_SRCOVERLAYCLRSPACEYUV = 0x00008000;
 
 /*
  * Supports only one active source color key value for visible
  * overlay surfaces.
  */
-enum DDCKEYCAPS_SRCOVERLAYONEACTIVE = 0x00010000L;
+enum DDCKEYCAPS_SRCOVERLAYONEACTIVE = 0x00010000;
 
 /*
  * Supports overlays using the color key for the source with this
  * overlay surface for YUV colors.
  */
-enum DDCKEYCAPS_SRCOVERLAYYUV = 0x00020000L;
+enum DDCKEYCAPS_SRCOVERLAYYUV = 0x00020000;
 
 /*
  * there are no bandwidth trade-offs for using colorkey with an overlay
  */
-enum DDCKEYCAPS_NOCOSTOVERLAY = 0x00040000L;
+enum DDCKEYCAPS_NOCOSTOVERLAY = 0x00040000;
 
 
 /****************************************************************************
@@ -562,44 +562,44 @@ enum DDCKEYCAPS_NOCOSTOVERLAY = 0x00040000L;
 /*
  * The surface has alpha channel information in the pixel format.
  */
-enum DDPF_ALPHAPIXELS = 0x00000001L;
+enum DDPF_ALPHAPIXELS = 0x00000001;
 
 /*
  * The pixel format contains alpha only information
  */
-enum DDPF_ALPHA = 0x00000002L;
+enum DDPF_ALPHA = 0x00000002;
 
 /*
  * The FourCC code is valid.
  */
-enum DDPF_FOURCC = 0x00000004L;
+enum DDPF_FOURCC = 0x00000004;
 
 /*
  * The surface is 4-bit color indexed.
  */
-enum DDPF_PALETTEINDEXED4 = 0x00000008L;
+enum DDPF_PALETTEINDEXED4 = 0x00000008;
 
 /*
  * The surface is indexed into a palette which stores indices
  * into the destination surface's 8-bit palette.
  */
-enum DDPF_PALETTEINDEXEDTO8 = 0x00000010L;
+enum DDPF_PALETTEINDEXEDTO8 = 0x00000010;
 
 /*
  * The surface is 8-bit color indexed.
  */
-enum DDPF_PALETTEINDEXED8 = 0x00000020L;
+enum DDPF_PALETTEINDEXED8 = 0x00000020;
 
 /*
  * The RGB data in the pixel format structure is valid.
  */
-enum DDPF_RGB = 0x00000040L;
+enum DDPF_RGB = 0x00000040;
 
 /*
  * The surface will accept pixel data in the format specified
  * and compress it during the write.
  */
-enum DDPF_COMPRESSED = 0x00000080L;
+enum DDPF_COMPRESSED = 0x00000080;
 
 /*
  * The surface will accept RGB data and translate it during
@@ -607,43 +607,43 @@ enum DDPF_COMPRESSED = 0x00000080L;
  * will be contained in the pixel format structure.  The DDPF_RGB
  * flag will be set.
  */
-enum DDPF_RGBTOYUV = 0x00000100L;
+enum DDPF_RGBTOYUV = 0x00000100;
 
 /*
  * pixel format is YUV - YUV data in pixel format struct is valid
  */
-enum DDPF_YUV = 0x00000200L;
+enum DDPF_YUV = 0x00000200;
 
 /*
  * pixel format is a z buffer only surface
  */
-enum DDPF_ZBUFFER = 0x00000400L;
+enum DDPF_ZBUFFER = 0x00000400;
 
 /*
  * The surface is 1-bit color indexed.
  */
-enum DDPF_PALETTEINDEXED1 = 0x00000800L;
+enum DDPF_PALETTEINDEXED1 = 0x00000800;
 
 /*
  * The surface is 2-bit color indexed.
  */
-enum DDPF_PALETTEINDEXED2 = 0x00001000L;
+enum DDPF_PALETTEINDEXED2 = 0x00001000;
 
 /*
  * The surface contains Z information in the pixels
  */
-enum DDPF_ZPIXELS = 0x00002000L;
+enum DDPF_ZPIXELS = 0x00002000;
 
 /*
  * The surface contains stencil information along with Z
  */
-enum DDPF_STENCILBUFFER = 0x00004000L;
+enum DDPF_STENCILBUFFER = 0x00004000;
 
 /*
  * Premultiplied alpha format -- the color components have been
  * premultiplied by the alpha component.
  */
-enum DDPF_ALPHAPREMULT = 0x00008000L;
+enum DDPF_ALPHAPREMULT = 0x00008000;
 
 
 /*
@@ -651,7 +651,7 @@ enum DDPF_ALPHAPREMULT = 0x00008000L;
  * Use this flag for luminance-only or luminance+alpha surfaces,
  * the bit depth is then ddpf.dwLuminanceBitCount.
  */
-enum DDPF_LUMINANCE = 0x00020000L;
+enum DDPF_LUMINANCE = 0x00020000;
 
 /*
  * Luminance data in the pixel format is valid.
@@ -659,12 +659,12 @@ enum DDPF_LUMINANCE = 0x00020000L;
  * the bit mask for the luminance portion of the pixel is then
  * ddpf.dwBumpLuminanceBitMask
  */
-enum DDPF_BUMPLUMINANCE = 0x00040000L;
+enum DDPF_BUMPLUMINANCE = 0x00040000;
 
 /*
  * Bump map dUdV data in the pixel format is valid.
  */
-enum DDPF_BUMPDUDV = 0x00080000L;
+enum DDPF_BUMPDUDV = 0x00080000;
 
 
 /*===========================================================================
@@ -684,27 +684,27 @@ enum DDPF_BUMPDUDV = 0x00080000L;
 /*
  * Enumerate all of the surfaces that meet the search criterion.
  */
-enum DDENUMSURFACES_ALL = 0x00000001L;
+enum DDENUMSURFACES_ALL = 0x00000001;
 
 /*
  * A search hit is a surface that matches the surface description.
  */
-enum DDENUMSURFACES_MATCH = 0x00000002L;
+enum DDENUMSURFACES_MATCH = 0x00000002;
 
 /*
  * A search hit is a surface that does not match the surface description.
  */
-enum DDENUMSURFACES_NOMATCH = 0x00000004L;
+enum DDENUMSURFACES_NOMATCH = 0x00000004;
 
 /*
  * Enumerate the first surface that can be created which meets the search criterion.
  */
-enum DDENUMSURFACES_CANBECREATED = 0x00000008L;
+enum DDENUMSURFACES_CANBECREATED = 0x00000008;
 
 /*
  * Enumerate the surfaces that already exist that meet the search criterion.
  */
-enum DDENUMSURFACES_DOESEXIST = 0x00000010L;
+enum DDENUMSURFACES_DOESEXIST = 0x00000010;
 
 
 /****************************************************************************
@@ -716,7 +716,7 @@ enum DDENUMSURFACES_DOESEXIST = 0x00000010L;
 /*
  * The desired mode is a standard VGA mode
  */
-enum DDSDM_STANDARDVGAMODE = 0x00000001L;
+enum DDSDM_STANDARDVGAMODE = 0x00000001;
 
 
 /****************************************************************************
@@ -730,7 +730,7 @@ enum DDSDM_STANDARDVGAMODE = 0x00000001L;
  * that a particular mode will be enumerated only once.  This flag specifies whether
  * the refresh rate is taken into account when determining if a mode is unique.
  */
-enum DDEDM_REFRESHRATES = 0x00000001L;
+enum DDEDM_REFRESHRATES = 0x00000001;
 
 /*
  * Enumerate VGA modes. Specify this flag if you wish to enumerate supported VGA
@@ -738,7 +738,7 @@ enum DDEDM_REFRESHRATES = 0x00000001L;
  * enumerated if the application has previously called SetCooperativeLevel with the
  * DDSCL_ALLOWMODEX flag set).
  */
-enum DDEDM_STANDARDVGAMODES = 0x00000002L;
+enum DDEDM_STANDARDVGAMODES = 0x00000002;
 
 
 /****************************************************************************
@@ -751,57 +751,57 @@ enum DDEDM_STANDARDVGAMODES = 0x00000002L;
  * Exclusive mode owner will be responsible for the entire primary surface.
  * GDI can be ignored. used with DD
  */
-enum DDSCL_FULLSCREEN = 0x00000001L;
+enum DDSCL_FULLSCREEN = 0x00000001;
 
 /*
  * allow CTRL_ALT_DEL to work while in fullscreen exclusive mode
  */
-enum DDSCL_ALLOWREBOOT = 0x00000002L;
+enum DDSCL_ALLOWREBOOT = 0x00000002;
 
 /*
  * prevents DDRAW from modifying the application window.
  * prevents DDRAW from minimize/restore the application window on activation.
  */
-enum DDSCL_NOWINDOWCHANGES = 0x00000004L;
+enum DDSCL_NOWINDOWCHANGES = 0x00000004;
 
 /*
  * app wants to work as a regular Windows application
  */
-enum DDSCL_NORMAL = 0x00000008L;
+enum DDSCL_NORMAL = 0x00000008;
 
 /*
  * app wants exclusive access
  */
-enum DDSCL_EXCLUSIVE = 0x00000010L;
+enum DDSCL_EXCLUSIVE = 0x00000010;
 
 
 /*
  * app can deal with non-windows display modes
  */
-enum DDSCL_ALLOWMODEX = 0x00000040L;
+enum DDSCL_ALLOWMODEX = 0x00000040;
 
 /*
  * this window will receive the focus messages
  */
-enum DDSCL_SETFOCUSWINDOW = 0x00000080L;
+enum DDSCL_SETFOCUSWINDOW = 0x00000080;
 
 /*
  * this window is associated with the DDRAW object and will
  * cover the screen in fullscreen mode
  */
-enum DDSCL_SETDEVICEWINDOW = 0x00000100L;
+enum DDSCL_SETDEVICEWINDOW = 0x00000100;
 
 /*
  * app wants DDRAW to create a window to be associated with the
  * DDRAW object
  */
-enum DDSCL_CREATEDEVICEWINDOW = 0x00000200L;
+enum DDSCL_CREATEDEVICEWINDOW = 0x00000200;
 
 /*
  * App explicitly asks DDRAW/D3D to be multithread safe. This makes D3D
  * take the global crtisec more frequently.
  */
-enum DDSCL_MULTITHREADED = 0x00000400L;
+enum DDSCL_MULTITHREADED = 0x00000400;
 
 /*
  * App specifies that it would like to keep the FPU set up for optimal Direct3D
@@ -809,7 +809,7 @@ enum DDSCL_MULTITHREADED = 0x00000400L;
  * does not need to explicitly set the FPU each time. This is assumed by
  * default in DirectX 7. See also DDSCL_FPUPRESERVE
  */
-enum DDSCL_FPUSETUP = 0x00000800L;
+enum DDSCL_FPUSETUP = 0x00000800;
 
 /*
  * App specifies that it needs either double precision FPU or FPU exceptions
@@ -817,7 +817,7 @@ enum DDSCL_FPUSETUP = 0x00000800L;
  * called. Setting the flag will reduce Direct3D performance. The flag is
  * assumed by default in DirectX 6 and earlier. See also DDSCL_FPUSETUP
  */
-enum DDSCL_FPUPRESERVE = 0x00001000L;
+enum DDSCL_FPUPRESERVE = 0x00001000;
 
 
 /****************************************************************************
@@ -830,168 +830,168 @@ enum DDSCL_FPUPRESERVE = 0x00001000L;
  * Use the alpha information in the pixel format or the alpha channel surface
  * attached to the destination surface as the alpha channel for this blt.
  */
-enum DDBLT_ALPHADEST = 0x00000001L;
+enum DDBLT_ALPHADEST = 0x00000001;
 
 /*
  * Use the dwConstAlphaDest field in the DDBLTFX structure as the alpha channel
  * for the destination surface for this blt.
  */
-enum DDBLT_ALPHADESTCONSTOVERRIDE = 0x00000002L;
+enum DDBLT_ALPHADESTCONSTOVERRIDE = 0x00000002;
 
 /*
  * The NEG suffix indicates that the destination surface becomes more
  * transparent as the alpha value increases. (0 is opaque)
  */
-enum DDBLT_ALPHADESTNEG = 0x00000004L;
+enum DDBLT_ALPHADESTNEG = 0x00000004;
 
 /*
  * Use the lpDDSAlphaDest field in the DDBLTFX structure as the alpha
  * channel for the destination for this blt.
  */
-enum DDBLT_ALPHADESTSURFACEOVERRIDE = 0x00000008L;
+enum DDBLT_ALPHADESTSURFACEOVERRIDE = 0x00000008;
 
 /*
  * Use the dwAlphaEdgeBlend field in the DDBLTFX structure as the alpha channel
  * for the edges of the image that border the color key colors.
  */
-enum DDBLT_ALPHAEDGEBLEND = 0x00000010L;
+enum DDBLT_ALPHAEDGEBLEND = 0x00000010;
 
 /*
  * Use the alpha information in the pixel format or the alpha channel surface
  * attached to the source surface as the alpha channel for this blt.
  */
-enum DDBLT_ALPHASRC = 0x00000020L;
+enum DDBLT_ALPHASRC = 0x00000020;
 
 /*
  * Use the dwConstAlphaSrc field in the DDBLTFX structure as the alpha channel
  * for the source for this blt.
  */
-enum DDBLT_ALPHASRCCONSTOVERRIDE = 0x00000040L;
+enum DDBLT_ALPHASRCCONSTOVERRIDE = 0x00000040;
 
 /*
  * The NEG suffix indicates that the source surface becomes more transparent
  * as the alpha value increases. (0 is opaque)
  */
-enum DDBLT_ALPHASRCNEG = 0x00000080L;
+enum DDBLT_ALPHASRCNEG = 0x00000080;
 
 /*
  * Use the lpDDSAlphaSrc field in the DDBLTFX structure as the alpha channel
  * for the source for this blt.
  */
-enum DDBLT_ALPHASRCSURFACEOVERRIDE = 0x00000100L;
+enum DDBLT_ALPHASRCSURFACEOVERRIDE = 0x00000100;
 
 /*
  * Do this blt asynchronously through the FIFO in the order received.  If
  * there is no room in the hardware FIFO fail the call.
  */
-enum DDBLT_ASYNC = 0x00000200L;
+enum DDBLT_ASYNC = 0x00000200;
 
 /*
  * Uses the dwFillColor field in the DDBLTFX structure as the RGB color
  * to fill the destination rectangle on the destination surface with.
  */
-enum DDBLT_COLORFILL = 0x00000400L;
+enum DDBLT_COLORFILL = 0x00000400;
 
 /*
  * Uses the dwDDFX field in the DDBLTFX structure to specify the effects
  * to use for the blt.
  */
-enum DDBLT_DDFX = 0x00000800L;
+enum DDBLT_DDFX = 0x00000800;
 
 /*
  * Uses the dwDDROPS field in the DDBLTFX structure to specify the ROPS
  * that are not part of the Win32 API.
  */
-enum DDBLT_DDROPS = 0x00001000L;
+enum DDBLT_DDROPS = 0x00001000;
 
 /*
  * Use the color key associated with the destination surface.
  */
-enum DDBLT_KEYDEST = 0x00002000L;
+enum DDBLT_KEYDEST = 0x00002000;
 
 /*
  * Use the dckDestColorkey field in the DDBLTFX structure as the color key
  * for the destination surface.
  */
-enum DDBLT_KEYDESTOVERRIDE = 0x00004000L;
+enum DDBLT_KEYDESTOVERRIDE = 0x00004000;
 
 /*
  * Use the color key associated with the source surface.
  */
-enum DDBLT_KEYSRC = 0x00008000L;
+enum DDBLT_KEYSRC = 0x00008000;
 
 /*
  * Use the dckSrcColorkey field in the DDBLTFX structure as the color key
  * for the source surface.
  */
-enum DDBLT_KEYSRCOVERRIDE = 0x00010000L;
+enum DDBLT_KEYSRCOVERRIDE = 0x00010000;
 
 /*
  * Use the dwROP field in the DDBLTFX structure for the raster operation
  * for this blt.  These ROPs are the same as the ones defined in the Win32 API.
  */
-enum DDBLT_ROP = 0x00020000L;
+enum DDBLT_ROP = 0x00020000;
 
 /*
  * Use the dwRotationAngle field in the DDBLTFX structure as the angle
  * (specified in 1/100th of a degree) to rotate the surface.
  */
-enum DDBLT_ROTATIONANGLE = 0x00040000L;
+enum DDBLT_ROTATIONANGLE = 0x00040000;
 
 /*
  * Z-buffered blt using the z-buffers attached to the source and destination
  * surfaces and the dwZBufferOpCode field in the DDBLTFX structure as the
  * z-buffer opcode.
  */
-enum DDBLT_ZBUFFER = 0x00080000L;
+enum DDBLT_ZBUFFER = 0x00080000;
 
 /*
  * Z-buffered blt using the dwConstDest Zfield and the dwZBufferOpCode field
  * in the DDBLTFX structure as the z-buffer and z-buffer opcode respectively
  * for the destination.
  */
-enum DDBLT_ZBUFFERDESTCONSTOVERRIDE = 0x00100000L;
+enum DDBLT_ZBUFFERDESTCONSTOVERRIDE = 0x00100000;
 
 /*
  * Z-buffered blt using the lpDDSDestZBuffer field and the dwZBufferOpCode
  * field in the DDBLTFX structure as the z-buffer and z-buffer opcode
  * respectively for the destination.
  */
-enum DDBLT_ZBUFFERDESTOVERRIDE = 0x00200000L;
+enum DDBLT_ZBUFFERDESTOVERRIDE = 0x00200000;
 
 /*
  * Z-buffered blt using the dwConstSrcZ field and the dwZBufferOpCode field
  * in the DDBLTFX structure as the z-buffer and z-buffer opcode respectively
  * for the source.
  */
-enum DDBLT_ZBUFFERSRCCONSTOVERRIDE = 0x00400000L;
+enum DDBLT_ZBUFFERSRCCONSTOVERRIDE = 0x00400000;
 
 /*
  * Z-buffered blt using the lpDDSSrcZBuffer field and the dwZBufferOpCode
  * field in the DDBLTFX structure as the z-buffer and z-buffer opcode
  * respectively for the source.
  */
-enum DDBLT_ZBUFFERSRCOVERRIDE = 0x00800000L;
+enum DDBLT_ZBUFFERSRCOVERRIDE = 0x00800000;
 
 /*
  * wait until the device is ready to handle the blt
  * this will cause blt to not return DDERR_WASSTILLDRAWING
  */
-enum DDBLT_WAIT = 0x01000000L;
+enum DDBLT_WAIT = 0x01000000;
 
 /*
  * Uses the dwFillDepth field in the DDBLTFX structure as the depth value
  * to fill the destination rectangle on the destination Z-buffer surface
  * with.
  */
-enum DDBLT_DEPTHFILL = 0x02000000L;
+enum DDBLT_DEPTHFILL = 0x02000000;
 
 
 /*
  * Return immediately (with DDERR_WASSTILLDRAWING) if the device is not
  * ready to schedule the blt at the time Blt() is called.
  */
-enum DDBLT_DONOTWAIT = 0x08000000L;
+enum DDBLT_DONOTWAIT = 0x08000000;
 
 /*
  * These flags indicate a presentation blt (i.e. a blt
@@ -1027,13 +1027,13 @@ enum DDBLT_DONOTWAIT = 0x08000000L;
  * APPLICATIONS DO NOT SET THESE FLAGS. THEY ARE SET BY THE DIRECTDRAW RUNTIME.
  * 
  */
-enum DDBLT_PRESENTATION = 0x10000000L;
-enum DDBLT_LAST_PRESENTATION = 0x20000000L;
+enum DDBLT_PRESENTATION = 0x10000000;
+enum DDBLT_LAST_PRESENTATION = 0x20000000;
 
 /*
  * If DDBLT_EXTENDED_FLAGS is set, then the driver should re-interpret
  * other flags according to the definitions that follow.
- * For example, bit 0 (0x00000001L) means DDBLT_ALPHADEST, unless
+ * For example, bit 0 (0x00000001) means DDBLT_ALPHADEST, unless
  * DDBLT_EXTENDED_FLAGS is also set, in which case bit 0 means
  * DDBLT_EXTENDED_LINEAR_CONTENT.
  * Only DirectX9 and higher drivers will be given extended blt flags.
@@ -1051,7 +1051,7 @@ enum DDBLT_LAST_PRESENTATION = 0x20000000L;
  * NOTE: APPLICATIONS SHOULD NOT SET THIS FLAG. THIS FLAG IS INTENDED
  * FOR USE BY THE DIRECT3D RUNTIME.
  */
-enum DDBLT_EXTENDED_FLAGS = 0x40000000L;
+enum DDBLT_EXTENDED_FLAGS = 0x40000000;
 
 /*
  * EXTENDED FLAG. SEE DEFINITION OF DDBLT_EXTENDED_FLAGS.
@@ -1065,7 +1065,7 @@ enum DDBLT_EXTENDED_FLAGS = 0x40000000L;
  * FOR USE BY THE DIRECT3D RUNTIME. Use IDirect3DSwapChain9::Present
  * and specify D3DPRESENT_LINEAR_CONTENT in order to use this functionality.
  */ 
-enum DDBLT_EXTENDED_LINEAR_CONTENT = 0x00000004L;
+enum DDBLT_EXTENDED_LINEAR_CONTENT = 0x00000004;
 
 
 /****************************************************************************
@@ -1086,19 +1086,19 @@ enum DDBLTFAST_DONOTWAIT = 0x00000020;
  *
  ****************************************************************************/
 
-enum DDFLIP_WAIT = 0x00000001L;
+enum DDFLIP_WAIT = 0x00000001;
 
 /*
  * Indicates that the target surface contains the even field of video data.
  * This flag is only valid with an overlay surface.
  */
-enum DDFLIP_EVEN = 0x00000002L;
+enum DDFLIP_EVEN = 0x00000002;
 
 /*
  * Indicates that the target surface contains the odd field of video data.
  * This flag is only valid with an overlay surface.
  */
-enum DDFLIP_ODD = 0x00000004L;
+enum DDFLIP_ODD = 0x00000004;
 
 /*
  * Causes DirectDraw to perform the physical flip immediately and return
@@ -1112,7 +1112,7 @@ enum DDFLIP_ODD = 0x00000004L;
  * Only effective if DDCAPS2_FLIPNOVSYNC is set. If that bit is not set,
  * DDFLIP_NOVSYNC has no effect.
  */
-enum DDFLIP_NOVSYNC = 0x00000008L;
+enum DDFLIP_NOVSYNC = 0x00000008;
 
 
 /*
@@ -1126,31 +1126,31 @@ enum DDFLIP_NOVSYNC = 0x00000008L;
 /*
  * DirectDraw will flip on every other vertical sync
  */
-enum DDFLIP_INTERVAL2 = 0x02000000L;
+enum DDFLIP_INTERVAL2 = 0x02000000;
 
 
 /*
  * DirectDraw will flip on every third vertical sync
  */
-enum DDFLIP_INTERVAL3 = 0x03000000L;
+enum DDFLIP_INTERVAL3 = 0x03000000;
 
 
 /*
  * DirectDraw will flip on every fourth vertical sync
  */
-enum DDFLIP_INTERVAL4 = 0x04000000L;
+enum DDFLIP_INTERVAL4 = 0x04000000;
 
 /*
  * DirectDraw will flip and display a main stereo surface
  */
-enum DDFLIP_STEREO = 0x00000010L;
+enum DDFLIP_STEREO = 0x00000010;
 
 /*
  * On IDirectDrawSurface7 and higher interfaces, the default is DDFLIP_WAIT. If you wish
  * to override the default and use time when the accelerator is busy (as denoted by
  * the DDERR_WASSTILLDRAWING return code) then use DDFLIP_DONOTWAIT.
  */
-enum DDFLIP_DONOTWAIT = 0x00000020L;
+enum DDFLIP_DONOTWAIT = 0x00000020;
 
 
 /****************************************************************************
@@ -1164,146 +1164,146 @@ enum DDFLIP_DONOTWAIT = 0x00000020L;
  * attached to the destination surface as the alpha channel for the
  * destination overlay.
  */
-enum DDOVER_ALPHADEST = 0x00000001L;
+enum DDOVER_ALPHADEST = 0x00000001;
 
 /*
  * Use the dwConstAlphaDest field in the DDOVERLAYFX structure as the
  * destination alpha channel for this overlay.
  */
-enum DDOVER_ALPHADESTCONSTOVERRIDE = 0x00000002L;
+enum DDOVER_ALPHADESTCONSTOVERRIDE = 0x00000002;
 
 /*
  * The NEG suffix indicates that the destination surface becomes more
  * transparent as the alpha value increases.
  */
-enum DDOVER_ALPHADESTNEG = 0x00000004L;
+enum DDOVER_ALPHADESTNEG = 0x00000004;
 
 /*
  * Use the lpDDSAlphaDest field in the DDOVERLAYFX structure as the alpha
  * channel destination for this overlay.
  */
-enum DDOVER_ALPHADESTSURFACEOVERRIDE = 0x00000008L;
+enum DDOVER_ALPHADESTSURFACEOVERRIDE = 0x00000008;
 
 /*
  * Use the dwAlphaEdgeBlend field in the DDOVERLAYFX structure as the alpha
  * channel for the edges of the image that border the color key colors.
  */
-enum DDOVER_ALPHAEDGEBLEND = 0x00000010L;
+enum DDOVER_ALPHAEDGEBLEND = 0x00000010;
 
 /*
  * Use the alpha information in the pixel format or the alpha channel surface
  * attached to the source surface as the source alpha channel for this overlay.
  */
-enum DDOVER_ALPHASRC = 0x00000020L;
+enum DDOVER_ALPHASRC = 0x00000020;
 
 /*
  * Use the dwConstAlphaSrc field in the DDOVERLAYFX structure as the source
  * alpha channel for this overlay.
  */
-enum DDOVER_ALPHASRCCONSTOVERRIDE = 0x00000040L;
+enum DDOVER_ALPHASRCCONSTOVERRIDE = 0x00000040;
 
 /*
  * The NEG suffix indicates that the source surface becomes more transparent
  * as the alpha value increases.
  */
-enum DDOVER_ALPHASRCNEG = 0x00000080L;
+enum DDOVER_ALPHASRCNEG = 0x00000080;
 
 /*
  * Use the lpDDSAlphaSrc field in the DDOVERLAYFX structure as the alpha channel
  * source for this overlay.
  */
-enum DDOVER_ALPHASRCSURFACEOVERRIDE = 0x00000100L;
+enum DDOVER_ALPHASRCSURFACEOVERRIDE = 0x00000100;
 
 /*
  * Turn this overlay off.
  */
-enum DDOVER_HIDE = 0x00000200L;
+enum DDOVER_HIDE = 0x00000200;
 
 /*
  * Use the color key associated with the destination surface.
  */
-enum DDOVER_KEYDEST = 0x00000400L;
+enum DDOVER_KEYDEST = 0x00000400;
 
 /*
  * Use the dckDestColorkey field in the DDOVERLAYFX structure as the color key
  * for the destination surface
  */
-enum DDOVER_KEYDESTOVERRIDE = 0x00000800L;
+enum DDOVER_KEYDESTOVERRIDE = 0x00000800;
 
 /*
  * Use the color key associated with the source surface.
  */
-enum DDOVER_KEYSRC = 0x00001000L;
+enum DDOVER_KEYSRC = 0x00001000;
 
 /*
  * Use the dckSrcColorkey field in the DDOVERLAYFX structure as the color key
  * for the source surface.
  */
-enum DDOVER_KEYSRCOVERRIDE = 0x00002000L;
+enum DDOVER_KEYSRCOVERRIDE = 0x00002000;
 
 /*
  * Turn this overlay on.
  */
-enum DDOVER_SHOW = 0x00004000L;
+enum DDOVER_SHOW = 0x00004000;
 
 /*
  * Add a dirty rect to an emulated overlayed surface.
  */
-enum DDOVER_ADDDIRTYRECT = 0x00008000L;
+enum DDOVER_ADDDIRTYRECT = 0x00008000;
 
 /*
  * Redraw all dirty rects on an emulated overlayed surface.
  */
-enum DDOVER_REFRESHDIRTYRECTS = 0x00010000L;
+enum DDOVER_REFRESHDIRTYRECTS = 0x00010000;
 
 /*
  * Redraw the entire surface on an emulated overlayed surface.
  */
-enum DDOVER_REFRESHALL = 0x00020000L;
+enum DDOVER_REFRESHALL = 0x00020000;
 
 
 /*
  * Use the overlay FX flags to define special overlay FX
  */
-enum DDOVER_DDFX = 0x00080000L;
+enum DDOVER_DDFX = 0x00080000;
 
 /*
  * Autoflip the overlay when ever the video port autoflips
  */
-enum DDOVER_AUTOFLIP = 0x00100000L;
+enum DDOVER_AUTOFLIP = 0x00100000;
 
 /*
  * Display each field of video port data individually without
  * causing any jittery artifacts
  */
-enum DDOVER_BOB = 0x00200000L;
+enum DDOVER_BOB = 0x00200000;
 
 /*
  * Indicates that bob/weave decisions should not be overridden by other
  * interfaces.
  */
-enum DDOVER_OVERRIDEBOBWEAVE = 0x00400000L;
+enum DDOVER_OVERRIDEBOBWEAVE = 0x00400000;
 
 /*
  * Indicates that the surface memory is composed of interleaved fields.
  */
-enum DDOVER_INTERLEAVED = 0x00800000L;
+enum DDOVER_INTERLEAVED = 0x00800000;
 
 /*
  * Indicates that bob will be performed using hardware rather than
  * software or emulated.
  */
-enum DDOVER_BOBHARDWARE = 0x01000000L;
+enum DDOVER_BOBHARDWARE = 0x01000000;
 
 /*
  * Indicates that overlay FX structure contains valid ARGB scaling factors.
  */
-enum DDOVER_ARGBSCALEFACTORS = 0x02000000L;
+enum DDOVER_ARGBSCALEFACTORS = 0x02000000;
 
 /*
  * Indicates that ARGB scaling factors can be degraded to fit driver capabilities.
  */
-enum DDOVER_DEGRADEARGBSCALING = 0x04000000L;
+enum DDOVER_DEGRADEARGBSCALING = 0x04000000;
 
 
 
@@ -1316,12 +1316,12 @@ enum DDOVER_DEGRADEARGBSCALING = 0x04000000L;
 /*
  * The default.  The GDI DC will be tore down.
  */
-enum DDSETSURFACEDESC_RECREATEDC = 0x00000000L;     // default;
+enum DDSETSURFACEDESC_RECREATEDC = 0x00000000;     // default;
 
 /*
  * The default.  The GDI DC will be kept.
  */
-enum DDSETSURFACEDESC_PRESERVEDC = 0x00000001L;
+enum DDSETSURFACEDESC_PRESERVEDC = 0x00000001;
 
 
 /****************************************************************************
@@ -1335,30 +1335,30 @@ enum DDSETSURFACEDESC_PRESERVEDC = 0x00000001L;
  * to the top of the specified rectangle.  If no rectangle is specified then a
  * pointer to the top of the surface is returned.
  */
-enum DDLOCK_SURFACEMEMORYPTR = 0x00000000L;     // default;
+enum DDLOCK_SURFACEMEMORYPTR = 0x00000000;     // default;
 
 /*
  * Set to indicate that Lock should wait until it can obtain a valid memory
  * pointer before returning.  If this bit is set, Lock will never return
  * DDERR_WASSTILLDRAWING.
  */
-enum DDLOCK_WAIT = 0x00000001L;
+enum DDLOCK_WAIT = 0x00000001;
 
 /*
  * Set if an event handle is being passed to Lock.  Lock will trigger the event
  * when it can return the surface memory pointer requested.
  */
-enum DDLOCK_EVENT = 0x00000002L;
+enum DDLOCK_EVENT = 0x00000002;
 
 /*
  * Indicates that the surface being locked will only be read from.
  */
-enum DDLOCK_READONLY = 0x00000010L;
+enum DDLOCK_READONLY = 0x00000010;
 
 /*
  * Indicates that the surface being locked will only be written to
  */
-enum DDLOCK_WRITEONLY = 0x00000020L;
+enum DDLOCK_WRITEONLY = 0x00000020;
 
 
 /*
@@ -1369,7 +1369,7 @@ enum DDLOCK_WRITEONLY = 0x00000020L;
  * comply with a number of conditions documented in the help file.
  * Furthermore, this flag cannot be specified when locking the primary.
  */
-enum DDLOCK_NOSYSLOCK = 0x00000800L;
+enum DDLOCK_NOSYSLOCK = 0x00000800;
 
 /*
  * Used only with Direct3D Vertex Buffer Locks. Indicates that no vertices
@@ -1378,7 +1378,7 @@ enum DDLOCK_NOSYSLOCK = 0x00000800L;
  * lock. This can be useful when one is only appending data to the vertex
  * buffer
  */
-enum DDLOCK_NOOVERWRITE = 0x00001000L;
+enum DDLOCK_NOOVERWRITE = 0x00001000;
 
 /*
  * Indicates that no assumptions will be made about the contents of the
@@ -1396,28 +1396,28 @@ enum DDLOCK_NOOVERWRITE = 0x00001000L;
  *      Applications should always set this flag when they intend to overwrite the entire
  *      surface or locked rectangle.
  */
-enum DDLOCK_DISCARDCONTENTS = 0x00002000L;
+enum DDLOCK_DISCARDCONTENTS = 0x00002000;
  /*
   * DDLOCK_OKTOSWAP is an older, less informative name for DDLOCK_DISCARDCONTENTS
   */
-enum DDLOCK_OKTOSWAP = 0x00002000L;
+enum DDLOCK_OKTOSWAP = 0x00002000;
 
 /*
  * On IDirectDrawSurface7 and higher interfaces, the default is DDLOCK_WAIT. If you wish
  * to override the default and use time when the accelerator is busy (as denoted by
  * the DDERR_WASSTILLDRAWING return code) then use DDLOCK_DONOTWAIT.
  */
-enum DDLOCK_DONOTWAIT = 0x00004000L;
+enum DDLOCK_DONOTWAIT = 0x00004000;
 
 /*
  * This indicates volume texture lock with front and back specified.
  */
-enum DDLOCK_HASVOLUMETEXTUREBOXRECT = 0x00008000L;
+enum DDLOCK_HASVOLUMETEXTUREBOXRECT = 0x00008000;
 
 /*
  * This indicates that the driver should not update dirty rect information for this lock.
  */
-enum DDLOCK_NODIRTYUPDATE = 0x00010000L;
+enum DDLOCK_NODIRTYUPDATE = 0x00010000;
 
 
 /****************************************************************************
@@ -1451,51 +1451,51 @@ enum DDLOCK_NODIRTYUPDATE = 0x00010000L;
 /*
  * If stretching, use arithmetic stretching along the Y axis for this blt.
  */
-enum DDBLTFX_ARITHSTRETCHY = 0x00000001L;
+enum DDBLTFX_ARITHSTRETCHY = 0x00000001;
 
 /*
  * Do this blt mirroring the surface left to right.  Spin the
  * surface around its y-axis.
  */
-enum DDBLTFX_MIRRORLEFTRIGHT = 0x00000002L;
+enum DDBLTFX_MIRRORLEFTRIGHT = 0x00000002;
 
 /*
  * Do this blt mirroring the surface up and down.  Spin the surface
  * around its x-axis.
  */
-enum DDBLTFX_MIRRORUPDOWN = 0x00000004L;
+enum DDBLTFX_MIRRORUPDOWN = 0x00000004;
 
 /*
  * Schedule this blt to avoid tearing.
  */
-enum DDBLTFX_NOTEARING = 0x00000008L;
+enum DDBLTFX_NOTEARING = 0x00000008;
 
 /*
  * Do this blt rotating the surface one hundred and eighty degrees.
  */
-enum DDBLTFX_ROTATE180 = 0x00000010L;
+enum DDBLTFX_ROTATE180 = 0x00000010;
 
 /*
  * Do this blt rotating the surface two hundred and seventy degrees.
  */
-enum DDBLTFX_ROTATE270 = 0x00000020L;
+enum DDBLTFX_ROTATE270 = 0x00000020;
 
 /*
  * Do this blt rotating the surface ninety degrees.
  */
-enum DDBLTFX_ROTATE90 = 0x00000040L;
+enum DDBLTFX_ROTATE90 = 0x00000040;
 
 /*
  * Do this z blt using dwZBufferLow and dwZBufferHigh as  range values
  * specified to limit the bits copied from the source surface.
  */
-enum DDBLTFX_ZBUFFERRANGE = 0x00000080L;
+enum DDBLTFX_ZBUFFERRANGE = 0x00000080;
 
 /*
  * Do this z blt adding the dwZBufferBaseDest to each of the sources z values
  * before comparing it with the desting z values.
  */
-enum DDBLTFX_ZBUFFERBASEDEST = 0x00000100L;
+enum DDBLTFX_ZBUFFERBASEDEST = 0x00000100;
 
 /****************************************************************************
  *
@@ -1506,22 +1506,22 @@ enum DDBLTFX_ZBUFFERBASEDEST = 0x00000100L;
 /*
  * If stretching, use arithmetic stretching along the Y axis for this overlay.
  */
-enum DDOVERFX_ARITHSTRETCHY = 0x00000001L;
+enum DDOVERFX_ARITHSTRETCHY = 0x00000001;
 
 /*
  * Mirror the overlay across the vertical axis
  */
-enum DDOVERFX_MIRRORLEFTRIGHT = 0x00000002L;
+enum DDOVERFX_MIRRORLEFTRIGHT = 0x00000002;
 
 /*
  * Mirror the overlay across the horizontal axis
  */
-enum DDOVERFX_MIRRORUPDOWN = 0x00000004L;
+enum DDOVERFX_MIRRORUPDOWN = 0x00000004;
 
 /*
  * Deinterlace the overlay, if possible
  */
-enum DDOVERFX_DEINTERLACE = 0x00000008L;
+enum DDOVERFX_DEINTERLACE = 0x00000008;
 
 
 /****************************************************************************
@@ -1533,17 +1533,17 @@ enum DDOVERFX_DEINTERLACE = 0x00000008L;
 /*
  * return when the vertical blank interval begins
  */
-enum DDWAITVB_BLOCKBEGIN = 0x00000001L;
+enum DDWAITVB_BLOCKBEGIN = 0x00000001;
 
 /*
  * set up an event to trigger when the vertical blank begins
  */
-enum DDWAITVB_BLOCKBEGINEVENT = 0x00000002L;
+enum DDWAITVB_BLOCKBEGINEVENT = 0x00000002;
 
 /*
  * return when the vertical blank interval ends and display begins
  */
-enum DDWAITVB_BLOCKEND = 0x00000004L;
+enum DDWAITVB_BLOCKEND = 0x00000004;
 
 /****************************************************************************
  *
@@ -1554,12 +1554,12 @@ enum DDWAITVB_BLOCKEND = 0x00000004L;
 /*
  * is it OK to flip now?
  */
-enum DDGFS_CANFLIP = 0x00000001L;
+enum DDGFS_CANFLIP = 0x00000001;
 
 /*
  * is the last flip finished?
  */
-enum DDGFS_ISFLIPDONE = 0x00000002L;
+enum DDGFS_ISFLIPDONE = 0x00000002;
 
 /****************************************************************************
  *
@@ -1570,12 +1570,12 @@ enum DDGFS_ISFLIPDONE = 0x00000002L;
 /*
  * is it OK to blt now?
  */
-enum DDGBS_CANBLT = 0x00000001L;
+enum DDGBS_CANBLT = 0x00000001;
 
 /*
  * is the blt to the surface finished?
  */
-enum DDGBS_ISBLTDONE = 0x00000002L;
+enum DDGBS_ISBLTDONE = 0x00000002;
 
 
 /****************************************************************************
@@ -1587,12 +1587,12 @@ enum DDGBS_ISBLTDONE = 0x00000002L;
 /*
  * Enumerate overlays back to front.
  */
-enum DDENUMOVERLAYZ_BACKTOFRONT = 0x00000000L;
+enum DDENUMOVERLAYZ_BACKTOFRONT = 0x00000000;
 
 /*
  * Enumerate overlays front to back
  */
-enum DDENUMOVERLAYZ_FRONTTOBACK = 0x00000001L;
+enum DDENUMOVERLAYZ_FRONTTOBACK = 0x00000001;
 
 /****************************************************************************
  *
@@ -1603,32 +1603,32 @@ enum DDENUMOVERLAYZ_FRONTTOBACK = 0x00000001L;
 /*
  * Send overlay to front
  */
-enum DDOVERZ_SENDTOFRONT = 0x00000000L;
+enum DDOVERZ_SENDTOFRONT = 0x00000000;
 
 /*
  * Send overlay to back
  */
-enum DDOVERZ_SENDTOBACK = 0x00000001L;
+enum DDOVERZ_SENDTOBACK = 0x00000001;
 
 /*
  * Move Overlay forward
  */
-enum DDOVERZ_MOVEFORWARD = 0x00000002L;
+enum DDOVERZ_MOVEFORWARD = 0x00000002;
 
 /*
  * Move Overlay backward
  */
-enum DDOVERZ_MOVEBACKWARD = 0x00000003L;
+enum DDOVERZ_MOVEBACKWARD = 0x00000003;
 
 /*
  * Move Overlay in front of relative surface
  */
-enum DDOVERZ_INSERTINFRONTOF = 0x00000004L;
+enum DDOVERZ_INSERTINFRONTOF = 0x00000004;
 
 /*
  * Move Overlay in back of relative surface
  */
-enum DDOVERZ_INSERTINBACKOF = 0x00000005L;
+enum DDOVERZ_INSERTINBACKOF = 0x00000005;
 
 
 /****************************************************************************
@@ -1642,7 +1642,7 @@ enum DDOVERZ_INSERTINBACKOF = 0x00000005L;
  * properties of the display so that the result should appear identical
  * on all systems.
  */
-enum DDSGR_CALIBRATE = 0x00000001L;
+enum DDSGR_CALIBRATE = 0x00000001;
 
 
 /****************************************************************************
@@ -1654,7 +1654,7 @@ enum DDSGR_CALIBRATE = 0x00000001L;
 /*
  * Indicates that the mode being tested has passed
  */
-enum DDSMT_ISTESTREQUIRED = 0x00000001L;
+enum DDSMT_ISTESTREQUIRED = 0x00000001;
 
 
 /****************************************************************************
@@ -1666,12 +1666,12 @@ enum DDSMT_ISTESTREQUIRED = 0x00000001L;
 /*
  * Indicates that the mode being tested has passed
  */
-enum DDEM_MODEPASSED = 0x00000001L;
+enum DDEM_MODEPASSED = 0x00000001;
 
 /*
  * Indicates that the mode being tested has failed
  */
-enum DDEM_MODEFAILED = 0x00000002L;
+enum DDEM_MODEFAILED = 0x00000002;
 
 
 /*===========================================================================
