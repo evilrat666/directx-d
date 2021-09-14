@@ -2571,33 +2571,33 @@ HRESULT DXUTCreate3DEnvironment11()
         }
     }
 
-// static if(!no_debug)
-{
-        if( SUCCEEDED( hr ) )
+    debug //!NDEBUG
     {
-        ID3D11Debug * d3dDebug = null;
-        if( SUCCEEDED( pd3d11Device.QueryInterface(IID_PPV_ARGS(&d3dDebug) ) ) )
+        if( SUCCEEDED( hr ) )
         {
-            ID3D11InfoQueue* infoQueue = null;
-            if( SUCCEEDED( d3dDebug.QueryInterface( IID_PPV_ARGS(&infoQueue) ) ) )
+            ID3D11Debug * d3dDebug = null;
+            if( SUCCEEDED( pd3d11Device.QueryInterface(IID_PPV_ARGS(&d3dDebug) ) ) )
             {
-                // ignore some "expected" errors
-                D3D11_MESSAGE_ID* denied =
-                [
-                    D3D11_MESSAGE_ID_SETPRIVATEDATA_CHANGINGPARAMS,
-                ].ptr;
+                ID3D11InfoQueue* infoQueue = null;
+                if( SUCCEEDED( d3dDebug.QueryInterface( IID_PPV_ARGS(&infoQueue) ) ) )
+                {
+                    // ignore some "expected" errors
+                    D3D11_MESSAGE_ID* denied =
+                    [
+                        D3D11_MESSAGE_ID_SETPRIVATEDATA_CHANGINGPARAMS,
+                    ].ptr;
 
-                D3D11_INFO_QUEUE_FILTER filter;
-                memset( &filter, 0, sizeof(filter) );
-                filter.DenyList.NumIDs = _countof(denied);
-                filter.DenyList.pIDList = denied;
-                infoQueue.AddStorageFilterEntries( &filter );
-                infoQueue.Release();
+                    D3D11_INFO_QUEUE_FILTER filter;
+                    memset( &filter, 0, sizeof(filter) );
+                    filter.DenyList.NumIDs = _countof(denied);
+                    filter.DenyList.pIDList = denied;
+                    infoQueue.AddStorageFilterEntries( &filter );
+                    infoQueue.Release();
+                }
+                d3dDebug.Release();
             }
-            d3dDebug.Release();
         }
     }
-}
 
     if( SUCCEEDED( hr ) )
     {
@@ -3214,8 +3214,7 @@ void DXUTCleanup3DEnvironment(bool bReleaseSettings )
         // Report live objects
         if ( pd3dDevice )
         {
-            debug{}
-            else //!NDEBUG
+            debug //!NDEBUG
             {
                 ID3D11Debug * d3dDebug = null;
                 if( SUCCEEDED( pd3dDevice.QueryInterface( IID_PPV_ARGS(&d3dDebug) ) ) )
@@ -3258,8 +3257,7 @@ void DXUTCleanup3DEnvironment(bool bReleaseSettings )
         }
         GetDXUTState().SetD3D11Device( null );
 
-        debug{}
-        else//!NDEBUG
+        debug //!NDEBUG
         {
             {
                 IDXGIDebug* dxgiDebug = null;
