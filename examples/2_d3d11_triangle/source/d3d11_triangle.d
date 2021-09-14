@@ -7,12 +7,12 @@
 //--------------------------------------------------------------------------------------
 
 import core.runtime;
+import core.stdc.stdio;
+import core.stdc.string : memset;
 import std.stdio;
 import std.format;
 import std.string : toStringz;
 import std.utf : toUTF16z;
-import core.stdc.stdio;
-import core.stdc.string : memset;
 
 import directx.win32;
 import directx.d3d11;
@@ -38,10 +38,9 @@ struct SimpleVertex
 
 bool _FAILED(HRESULT res, string f = __PRETTY_FUNCTION__, uint l = __LINE__)
 {
-    import std.conv:to;
     bool ret = FAILED(res);
     if(ret)
-        writeln("Some error ocurred at " ~ f ~ ":" ~ to!string(l));
+        writefln!"Some error ocurred at %s : %s"(f, l);
     return ret;
 }
 
@@ -70,9 +69,6 @@ ID3D11Buffer            g_pVertexBuffer = null;
 //--------------------------------------------------------------------------------------
 int myWinMain()
 {
-    import std.stdio;
-
-    writeln("Hello world");
     if( _FAILED( InitWindow( null, 0 ) ) )
         return 0;
 

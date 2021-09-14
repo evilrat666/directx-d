@@ -1,11 +1,12 @@
 module d3d11_sdl;
 
-import bindbc.sdl;
 import core.stdc.stdio;
 import core.stdc.string;
 import std.format;
 import std.string;
 import std.utf;
+
+import bindbc.sdl;
 
 import directx.d3d11;
 

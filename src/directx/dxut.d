@@ -14,13 +14,14 @@ module directx.dxut;
 enum USE_DIRECT3D11_3 = false;
 enum USE_DIRECT3D11_4 = false;
 
+import core.stdc.string;
+import core.stdcpp.vector;
+
 import directx.dxgidebug;
 import directx.d3d11;
 import directx.d3d11_1;
 import directx.d3d11_2;
 import directx.dxutmisc;
-import core.stdc.string;
-import core.stdcpp.vector;
 
 
 static if(!is(typeof(ZeroMemory)))
@@ -3196,32 +3197,33 @@ void DXUTCleanup3DEnvironment(bool bReleaseSettings )
         SAFE_RELEASE(pImmediateContext2);
         GetDXUTState().SetD3D11DeviceContext2(null);
 
-static if(USE_DIRECT3D11_3)
-{
-        auto pImmediateContext3 = DXUTGetD3D11DeviceContext3();
-        SAFE_RELEASE(pImmediateContext3);
-        GetDXUTState().SetD3D11DeviceContext3(null);
-}
+        static if(USE_DIRECT3D11_3)
+        {
+            auto pImmediateContext3 = DXUTGetD3D11DeviceContext3();
+            SAFE_RELEASE(pImmediateContext3);
+            GetDXUTState().SetD3D11DeviceContext3(null);
+        }
 
-static if(USE_DIRECT3D11_4)
-{
-        auto pImmediateContext4 = DXUTGetD3D11DeviceContext4();
-        SAFE_RELEASE(pImmediateContext4);
-        GetDXUTState().SetD3D11DeviceContext4(null);
-}
+        static if(USE_DIRECT3D11_4)
+        {
+            auto pImmediateContext4 = DXUTGetD3D11DeviceContext4();
+            SAFE_RELEASE(pImmediateContext4);
+            GetDXUTState().SetD3D11DeviceContext4(null);
+        }
 
         // Report live objects
         if ( pd3dDevice )
         {
-static if(!NDEBUG)
-{
-            ID3D11Debug * d3dDebug = null;
-            if( SUCCEEDED( pd3dDevice.QueryInterface( IID_PPV_ARGS(&d3dDebug) ) ) )
+            debug{}
+            else //!NDEBUG
             {
-                d3dDebug.ReportLiveDeviceObjects( D3D11_RLDO_SUMMARY | D3D11_RLDO_DETAIL );
-                d3dDebug.Release();
+                ID3D11Debug * d3dDebug = null;
+                if( SUCCEEDED( pd3dDevice.QueryInterface( IID_PPV_ARGS(&d3dDebug) ) ) )
+                {
+                    d3dDebug.ReportLiveDeviceObjects( D3D11_RLDO_SUMMARY | D3D11_RLDO_DETAIL );
+                    d3dDebug.Release();
+                }
             }
-}
 
             auto pd3dDevice1 = DXUTGetD3D11Device1();
             SAFE_RELEASE( pd3dDevice1 );
@@ -3231,19 +3233,19 @@ static if(!NDEBUG)
             SAFE_RELEASE(pd3dDevice2);
             GetDXUTState().SetD3D11Device2(null);
 
-static if(USE_DIRECT3D11_3)
-{
-    auto pd3dDevice3 = DXUTGetD3D11Device3();
-    SAFE_RELEASE(pd3dDevice3);
-    GetDXUTState().SetD3D11Device3(null);
-}
+            static if(USE_DIRECT3D11_3)
+            {
+                auto pd3dDevice3 = DXUTGetD3D11Device3();
+                SAFE_RELEASE(pd3dDevice3);
+                GetDXUTState().SetD3D11Device3(null);
+            }
 
-static if(USE_DIRECT3D11_4)
-{
-    auto pd3dDevice4 = DXUTGetD3D11Device4();
-    SAFE_RELEASE(pd3dDevice4);
-    GetDXUTState().SetD3D11Device4(null);
-}
+            static if(USE_DIRECT3D11_4)
+            {
+                auto pd3dDevice4 = DXUTGetD3D11Device4();
+                SAFE_RELEASE(pd3dDevice4);
+                GetDXUTState().SetD3D11Device4(null);
+            }
 
             // Release the D3D device and in debug configs, displays a message box if there 
             // are unrelease objects.
@@ -3256,7 +3258,8 @@ static if(USE_DIRECT3D11_4)
         }
         GetDXUTState().SetD3D11Device( null );
 
-        static if(!NDEBUG)
+        debug{}
+        else//!NDEBUG
         {
             {
                 IDXGIDebug* dxgiDebug = null;
@@ -4322,6 +4325,8 @@ void DXUTUpdateD3D11DeviceStats( D3D_DRIVER_TYPE DeviceType, D3D_FEATURE_LEVEL f
     case D3D_FEATURE_LEVEL_11_1:
         wcscat_s( pstrDeviceStats, 256, " (FL 11.1)" );
         break;
+//I believe that is one of the rare cases that makes more sense using static
+//if unidentend one level, makes case easier to read
 static if(USE_DIRECT3D11_3 || USE_DIRECT3D11_4)
 {
     case D3D_FEATURE_LEVEL_12_0:
@@ -4349,7 +4354,8 @@ DXUTDeviceSettings DXUTGetDeviceSettings()
     }
     else
     {
-        DXUTDeviceSettings ds = {};
+        DXUTDeviceSettings ds;
+        ZeroMemory(&ds, DXUTDeviceSettings.sizeof);
         return ds;
     }
 }
@@ -4365,7 +4371,7 @@ bool DXUTIsVsyncEnabled()
     {
         return true;
     }
-};
+}
 
 bool DXUTIsKeyDown(BYTE vKey )
 {
