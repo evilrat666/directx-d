@@ -7,9 +7,12 @@
 //--------------------------------------------------------------------------------------
 
 import core.runtime;
+import core.stdc.stdio;
+import core.stdc.string : memset;
+import std.stdio;
+import std.format;
 import std.string : toStringz;
 import std.utf : toUTF16z;
-import core.stdc.string : memset;
 
 import directx.win32;
 import directx.d3d11;
@@ -33,6 +36,14 @@ struct SimpleVertex
     FLOAT3[] Pos;
 }
 
+bool _FAILED(HRESULT res, string f = __PRETTY_FUNCTION__, uint l = __LINE__)
+{
+    bool ret = FAILED(res);
+    if(ret)
+        writefln!"Some error ocurred at %s : %s"(f, l);
+    return ret;
+}
+
 
 //--------------------------------------------------------------------------------------
 // Global Variables
@@ -40,7 +51,7 @@ struct SimpleVertex
 // NOTE: in D this is thread-local, use __gshared for C style globals
 HINSTANCE               g_hInst = null;
 HWND                    g_hWnd = null;
-D3D_DRIVER_TYPE         g_driverType = D3D_DRIVER_TYPE_NULL;
+D3D_DRIVER_TYPE         g_driverType = D3D_DRIVER_TYPE_HARDWARE;
 D3D_FEATURE_LEVEL       g_featureLevel = D3D_FEATURE_LEVEL_11_0;
 ID3D11Device            g_pd3dDevice = null;
 ID3D11DeviceContext     g_pImmediateContext = null;
@@ -56,13 +67,12 @@ ID3D11Buffer            g_pVertexBuffer = null;
 // Entry point to the program. Initializes everything and goes into a message processing 
 // loop. Idle time is used to render the scene.
 //--------------------------------------------------------------------------------------
-int myWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
+int myWinMain()
 {
-
-    if( FAILED( InitWindow( hInstance, nCmdShow ) ) )
+    if( _FAILED( InitWindow( null, 0 ) ) )
         return 0;
 
-    if( FAILED( InitDevice() ) )
+    if( _FAILED( InitDevice() ) )
     {
         CleanupDevice();
         return 0;
@@ -70,42 +80,38 @@ int myWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 
     // Main message loop
     MSG msg;
-    while( WM_QUIT != msg.message )
+    while( true)
     {
         if( PeekMessage( &msg, null, 0, 0, PM_REMOVE ) )
         {
             TranslateMessage( &msg );
             DispatchMessage( &msg );
+            if( msg.message == WM_QUIT )
+                break;
         }
-        else
-        {
-            Render();
-        }
+        Render();
     }
 
     CleanupDevice();
 
-    return cast( int )msg.wParam;
+    return S_OK;
 }
 
 
-extern (Windows)
-int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+// extern (Windows)
+int main()
 {
     int result;
 
-	import core.runtime;
 	try
     {
-        Runtime.initialize();
-		result = myWinMain(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
-		Runtime.terminate();
+		result = myWinMain();
     }
 
     catch (Exception e)            // catch any uncaught exceptions
     {
         MessageBox(null, toUTF16z(e.msg), "Error", MB_OK | MB_ICONEXCLAMATION);
-        result = 0;             // failed
+        result = 0;             // _failed
     }
 
 	return result;
@@ -142,7 +148,7 @@ HRESULT InitWindow( HINSTANCE hInstance, int nCmdShow )
     if( !g_hWnd )
         return E_FAIL;
 
-    ShowWindow( g_hWnd, nCmdShow );
+    ShowWindow( g_hWnd, SW_SHOW );
 
     return S_OK;
 }
@@ -169,7 +175,7 @@ debug {
 	hr = D3DCompileFromFile ( toUTF16z(szFileName), null, null, toStringz(szEntryPoint), toStringz(szShaderModel),
 		dwShaderFlags, 0, ppBlobOut, &pErrorBlob);
 
-    if( FAILED(hr) )
+    if( _FAILED(hr) )
     {
         if( pErrorBlob ) 
         {
@@ -198,7 +204,8 @@ HRESULT InitDevice()
 
     UINT createDeviceFlags = 0;
 debug {
-    createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+    createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG; //Not working
+    createDeviceFlags = 0;
 }
 
     D3D_DRIVER_TYPE[] driverTypes =
@@ -231,6 +238,7 @@ debug {
     sd.SampleDesc.Quality = 0;
     sd.Windowed = TRUE;
 
+
     for( UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++ )
     {
         g_driverType = driverTypes[driverTypeIndex];
@@ -239,18 +247,18 @@ debug {
         if( SUCCEEDED( hr ) )
             break;
     }
-    if( FAILED( hr ) )
+    if( _FAILED( hr ) )
         return hr;
 
     // Create a render target view
     ID3D11Texture2D pBackBuffer;
     hr = g_pSwapChain.GetBuffer( 0, &IID_ID3D11Texture2D, cast( LPVOID* )&pBackBuffer );
-    if( FAILED( hr ) )
+    if( _FAILED( hr ) )
         return hr;
 
     hr = g_pd3dDevice.CreateRenderTargetView( pBackBuffer, null, &g_pRenderTargetView );
     pBackBuffer.Release();
-    if( FAILED( hr ) )
+    if( _FAILED( hr ) )
         return hr;
 
     g_pImmediateContext.OMSetRenderTargets( 1, &g_pRenderTargetView, null );
@@ -268,7 +276,7 @@ debug {
     // Compile the vertex shader
     ID3DBlob pVSBlob;
     hr = CompileShaderFromFile( "Tutorial02.fx" , "VS", "vs_4_0", &pVSBlob );
-    if( FAILED( hr ) )
+    if( _FAILED( hr ) )
     {
         MessageBox( null,
                     "The FX file cannot be compiled.  Please run this executable from the directory that contains the FX file.", "Error", MB_OK );
@@ -277,7 +285,7 @@ debug {
 
 	// Create the vertex shader
 	hr = g_pd3dDevice.CreateVertexShader( pVSBlob.GetBufferPointer(), pVSBlob.GetBufferSize(), null, &g_pVertexShader );
-	if( FAILED( hr ) )
+	if( _FAILED( hr ) )
 	{	
 		pVSBlob.Release();
         return hr;
@@ -294,7 +302,7 @@ debug {
 	hr = g_pd3dDevice.CreateInputLayout( layout.ptr, numElements, pVSBlob.GetBufferPointer(),
                                           pVSBlob.GetBufferSize(), &g_pVertexLayout );
 	pVSBlob.Release();
-	if( FAILED( hr ) )
+	if( _FAILED( hr ) )
         return hr;
 
     // Set the input layout
@@ -303,7 +311,7 @@ debug {
 	// Compile the pixel shader
 	ID3DBlob pPSBlob;
     hr = CompileShaderFromFile( "Tutorial02.fx", "PS", "ps_4_0", &pPSBlob );
-    if( FAILED( hr ) )
+    if( _FAILED( hr ) )
     {
         MessageBox( null,
                     "The FX file cannot be compiled.  Please run this executable from the directory that contains the FX file.", "Error", MB_OK );
@@ -313,7 +321,7 @@ debug {
 	// Create the pixel shader
 	hr = g_pd3dDevice.CreatePixelShader( pPSBlob.GetBufferPointer(), pPSBlob.GetBufferSize(), null, &g_pPixelShader );
 	pPSBlob.Release();
-    if( FAILED( hr ) )
+    if( _FAILED( hr ) )
         return hr;
 
     // Create vertex buffer
@@ -333,7 +341,7 @@ debug {
 	memset( &InitData, 0, D3D11_SUBRESOURCE_DATA.sizeof );
     InitData.pSysMem = vertices.Pos.ptr;
     hr = g_pd3dDevice.CreateBuffer( &bd, &InitData, &g_pVertexBuffer );
-    if( FAILED( hr ) )
+    if( _FAILED( hr ) )
         return hr;
 
     // Set vertex buffer
@@ -384,12 +392,11 @@ extern(Windows) LRESULT WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM 
         case WM_DESTROY:
             PostQuitMessage( 0 );
             break;
-
         default:
-            return DefWindowProc( hWnd, message, wParam, lParam );
+            break;
     }
 
-    return 0;
+    return DefWindowProc( hWnd, message, wParam, lParam );
 }
 
 

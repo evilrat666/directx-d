@@ -1,119 +1,70 @@
-import core.sys.windows.windows;
+module d3d11_sdl;
+
 import core.stdc.stdio;
 import core.stdc.string;
 import std.format;
 import std.string;
 import std.utf;
 
+import bindbc.sdl;
+
 import directx.d3d11;
 
 // our objects instances, keep in mind that this is thread-local
-ID3D11Device device;
-ID3D11DeviceContext context;
-IDXGISwapChain swapchain;
-ID3D11RenderTargetView backbuffer;
+ID3D11Device device = null;
+ID3D11DeviceContext context = null;
+IDXGISwapChain swapchain = null;
+ID3D11RenderTargetView backbuffer = null;
 
 /////////////////////////
 // Windows specific stuff
 
-extern(Windows)
-int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int main()
 {
-    int result;
-
-	import core.runtime;
-	try
+    SDLSupport sup = loadSDL();
+    if(sup != sdlSupport)
     {
-        Runtime.initialize();
-		result = myWinMain();
-		Runtime.terminate();
+        if(sup == SDLSupport.badLibrary)
+            MessageBox(null, "Unknown library version", "Library version error", MB_ICONERROR | MB_OK);
+        else if(sup == SDLSupport.noLibrary)
+        {
+            MessageBox(null, "SDL2.dll not found", "DLL not found", MB_ICONERROR | MB_OK);
+            return -1;
+        }
     }
+    SDL_Init(SDL_INIT_VIDEO);
+    alias f = SDL_WindowFlags;
+    SDL_Window* wnd = SDL_CreateWindow("D3D11 SDL example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+    800, 600, f.SDL_WINDOW_ALLOW_HIGHDPI | f.SDL_WINDOW_RESIZABLE);
+    SDL_SysWMinfo info;
+    SDL_GetWindowWMInfo(wnd, &info);
 
-    catch (Exception e)            // catch any uncaught exceptions
+    bool quit;
+    SDL_Event ev;
+    HWND hwnd = cast(HWND)info.info.win.window;
+    InitD3D(hwnd);
+
+    while(!quit)
     {
-        MessageBox(null, toUTF16z(e.msg), "Error", MB_OK | MB_ICONEXCLAMATION);
-        result = 0; // failed
-    }
-
-	return result;
-}
-
-
-extern(Windows)
-LRESULT WindowProc(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam) nothrow
-{
-    switch (uMsg)
-    {
-        case WM_COMMAND:
-            break;
-			
-        case WM_PAINT:
-            break;
-
-        case WM_DESTROY:
-            PostQuitMessage(0);
-            break;
-
-        default:
-            break;
-    }
-
-    return DefWindowProc(hWnd, uMsg, wParam, lParam);
-}
-
-
-int myWinMain()
-{
-	HINSTANCE hInst = GetModuleHandle(null);
-    WNDCLASS  wc;
-
-    wc.lpszClassName = "DWndClass";
-    wc.style         = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
-    wc.lpfnWndProc   = &WindowProc;
-    wc.hInstance     = hInst;
-    wc.hIcon         = LoadIcon(cast(HINSTANCE) null, IDI_APPLICATION);
-    wc.hCursor       = LoadCursor(cast(HINSTANCE) null, IDC_CROSS);
-    wc.hbrBackground = cast(HBRUSH) (COLOR_WINDOW + 1);
-    wc.lpszMenuName  = null;
-    wc.cbClsExtra    = wc.cbWndExtra = 0;
-
-    auto a = RegisterClass(&wc);
-    assert(a); //note that asserts only run in debug mode
-
-    HWND hWnd;
-    hWnd = CreateWindow("DWndClass", "D3D Window", WS_THICKFRAME |
-                         WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_VISIBLE,
-                         CW_USEDEFAULT, CW_USEDEFAULT, 400, 300, HWND_DESKTOP,
-                         cast(HMENU) null, hInst, null);
-    assert(hWnd);
-
-  
-    // init our pipeline
-    InitD3D(hWnd);
-    // our main loop
-    MSG msg;
-    while(true)
-    {
-        if( PeekMessage(&msg, null, 0, 0, PM_REMOVE) ){
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-            
-            if( msg.message == WM_QUIT )
+        SDL_PollEvent(&ev);
+        switch(ev.type)
+        {
+            case SDL_EventType.SDL_QUIT:
+                quit = true;
+                break;
+            case SDL_EventType.SDL_KEYDOWN:
+                if(ev.key.keysym.sym == SDL_Keycode.SDLK_ESCAPE)
+                    quit = true;
+                break;
+            default:
                 break;
         }
-
-        // clear, draw, present
         RenderFrame();
     }
-    
-    // release resources
     CleanD3D();
-
-    return S_OK;
+    
+    return 0;
 }
-
-///////////////////////////////////////
-//// Direct3D stuff
 
 void InitD3D(HWND hWnd)
 {
@@ -147,11 +98,11 @@ void InitD3D(HWND hWnd)
     swapchain.GetBuffer(0, &IID_ID3D11Texture2D, cast(void**)&pBackBuffer);
     
     // use the back buffer address to create the render target
-    device.CreateRenderTargetView(pBackBuffer, null, &backbuffer);
+    device.CreateRenderTargetView(pBackBuffer, cast(D3D11_RENDER_TARGET_VIEW_DESC*)null, &backbuffer);
     pBackBuffer.Release();
 
     // set the render target as the back buffer
-    context.OMSetRenderTargets(1, &backbuffer, null);
+    context.OMSetRenderTargets(1u, &backbuffer, null);
     
     // Set the viewport
     D3D11_VIEWPORT viewport;
